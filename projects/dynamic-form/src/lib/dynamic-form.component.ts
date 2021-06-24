@@ -90,25 +90,24 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         // button & input & text area are single object render
         case EFieldConfigType.Button: {
           // to make sure the type_config is for input
-          if (isFieldConfigForButtonConfig(element.type_config)) {
-
-          } else {
+          if (!isFieldConfigForButtonConfig(element.type_config)) {
             throw new Error(`${element.name} Using the wrong interface for type_config!`);
           }
+          // all good, apply the control to form
           group.addControl(element.name, this.privateFormBuilder.control({}));
           break;
         }
         case EFieldConfigType.Input: {
           // to make sure the type_config is for input
-          if (isFieldConfigForInputConfig(element.type_config)) {
-            const a = element.type_config as IFieldConfigForInputConfig;
-            if (a.type === EFieldConfigInputType.Radio) {
-              throw new Error('There is no point having a single radio button, do use array!');
-            }
-
-          } else {
+          if (!isFieldConfigForInputConfig(element.type_config)) {
             throw new Error(`${element.name} Using the wrong interface for type_config!`);
           }
+          // to check further if type_config using wronlgy...
+          const a = element.type_config as IFieldConfigForInputConfig;
+          if (a.type === EFieldConfigInputType.Radio) {
+            throw new Error('There is no point having a single radio button, do use array!');
+          }
+          // all good, apply the control to form
           group.addControl(element.name, this.createControl(element));
           break;
         }
