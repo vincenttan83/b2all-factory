@@ -9,6 +9,7 @@ import { DynamicFieldArrayComponent } from './components/dynamic-field-array/dyn
 import { DynamicFieldButtonComponent } from './components/dynamic-field-button/dynamic-field-button.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { DynamicFieldDividerComponent } from './components/dynamic-field-divider/dynamic-field-divider.component';
 
 
 
@@ -21,7 +22,8 @@ import { BrowserModule } from '@angular/platform-browser';
     DynamicFieldObjectComponent,
     DynamicFieldSelectComponent,
     DynamicFieldArrayComponent,
-    DynamicFieldButtonComponent
+    DynamicFieldButtonComponent,
+    DynamicFieldDividerComponent
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,8 @@ export interface IFieldConfig {
      * or field of objects
      */
     type: EFieldConfigType;
-    type_config: IFieldConfigForArrayConfig
+    type_config: null
+    | IFieldConfigForArrayConfig
     | IFieldConfigForButtonConfig
     | IFieldConfigForInputConfig
     | IFieldConfigForObjectConfig

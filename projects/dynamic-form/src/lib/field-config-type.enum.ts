@@ -1,6 +1,7 @@
 export enum EFieldConfigType {
     Array = 'array', // to present the form in table mode, multiple lines, list of map
     Button = 'button', // should we even include a custom button? all form should have button, configure from form itself
+    Divider = 'divider',
     Input = 'input',
     Object = 'object', // reconfirm required as this is the nested object / map
     Select = 'select', // might rename, as all type should support more than 1

@@ -2,6 +2,7 @@ import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, On
 import { FormGroup } from '@angular/forms';
 import { DynamicFieldArrayComponent } from './components/dynamic-field-array/dynamic-field-array.component';
 import { DynamicFieldButtonComponent } from './components/dynamic-field-button/dynamic-field-button.component';
+import { DynamicFieldDividerComponent } from './components/dynamic-field-divider/dynamic-field-divider.component';
 import { DynamicFieldInputComponent } from './components/dynamic-field-input/dynamic-field-input.component';
 import { DynamicFieldObjectComponent } from './components/dynamic-field-object/dynamic-field-object.component';
 import { DynamicFieldSelectComponent } from './components/dynamic-field-select/dynamic-field-select.component';
@@ -16,6 +17,7 @@ interface IComponent {
 const components: IComponent = {
   array: DynamicFieldArrayComponent,
   button: DynamicFieldButtonComponent,
+  divider: DynamicFieldDividerComponent,
   input: DynamicFieldInputComponent,
   object: DynamicFieldObjectComponent,
   select: DynamicFieldSelectComponent,

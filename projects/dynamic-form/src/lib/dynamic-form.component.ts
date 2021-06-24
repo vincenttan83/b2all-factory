@@ -36,6 +36,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Output() formOnSubmit: EventEmitter<any> = new EventEmitter<any>();
 
   formGroup!: FormGroup;
+  wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
 
   constructor(
     private privateFormBuilder: FormBuilder
@@ -55,13 +56,20 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
     // iterate the formgroup value of key value pairs
     Object.keys(this.formGroup.value).forEach(element => {
-      // check if match the name belongs to button, try to remove
-      if (!this.inputFormConfigs.some(findX => findX.name === element && findX.type === EFieldConfigType.Button)) {
-        newFormValue = { ...newFormValue, [element]: this.formGroup.value[element] };
-      } else {
-        // if is okay to remove? default is remove, any override false?
-        if (!this.removeButtonField) {
+      // check if NOT match the name belongs to DIVIDER
+      if (!this.inputFormConfigs.some(findX => findX.name === element && findX.type === EFieldConfigType.Divider)) {
+        // is not a divider
+        // check if NOT match the name belongs to BUTTON
+        if (!this.inputFormConfigs.some(findX => findX.name === element && findX.type === EFieldConfigType.Button)) {
+          // is not a button
           newFormValue = { ...newFormValue, [element]: this.formGroup.value[element] };
+        } else {
+          // is a button
+          // Default is to remove, any override input param set to false?
+          if (!this.removeButtonField) {
+            // override setting found, keep it
+            newFormValue = { ...newFormValue, [element]: this.formGroup.value[element] };
+          }
         }
       }
     });
@@ -86,7 +94,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   createFormGroup(formConfigs: IFieldConfig[], validatorFn: ValidatorFn[] | null): FormGroup {
     const group = this.privateFormBuilder.group({});
-    const wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
 
     formConfigs.forEach(element => {
       switch (element.type) {
@@ -98,16 +105,20 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         case EFieldConfigType.Button: {
           // to make sure the type_config is for input
           if (!isFieldConfigForButtonConfig(element.type_config)) {
-            throw new Error(`${element.name} ${wrongInterfaceErrorMessage}`);
+            throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
           }
           // all good, apply the control to form
+          group.addControl(element.name, this.privateFormBuilder.control({}));
+          break;
+        }
+        case EFieldConfigType.Divider: {
           group.addControl(element.name, this.privateFormBuilder.control({}));
           break;
         }
         case EFieldConfigType.Input: {
           // to make sure the type_config is for input
           if (!isFieldConfigForInputConfig(element.type_config)) {
-            throw new Error(`${element.name} ${wrongInterfaceErrorMessage}`);
+            throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
           }
           // to check further if type_config using wronlgy...
           const a = element.type_config as IFieldConfigForInputConfig;
@@ -121,7 +132,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         case EFieldConfigType.Textarea: {
           // to make sure the type_config is for textarea
           if (!isFieldConfigForTextareaConfig(element.type_config)) {
-            throw new Error(`${element.name} ${wrongInterfaceErrorMessage}`);
+            throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
           }
           group.addControl(element.name, this.createControl(element));
           break;
@@ -130,7 +141,15 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         case EFieldConfigType.Object: {
           break;
         }
-        // select render, need to iterate the number of combo boxes if any
+
+        /**
+         * Select render, need to iterate the number of combo boxes if any.
+         * Combo box can work independently.
+         * Combo box can filter next combo box of N tier,
+         * e.g.: Country -> States,
+         * Job -> Task => item
+         * Workflows -> events -> jobs -> steps -> actions -> runners.
+         */
         case EFieldConfigType.Select: {
           break;
         }
