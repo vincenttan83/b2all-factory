@@ -5,8 +5,10 @@ import { EFieldConfigType } from './field-config-type.enum';
 import {
   IFieldConfig,
   IFieldConfigForInputConfig,
+  IFieldConfigForSelectConfig,
   isFieldConfigForButtonConfig,
   isFieldConfigForInputConfig,
+  isFieldConfigForSelectConfig,
   isFieldConfigForTextareaConfig
 } from './field-config.interface';
 
@@ -151,6 +153,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
          * Workflows -> events -> jobs -> steps -> actions -> runners.
          */
         case EFieldConfigType.Select: {
+          if (!isFieldConfigForSelectConfig(element.type_config)) {
+            throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
+          }
+          const a = element.type_config as IFieldConfigForSelectConfig;
+          a.controls.forEach(elementControl => {
+            console.log(elementControl);
+            group.addControl(elementControl.name, this.createControl2(undefined, undefined, elementControl.value));
+          });
           break;
         }
       }
@@ -158,6 +168,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
 
     return group;
+  }
+
+  createControl2(disabled: boolean | undefined, validationFn: ValidatorFn[] | undefined, value: any): FormControl {
+    return this.privateFormBuilder.control({ disabled, value }, validationFn);
   }
 
   createControl(config: IFieldConfig): FormControl {

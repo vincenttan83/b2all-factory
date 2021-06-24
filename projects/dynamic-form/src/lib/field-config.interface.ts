@@ -76,10 +76,30 @@ export interface IFieldConfigForObjectConfig {
 }
 
 export interface IFieldConfigForSelectConfig {
+    /**
+     * Only accept dataset in the outer join manner for
+     * dependant combo box
+     */
     dataset: any[];
-    /** To auto select based on saved data supply */
-    render_dataload: boolean;
+    controls: {
+        name: string;
+        label: string;
+        key_field: string;
+        value_field: string;
+        value: string;
+    }[];
 }
+
+export function isFieldConfigForSelectConfig(obj: any): obj is IFieldConfigForSelectConfig {
+    return (
+        obj !== null &&
+        obj.dataset !== null &&
+        typeof obj.dataset === 'object' &&
+        obj.controls !== null &&
+        typeof obj.controls === 'object'
+    );
+}
+
 
 export interface IFieldConfigForTextareaConfig {
     row_count: number;

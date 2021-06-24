@@ -141,6 +141,43 @@ export class AppComponent {
       type_config: null,
     },
     {
+      name: 'country_selection',
+      type: EFieldConfigType.Select,
+      type_config: {
+        dataset: [
+          [
+            { key: 'Malaysia', value: 'malaysia' },
+            { key: 'Singapore', value: 'singapore' },
+            { key: 'Thailand', value: 'thailand' },
+          ],
+          [
+            { key: 'Sun', value: 'sun' },
+            { key: 'Earth', value: 'earth' },
+            { key: 'Mars', value: 'mars' },
+          ],
+        ],
+        controls: [
+          { name: 'select_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'thailand' },
+          { name: 'select_star', label: 'Star', key_field: 'key', value_field: 'value', value: 'mars' },
+        ]
+      },
+    },
+    {
+      name: 'divider_select',
+      type: EFieldConfigType.Divider,
+      type_config: null,
+    },
+    {
+      name: 'array_something',
+      type: EFieldConfigType.Array,
+      type_config: null,
+    },
+    {
+      name: 'divider_array',
+      type: EFieldConfigType.Divider,
+      type_config: null,
+    },
+    {
       name: 'button_hello',
       display_text: 'Fire local method',
       type: EFieldConfigType.Button,

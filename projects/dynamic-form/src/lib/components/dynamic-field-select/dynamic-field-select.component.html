@@ -1,1 +1,16 @@
-<p>dynamic-field-select works!</p>
+<div class="row" [formGroup]="group">
+
+    <div *ngFor="let control of detailConfig.controls; index as i;">
+        <label [attr.for]="'select_' + control.name">{{ control.label }}</label>
+        <br>
+        <select [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name">
+            <option value="">Select {{ control.label.toLowerCase() }}</option>
+            <option *ngFor="let choice of detailConfig.dataset[i]" [value]="choice[control.value_field]"
+                [selected]="control.value===choice[control.value_field]">{{ choice[control.key_field] }}</option>
+        </select>
+        <br>
+        <br>
+
+    </div>
+
+</div>
