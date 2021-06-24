@@ -1,4 +1,6 @@
 <div [formGroup]="group">
-    <input [formControlName]="config.name" [attr.type]="detailConfig.type">
+    <label [attr.for]="detailConfig.type + '-' + config.name">{{ config.display_text }}</label>
 
+    <input [attr.id]="detailConfig.type + '-' + config.name" [formControlName]="config.name"
+        [attr.type]="detailConfig.type" checked>
 </div>
