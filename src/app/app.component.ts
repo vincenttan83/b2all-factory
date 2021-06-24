@@ -121,6 +121,11 @@ export class AppComponent {
       }
     },
     {
+      name: 'divider_input',
+      type: EFieldConfigType.Divider,
+      type_config: null,
+    },
+    {
       name: 'text_area',
       display_text: 'Text area: ',
       value: 'Start your long winded story here!\n\nlol',
@@ -129,6 +134,11 @@ export class AppComponent {
         row_count: 5,
         // col_count: 10,
       }
+    },
+    {
+      name: 'divider_textarea',
+      type: EFieldConfigType.Divider,
+      type_config: null,
     },
     {
       name: 'button_hello',
