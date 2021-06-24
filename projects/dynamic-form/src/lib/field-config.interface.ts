@@ -49,9 +49,25 @@ export interface IFieldConfigForButtonConfig {
     onclick_fn?: () => Promise<void>;
 }
 
+export function isFieldConfigForButtonConfig(obj: any): obj is IFieldConfigForButtonConfig {
+    return (
+        obj !== null &&
+        (obj.type === 'button' || obj.type === 'reset' || obj.type === 'submit') &&
+        (typeof obj.onclick_fn === 'undefined' || typeof obj.onclick_fn === 'function')
+    );
+}
+
 export interface IFieldConfigForInputConfig {
     type: EFieldConfigInputType;
     input_helper?: boolean;
+}
+
+export function isFieldConfigForInputConfig(obj: any): obj is IFieldConfigForInputConfig {
+    return (
+        obj !== null &&
+        typeof obj.type === 'string' &&
+        (typeof obj.input_helper === 'undefined' || typeof obj.input_helper === 'boolean')
+    );
 }
 
 export interface IFieldConfigForObjectConfig {

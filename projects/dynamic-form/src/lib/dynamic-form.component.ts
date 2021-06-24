@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
+import { EFieldConfigInputType } from './field-config-input-type.enum';
 import { EFieldConfigType } from './field-config-type.enum';
-import { IFieldConfig } from './field-config.interface';
+import { IFieldConfig, IFieldConfigForInputConfig, isFieldConfigForButtonConfig, isFieldConfigForInputConfig } from './field-config.interface';
 
 @Component({
   selector: 'b2all-dynamic-form',
@@ -87,10 +88,29 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
         // button & input & text area are single object render
         case EFieldConfigType.Button: {
+          // to make sure the type_config is for input
+          if (isFieldConfigForButtonConfig(element.type_config)) {
+
+          } else {
+            throw new Error(`${element.name} Using the wrong interface for type_config!`);
+          }
           group.addControl(element.name, this.privateFormBuilder.control({}));
           break;
         }
-        case EFieldConfigType.Input:
+        case EFieldConfigType.Input: {
+          // to make sure the type_config is for input
+          if (isFieldConfigForInputConfig(element.type_config)) {
+            const a = element.type_config as IFieldConfigForInputConfig;
+            if (a.type === EFieldConfigInputType.Radio) {
+              throw new Error('There is no point having a single radio button, do use array!');
+            }
+
+          } else {
+            throw new Error(`${element.name} Using the wrong interface for type_config!`);
+          }
+          group.addControl(element.name, this.createControl(element));
+          break;
+        }
         case EFieldConfigType.Textarea: {
           group.addControl(element.name, this.createControl(element));
           break;
@@ -114,5 +134,14 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     const { disabled, validation_fn, value } = config;
     return this.privateFormBuilder.control({ disabled, value }, validation_fn);
   }
+
+  markAsPristine(): void {
+    this.formGroup.markAsPristine();
+  }
+
+  markAsUntouched(): void {
+    this.formGroup.markAsUntouched();
+  }
+
 
 }
