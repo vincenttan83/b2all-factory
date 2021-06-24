@@ -122,7 +122,8 @@ export class AppComponent {
     },
     {
       name: 'text_area',
-      display_text: 'Input a week: ',
+      display_text: 'Text area: ',
+      value: 'Start your long winded story here!\n\nlol',
       type: EFieldConfigType.Textarea,
       type_config: {
         row_count: 5,
