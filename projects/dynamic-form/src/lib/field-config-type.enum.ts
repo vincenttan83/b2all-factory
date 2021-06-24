@@ -1,10 +1,10 @@
 export enum EFieldConfigType {
-    Array = 'ARRAY', // to present the form in table mode, multiple lines, list of map
-    Button = 'BUTTON', // should we even include a custom button? all form should have button, configure from form itself
-    Input = 'INPUT',
-    Object = 'OBJECT', // reconfirm required as this is the nested object / map
-    Select = 'SELECT', // might rename, as all type should support more than 1
-    Textarea = 'TEXTAREA',
+    Array = 'array', // to present the form in table mode, multiple lines, list of map
+    Button = 'button', // should we even include a custom button? all form should have button, configure from form itself
+    Input = 'input',
+    Object = 'object', // reconfirm required as this is the nested object / map
+    Select = 'select', // might rename, as all type should support more than 1
+    Textarea = 'textarea',
     // InputButton = 'INPUT_BUTTON' // is boostrap input with button in same row, deprecated
     // Listing = 'LISTING', // drop as initially target to chheck box list
     // Editor = 'EDITOR', // drop & introduce an 3rd party add on
