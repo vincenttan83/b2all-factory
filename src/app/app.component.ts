@@ -11,11 +11,28 @@ import { of } from 'rxjs/internal/observable/of';
 })
 export class AppComponent {
   title = 'b2all-factory';
+  returnedValue: any;
 
   myFields: IFieldConfig[] = [
     {
-      name: 'helloworld_button',
-      display_text: 'Hello World!',
+      name: 'input_text',
+      display_text: 'Input a text: ',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: EFieldConfigInputType.Text,
+      }
+    },
+    {
+      name: 'input_color',
+      display_text: 'Input a color: ',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: EFieldConfigInputType.Color,
+      }
+    },
+    {
+      name: 'button_hello',
+      display_text: 'Fire local method',
       type: EFieldConfigType.Button,
       type_config: {
         type: 'button',
@@ -23,20 +40,21 @@ export class AppComponent {
       }
     },
     {
-      name: 'submit_button',
-      display_text: 'Submit now!',
+      name: 'button_submit',
+      display_text: 'Submit button',
       type: EFieldConfigType.Button,
       type_config: {
         type: 'submit',
       }
     },
     {
-      name: 'input_name',
-      type: EFieldConfigType.Input,
+      name: 'buttn_reset',
+      display_text: 'Reset button',
+      type: EFieldConfigType.Button,
       type_config: {
-        type: EFieldConfigInputType.Text,
+        type: 'reset',
       }
-    }
+    },
   ];
 
   hello(): Promise<void> {
@@ -45,7 +63,7 @@ export class AppComponent {
 
   async formOnSubmit(formValue: any): Promise<void> {
 
-    console.log(formValue);
+    this.returnedValue = formValue;
 
   }
 }
