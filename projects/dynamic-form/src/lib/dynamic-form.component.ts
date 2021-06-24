@@ -12,6 +12,7 @@ import { IFieldConfig, IFieldConfigForInputConfig, isFieldConfigForButtonConfig,
       <div *ngFor="let field of inputFormConfigs;" [ngClass]="field.ng_class ?? ''">
         <ng-container b2allDynamicField [config]="field" [group]="formGroup">
         </ng-container>
+        <br>
       </div>
 
     </form>
