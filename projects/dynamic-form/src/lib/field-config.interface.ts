@@ -1,5 +1,6 @@
 import { ValidatorFn } from '@angular/forms';
 import { EFieldConfigInputType } from './field-config-input-type.enum';
+import { IMultiSelect } from './field-config-multiselect.interface';
 import { EFieldConfigType } from './field-config-type.enum';
 
 export interface IFieldConfig {
@@ -80,7 +81,7 @@ export interface IFieldConfigForSelectConfig {
      * Only accept dataset in the outer join manner for
      * dependant combo box
      */
-    dataset: any[];
+    dataset: IMultiSelect[];
     controls: {
         name: string;
         label: string;

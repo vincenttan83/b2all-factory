@@ -158,7 +158,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
           const a = element.type_config as IFieldConfigForSelectConfig;
           a.controls.forEach(elementControl => {
-            console.log(elementControl);
+            // console.log(elementControl);
             group.addControl(elementControl.name, this.createControl2(undefined, undefined, elementControl.value));
           });
           break;
