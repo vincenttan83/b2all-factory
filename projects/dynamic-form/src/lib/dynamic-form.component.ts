@@ -2,7 +2,13 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { EFieldConfigInputType } from './field-config-input-type.enum';
 import { EFieldConfigType } from './field-config-type.enum';
-import { IFieldConfig, IFieldConfigForInputConfig, isFieldConfigForButtonConfig, isFieldConfigForInputConfig } from './field-config.interface';
+import {
+  IFieldConfig,
+  IFieldConfigForInputConfig,
+  isFieldConfigForButtonConfig,
+  isFieldConfigForInputConfig,
+  isFieldConfigForTextareaConfig
+} from './field-config.interface';
 
 @Component({
   selector: 'b2all-dynamic-form',
@@ -80,6 +86,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   createFormGroup(formConfigs: IFieldConfig[], validatorFn: ValidatorFn[] | null): FormGroup {
     const group = this.privateFormBuilder.group({});
+    const wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
 
     formConfigs.forEach(element => {
       switch (element.type) {
@@ -91,7 +98,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         case EFieldConfigType.Button: {
           // to make sure the type_config is for input
           if (!isFieldConfigForButtonConfig(element.type_config)) {
-            throw new Error(`${element.name} Using the wrong interface for type_config!`);
+            throw new Error(`${element.name} ${wrongInterfaceErrorMessage}`);
           }
           // all good, apply the control to form
           group.addControl(element.name, this.privateFormBuilder.control({}));
@@ -100,7 +107,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         case EFieldConfigType.Input: {
           // to make sure the type_config is for input
           if (!isFieldConfigForInputConfig(element.type_config)) {
-            throw new Error(`${element.name} Using the wrong interface for type_config!`);
+            throw new Error(`${element.name} ${wrongInterfaceErrorMessage}`);
           }
           // to check further if type_config using wronlgy...
           const a = element.type_config as IFieldConfigForInputConfig;
@@ -112,6 +119,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           break;
         }
         case EFieldConfigType.Textarea: {
+          // to make sure the type_config is for textarea
+          if (!isFieldConfigForTextareaConfig(element.type_config)) {
+            throw new Error(`${element.name} ${wrongInterfaceErrorMessage}`);
+          }
           group.addControl(element.name, this.createControl(element));
           break;
         }

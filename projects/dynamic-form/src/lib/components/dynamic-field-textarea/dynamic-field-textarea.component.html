@@ -1,1 +1,8 @@
-<p>dynamic-field-textarea works!</p>
+<div [formGroup]="group">
+    <label [attr.for]="'textarea_' + config.name">{{ config.display_text }}</label>
+    <br>
+    <textarea [attr.id]="'textarea_' + config.name" [formControlName]="config.name" [attr.rows]="detailConfig.row_count"
+        [attr.cols]="detailConfig.col_count">
+
+    </textarea>
+</div>
