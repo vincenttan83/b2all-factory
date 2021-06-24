@@ -121,6 +121,15 @@ export class AppComponent {
       }
     },
     {
+      name: 'text_area',
+      display_text: 'Input a week: ',
+      type: EFieldConfigType.Textarea,
+      type_config: {
+        row_count: 5,
+        // col_count: 10,
+      }
+    },
+    {
       name: 'button_hello',
       display_text: 'Fire local method',
       type: EFieldConfigType.Button,
