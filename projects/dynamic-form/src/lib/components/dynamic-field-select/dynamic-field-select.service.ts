@@ -26,7 +26,7 @@ export class DynamicFieldSelectService {
     //   firstLevelKeyValueArray.push({ key: element.key, value: element.value });
     // });
 
-    this.theLatestDatabase = { key_value_pair_0: this.getSelection(val, 0) };
+    this.theLatestDatabase = { key_value_pair_0: this.getSelection(val, 0, '') };
   }
 
   getDatabase(): { [key: string]: any } {
@@ -40,10 +40,10 @@ export class DynamicFieldSelectService {
    * @param val the selected value of the combo box / saved data
    * @param lvl to identify the level of the dependant, start from 0, 1, 2, 3...
    */
-  setValue(val: string, lvl: number): void {
+  setValue(val: string | null, lvl: number): void {
     // catch the next level if any, and reset the following lever after the next level
     for (let i = lvl; i < this.maxLevel; i++) {
-      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: lvl === i ? val : '' };
+      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: lvl === i ? val : null };
       if (i !== lvl) {
         this.theLatestDatabase = { ...this.theLatestDatabase, ['key_value_pair_' + i]: [] };
       }
@@ -55,14 +55,15 @@ export class DynamicFieldSelectService {
         ['key_value_pair_' + (lvl + 1)]: this.getSelection(
           this.privateDatabase,
           (lvl + 1),
+          val,
         ),
       };
     }
     this.refreshStorage();
   }
 
-  getSelection(db: IMultiSelect[], lvl: number): { [key: string]: any }[] {
-    const currentLevelKeyValueArray: { [key: string]: string }[] = [];
+  getSelection(db: IMultiSelect[], lvl: number, selectedValue: string | null): { [key: string]: any }[] {
+    const currentLevelKeyValueArray: { [key: string]: any }[] = [];
     let selectedChildren: IMultiSelect[] | undefined = db;
 
     // if root level, just render the root level key n value
@@ -82,6 +83,8 @@ export class DynamicFieldSelectService {
         currentLevelKeyValueArray.push({ key: element.key, value: element.value });
       });
     }
+
+
 
     return currentLevelKeyValueArray;
   }

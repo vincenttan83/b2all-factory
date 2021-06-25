@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IMultiSelect } from '../../field-config-multiselect.interface';
 import { IFieldConfig, IFieldConfigForSelectConfig } from '../../field-config.interface';
@@ -33,8 +33,12 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
     this.privateDynamicFieldSelectService.setDatabase(this.detailConfig.dataset, this.detailConfig.controls.length);
     this.subscription = this.privateDynamicFieldSelectService.storageChanged$.subscribe(resp => {
       this.latestDatabase = { ...resp };
-      console.log(resp);
-
+      // since latest db is ready
+      // we need to update the reative from control of the "selected" value
+      // so that HTML will render correctly without "selected" property
+      for (let i = 0; i < this.detailConfig.controls.length; i++) {
+        this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
+      }
     });
   }
 
@@ -57,27 +61,17 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
   }
 
   getDataset(byLevel: number, selectedParent: string): IMultiSelect[] | undefined {
-
     if (byLevel > 0) {
       const childrenDataset = this.detailConfig.dataset.find(fX => {
-        // console.log(`${fX.value} === ? ${selectedParent}`);
-
         return fX.value === selectedParent;
       });
-      // console.log(childrenDataset);
-
       return childrenDataset?.children;
     }
     return this.detailConfig.dataset;
-
   }
 
   onChange(value: any, index: number): void {
     this.privateDynamicFieldSelectService.setValue(value.target.value, index);
-    // if you are the last index, no need to do any thing
-    // else u need to re render your children combo box
-
-
   }
 
 }

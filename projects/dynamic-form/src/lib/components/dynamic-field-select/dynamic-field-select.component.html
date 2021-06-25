@@ -3,21 +3,16 @@
     <div *ngFor="let control of detailConfig.controls; index as i;">
         <label [attr.for]="'select_' + control.name">{{ control.label }}</label>
         <br>
-        <select [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name"
-            (change)="onChange($event, i)">
-            <option value="''">Select {{ control.label.toLowerCase() }}</option>
-            <!-- <option *ngFor="let choice of detailConfig.dataset[i]" [value]="choice[control.value_field]"
-                [selected]="control.value===choice[control.value_field]">{{ choice[control.key_field] }}</option> -->
+        <select [attr.id]="'select_' + control.name" [attr.aria-label]="'Select ' + control.label"
+            [formControlName]="control.name" (change)="onChange($event, i)">
 
-            <option *ngFor="let a of latestDatabase['key_value_pair_' + i]"
-                [selected]="latestDatabase['selected_value_' + i]===a.value"
-                [value]="a.value">
-                {{ a.key }}
+            <option [value]="null">Select {{ control.label.toLowerCase() }}</option>
+
+            <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice.value">
+                {{ choice.key }}
             </option>
 
-
         </select>
-
 
         <br>
         <br>

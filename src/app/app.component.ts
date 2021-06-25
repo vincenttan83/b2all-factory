@@ -169,9 +169,21 @@ export class AppComponent {
       type_config: {
         dataset: cs,
         controls: [
-          { name: 'select_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'malaysia' },
-          { name: 'select_state', label: 'State', key_field: 'key', value_field: 'value', value: 'selangor' },
-          { name: 'select_city', label: 'City', key_field: 'key', value_field: 'value', value: 'petaling_jaya' },
+          { name: 'country_selection_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'malaysia' },
+          { name: 'country_selection_state', label: 'State', key_field: 'key', value_field: 'value', value: 'selangor' },
+          { name: 'country_selection_city', label: 'City', key_field: 'key', value_field: 'value', value: null },
+        ]
+      },
+    },
+    {
+      name: 'country_to',
+      type: EFieldConfigType.Select,
+      type_config: {
+        dataset: cs,
+        controls: [
+          { name: 'country_to_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'singapore' },
+          { name: 'country_to_state', label: 'State', key_field: 'key', value_field: 'value', value: 'singapore' },
+          { name: 'country_to_city', label: 'City', key_field: 'key', value_field: 'value', value: null },
         ]
       },
     },
