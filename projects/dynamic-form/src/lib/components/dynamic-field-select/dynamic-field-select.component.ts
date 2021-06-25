@@ -44,16 +44,15 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
   }
 
   ngAfterViewInit(): void {
+
+    // to avoid Expression has changed after it was checked. Previous value: 'undefined'. error
     setTimeout(() => {
-      // if (this.detailConfig.controls && this.detailConfig.controls.length > 0 && this.detailConfig.controls[0].value) {
-      //   this.privateDynamicFieldSelectService.setValue(this.detailConfig.controls[0].value, 0);
-      // }
       for (let i = 0; i < this.detailConfig.controls.length; i++) {
+        // if having any saved value, help user select it back...
         if (this.detailConfig.controls[i].value) {
           this.privateDynamicFieldSelectService.setValue(this.detailConfig.controls[i].value, i);
         }
       }
-
     }, 0);
   }
 
@@ -61,6 +60,13 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
     this.subscription.unsubscribe();
   }
 
+  /**
+   * this method is to return the children key value pair dynamically
+   * automatically look for the correct level of the children from the hirarchy database
+   * @param byLevel let the method know ur current level
+   * @param selectedParent supply the selected parent
+   * @returns the children list of key value pair
+   */
   getDataset(byLevel: number, selectedParent: string): IMultiSelect[] | undefined {
     if (byLevel > 0) {
       const childrenDataset = this.detailConfig.dataset.find(fX => {
@@ -71,6 +77,7 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
     return this.detailConfig.dataset;
   }
 
+  // push a changes to the combo box selection changed.
   onChange(value: any, index: number): void {
     this.privateDynamicFieldSelectService.setValue(value.target.value, index);
   }

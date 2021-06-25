@@ -17,16 +17,10 @@ export class DynamicFieldSelectService {
    * Should only call once
    * @param val the outer join database object
    */
-  setDatabase(val: IMultiSelect[], maxLevel: number): void {
-    this.privateDatabase = val;
+  setDatabase(originalDatabase: IMultiSelect[], maxLevel: number): void {
+    this.privateDatabase = originalDatabase;
     this.maxLevel = maxLevel;
-
-    // const firstLevelKeyValueArray: { [key: string]: string }[] = [];
-    // val.forEach(element => {
-    //   firstLevelKeyValueArray.push({ key: element.key, value: element.value });
-    // });
-
-    this.theLatestDatabase = { key_value_pair_0: this.getSelection(val, 0, '') };
+    this.theLatestDatabase = { key_value_pair_0: this.getSelection(originalDatabase, 0) };
   }
 
   getDatabase(): { [key: string]: any } {
@@ -37,32 +31,30 @@ export class DynamicFieldSelectService {
    * This method is called the moment when
    * first loading of saved data
    * user change the combo box
-   * @param val the selected value of the combo box / saved data
-   * @param lvl to identify the level of the dependant, start from 0, 1, 2, 3...
+   * @param selectedValue the selected value of the combo box / saved data
+   * @param currentLevel to identify the level of the dependant, start from 0, 1, 2, 3...
    */
-  setValue(val: string | null, lvl: number): void {
+  setValue(selectedValue: string | null, currentLevel: number): void {
     // catch the next level if any, and reset the following lever after the next level
-    for (let i = lvl; i < this.maxLevel; i++) {
-      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: lvl === i ? val : null };
-      if (i !== lvl) {
+    for (let i = currentLevel; i < this.maxLevel; i++) {
+      // clean the next level of selected value, current value keep
+      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: currentLevel === i ? selectedValue : null };
+      // clean the next leve of key value
+      if (i !== currentLevel) {
         this.theLatestDatabase = { ...this.theLatestDatabase, ['key_value_pair_' + i]: [] };
       }
     }
-    // fill the key_value_pair
-    if (lvl !== (this.maxLevel - 1)) {
+    // since the next level of selection is cleaned, we need to get back correct choices
+    if (currentLevel !== (this.maxLevel - 1)) {
       this.theLatestDatabase = {
         ...this.theLatestDatabase,
-        ['key_value_pair_' + (lvl + 1)]: this.getSelection(
-          this.privateDatabase,
-          (lvl + 1),
-          val,
-        ),
+        ['key_value_pair_' + (currentLevel + 1)]: this.getSelection(this.privateDatabase, (currentLevel + 1)),
       };
     }
     this.refreshStorage();
   }
 
-  getSelection(db: IMultiSelect[], lvl: number, selectedValue: string | null): { [key: string]: any }[] {
+  getSelection(db: IMultiSelect[], lvl: number): { [key: string]: any }[] {
     const currentLevelKeyValueArray: { [key: string]: any }[] = [];
     let selectedChildren: IMultiSelect[] | undefined = db;
 
@@ -83,8 +75,6 @@ export class DynamicFieldSelectService {
         currentLevelKeyValueArray.push({ key: element.key, value: element.value });
       });
     }
-
-
 
     return currentLevelKeyValueArray;
   }
