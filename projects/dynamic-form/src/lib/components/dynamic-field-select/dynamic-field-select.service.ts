@@ -21,6 +21,9 @@ export class DynamicFieldSelectService {
     this.privateDatabase = originalDatabase;
     this.maxLevel = maxLevel;
     this.theLatestDatabase = { key_value_pair_0: this.getSelection(originalDatabase, 0) };
+    for (let i = 0; i < maxLevel; i++) {
+      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: null };
+    }
   }
 
   getDatabase(): { [key: string]: any } {

@@ -141,36 +141,14 @@ export class AppComponent {
       type: EFieldConfigType.Divider,
       type_config: null,
     },
-    // {
-    //   name: 'country_selection',
-    //   type: EFieldConfigType.Select,
-    //   type_config: {
-    //     dataset: [
-    //       [
-    //         { key: 'Malaysia', value: 'malaysia' },
-    //         { key: 'Singapore', value: 'singapore' },
-    //         { key: 'Thailand', value: 'thailand' },
-    //       ],
-    //       [
-    //         { key: 'Sun', value: 'sun' },
-    //         { key: 'Earth', value: 'earth' },
-    //         { key: 'Mars', value: 'mars' },
-    //       ],
-    //     ],
-    //     controls: [
-    //       { name: 'select_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'thailand' },
-    //       { name: 'select_star', label: 'Star', key_field: 'key', value_field: 'value', value: 'mars' },
-    //     ]
-    //   },
-    // },
     {
       name: 'country_selection',
       type: EFieldConfigType.Select,
       type_config: {
         dataset: cs,
         controls: [
-          { name: 'country_selection_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'malaysia' },
-          { name: 'country_selection_state', label: 'State', key_field: 'key', value_field: 'value', value: 'selangor' },
+          { name: 'country_selection_country', label: 'Country', key_field: 'key', value_field: 'value', value: null },
+          { name: 'country_selection_state', label: 'State', key_field: 'key', value_field: 'value', value: null },
           { name: 'country_selection_city', label: 'City', key_field: 'key', value_field: 'value', value: null },
         ]
       },
@@ -184,6 +162,19 @@ export class AppComponent {
           { name: 'country_to_country', label: 'Country', key_field: 'key', value_field: 'value', value: 'singapore' },
           { name: 'country_to_state', label: 'State', key_field: 'key', value_field: 'value', value: 'singapore' },
           { name: 'country_to_city', label: 'City', key_field: 'key', value_field: 'value', value: null },
+        ]
+      },
+    },
+    {
+      name: 'gender_selection',
+      type: EFieldConfigType.Select,
+      type_config: {
+        dataset: [
+          { key: 'Male', value: 'male' },
+          { key: 'Female', value: 'female' },
+        ],
+        controls: [
+          { name: 'gender_selection_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
         ]
       },
     },

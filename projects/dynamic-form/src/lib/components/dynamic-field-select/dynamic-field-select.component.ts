@@ -44,6 +44,7 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
   }
 
   ngAfterViewInit(): void {
+    let atLeastOneTrigger = false;
 
     // to avoid Expression has changed after it was checked. Previous value: 'undefined'. error
     setTimeout(() => {
@@ -51,7 +52,13 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
         // if having any saved value, help user select it back...
         if (this.detailConfig.controls[i].value) {
           this.privateDynamicFieldSelectService.setValue(this.detailConfig.controls[i].value, i);
+          atLeastOneTrigger = true;
         }
+      }
+
+      if (!atLeastOneTrigger) {
+        // is all new form n selection, let's trigger the root level
+        this.privateDynamicFieldSelectService.refreshStorage();
       }
     }, 0);
   }
