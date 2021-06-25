@@ -206,6 +206,50 @@ export class AppComponent {
       type_config: null,
     },
     {
+      name: 'object_something',
+      type: EFieldConfigType.Object,
+      type_config: {
+        field_configs: [
+          {
+            name: 'object_something_input_text_firstname',
+            display_text: 'Input your first name: ',
+            value: 'haha',
+            type: EFieldConfigType.Input,
+            type_config: {
+              type: EFieldConfigInputType.Text,
+            }
+          },
+          {
+            name: 'object_something_input_text_last',
+            display_text: 'Input your last name: ',
+            value: 'haha',
+            type: EFieldConfigType.Input,
+            type_config: {
+              type: EFieldConfigInputType.Text,
+            }
+          },
+          {
+            name: 'gender_selection_profile',
+            type: EFieldConfigType.Select,
+            type_config: {
+              dataset: [
+                { key: 'Male', value: 'male' },
+                { key: 'Female', value: 'female' },
+              ],
+              controls: [
+                { name: 'gender_selection_profile_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
+              ]
+            },
+          },
+        ]
+      },
+    },
+    {
+      name: 'divider_object',
+      type: EFieldConfigType.Divider,
+      type_config: null,
+    },
+    {
       name: 'button_hello',
       display_text: 'Fire local method',
       type: EFieldConfigType.Button,

@@ -4,6 +4,7 @@ import { EFieldConfigInputType } from './enums/field-config-input-type.enum';
 import { EFieldConfigType } from './enums/field-config-type.enum';
 import { isFieldConfigForButtonConfig } from './interfaces/field-config-for-button.interface';
 import { IFieldConfigForInputConfig, isFieldConfigForInputConfig } from './interfaces/field-config-for-input.interface';
+import { IFieldConfigForObjectConfig, isFieldConfigForObjectConfig } from './interfaces/field-config-for-object.interface';
 import { IFieldConfigForSelectConfig, isFieldConfigForSelectConfig } from './interfaces/field-config-for-select.interface';
 import { isFieldConfigForTextareaConfig } from './interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from './interfaces/field-config.interface';
@@ -137,6 +138,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
         }
         // object render, need to iterate the giving field configs
         case EFieldConfigType.Object: {
+          if (!isFieldConfigForObjectConfig(element.type_config)) {
+            throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
+          }
+          const a = element.type_config as IFieldConfigForObjectConfig;
+          let subGroup;
+          subGroup = this.createFormGroup(a.field_configs, null);
+          group.addControl(element.name, subGroup);
           break;
         }
 
