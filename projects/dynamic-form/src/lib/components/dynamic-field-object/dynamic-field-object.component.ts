@@ -13,6 +13,8 @@ export class DynamicFieldObjectComponent implements OnInit, IField {
 
   config!: IFieldConfig;
   group!: FormGroup;
+  index!: number;
+
   detailConfig!: IFieldConfigForObjectConfig;
 
   theSubGroup!: FormGroup; // = this.group.controls[this.config.name];

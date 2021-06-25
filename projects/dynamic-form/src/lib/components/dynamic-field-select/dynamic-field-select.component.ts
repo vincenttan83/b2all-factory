@@ -17,6 +17,8 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
 
   config!: IFieldConfig;
   group!: FormGroup;
+  index!: number;
+
   detailConfig!: IFieldConfigForSelectConfig;
 
   runningValues: { key: string, value: string }[] = [];

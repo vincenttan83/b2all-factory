@@ -13,6 +13,8 @@ export class DynamicFieldButtonComponent implements OnInit, IField {
 
   config!: IFieldConfig;
   group!: FormGroup;
+  index!: number;
+
   detailConfig!: IFieldConfigForButtonConfig;
 
   constructor() { }

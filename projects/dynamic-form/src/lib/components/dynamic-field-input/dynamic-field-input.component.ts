@@ -13,6 +13,8 @@ export class DynamicFieldInputComponent implements OnInit, IField {
 
   config!: IFieldConfig;
   group!: FormGroup;
+  index!: number;
+
   detailConfig!: IFieldConfigForInputConfig;
 
   constructor() { }

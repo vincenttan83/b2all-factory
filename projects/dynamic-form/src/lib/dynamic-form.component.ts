@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { AsyncValidatorFn, FormBuilder, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { EFieldConfigInputType } from './enums/field-config-input-type.enum';
 import { EFieldConfigType } from './enums/field-config-type.enum';
+import { IFieldConfigForArrayConfig, isFieldConfigForArrayConfig } from './interfaces/field-config-for-array.interface';
 import { isFieldConfigForButtonConfig } from './interfaces/field-config-for-button.interface';
 import { IFieldConfigForInputConfig, isFieldConfigForInputConfig } from './interfaces/field-config-for-input.interface';
 import { IFieldConfigForObjectConfig, isFieldConfigForObjectConfig } from './interfaces/field-config-for-object.interface';
@@ -98,6 +99,23 @@ export class DynamicFormComponent implements OnInit, OnChanges {
       switch (element.type) {
         // array can is to render a form in repeative manner
         case EFieldConfigType.Array: {
+          // basically it create an empty array group and attach into the main group.
+          // later on on the html implementation, it will then apply the rendering in the
+          // array form, most likely in a table tag
+          if (!isFieldConfigForArrayConfig(element.type_config)) {
+            throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
+          }
+          const a = element.type_config as IFieldConfigForArrayConfig;
+          const as: any[] = [];
+          a.templates.forEach(elementTemplate => {
+            as.push(this.createFormGroup(elementTemplate.field_configs, null));
+          });
+
+          let subGroup;
+          subGroup = this.privateFormBuilder.array(as, element.validation_fn);
+          group.addControl(element.name, subGroup);
+          // console.log(group);
+
           break;
         }
         // button & input & text area are single object render

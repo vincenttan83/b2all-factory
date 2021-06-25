@@ -13,6 +13,8 @@ export class DynamicFieldTextareaComponent implements OnInit, IField {
 
   config!: IFieldConfig;
   group!: FormGroup;
+  index!: number;
+
   detailConfig!: IFieldConfigForTextareaConfig;
 
   constructor() { }

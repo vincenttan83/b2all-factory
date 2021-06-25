@@ -1,8 +1,8 @@
 <div [formGroup]="group">
-    <label [attr.for]="detailConfig.type + '_' + config.name">{{ config.display_text }}</label><span
+    <label [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{ config.display_text }}</label><span
         *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name] }}</span>
     <br>
-    <input [attr.id]="detailConfig.type + '_' + config.name" [formControlName]="config.name"
+    <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
         [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
         [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null">
 </div>
