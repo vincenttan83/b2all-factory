@@ -8,8 +8,8 @@
 
             <option [value]="null">Select {{ control.label.toLowerCase() }}</option>
 
-            <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice.value">
-                {{ choice.key }}
+            <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]">
+                {{ choice[control.key_field] }}
             </option>
 
         </select>
