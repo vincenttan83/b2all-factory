@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { IFieldConfig, IFieldConfigForButtonConfig } from './field-config.interface';
+import { IFieldConfig } from './field-config.interface';
 
 export interface IField {
     config: IFieldConfig;

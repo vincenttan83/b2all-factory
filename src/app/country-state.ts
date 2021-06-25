@@ -1,4 +1,4 @@
-import { IMultiSelect } from 'projects/dynamic-form/src/lib/field-config-multiselect.interface';
+import { IMultiSelect } from 'projects/dynamic-form/src/lib/interfaces/field-config-multiselect.interface';
 
 
 export const cs: IMultiSelect[] = [

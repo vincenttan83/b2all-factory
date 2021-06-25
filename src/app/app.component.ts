@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/field-config-input-type.enum';
-import { EFieldConfigType } from 'projects/dynamic-form/src/lib/field-config-type.enum';
-import { IFieldConfig } from 'projects/dynamic-form/src/lib/field-config.interface';
+import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/enums/field-config-input-type.enum';
+import { EFieldConfigType } from 'projects/dynamic-form/src/lib/enums/field-config-type.enum';
+import { IFieldConfig } from 'projects/dynamic-form/src/lib/interfaces/field-config.interface';
 import { of } from 'rxjs/internal/observable/of';
 import { countries, cs } from './country-state';
 

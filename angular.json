@@ -33,6 +33,9 @@
               "src/styles.sass"
             ],
             "scripts": [],
+            "allowedCommonJsDependencies": [
+              "rxjs/internal/observable/of"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IFieldConfig, IFieldConfigForButtonConfig } from '../../field-config.interface';
-import { IField } from '../../field.interface';
+import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
+import { IFieldConfig } from '../../interfaces/field-config.interface';
+import { IField } from '../../interfaces/field.interface';
 
 @Component({
   selector: 'b2all-dynamic-field-button',
