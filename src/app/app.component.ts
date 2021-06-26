@@ -14,17 +14,17 @@ export class AppComponent {
   title = 'b2all-factory';
   returnedValue: any;
 
-  myDatas: { [key: string]: any } = {
+  savedData: { [key: string]: any } = {
     students: [
       {
         student_first_name: 'Vincent',
         student_last_name: 'Tan',
-        student_gender_gender: 'female',
+        student_gender: 'female',
       },
       {
         student_first_name: 'Leon',
         student_last_name: 'Loke',
-        student_gender_gender: 'male',
+        student_gender: 'male',
       }
     ],
     profile: {
@@ -41,7 +41,7 @@ export class AppComponent {
     summary: 'Start your long winded story here!\n\nlol',
   };
 
-  myFields: IFieldConfig[] = [
+  myFormDesign: IFieldConfig[] = [
     {
       name: 'country_selection',
       type: EFieldConfigType.Select,
@@ -85,7 +85,8 @@ export class AppComponent {
             }
           },
           {
-            name: 'student_gender',
+            name: 'student_gender_selection',
+            display_text: 'Gender',
             type: EFieldConfigType.Select,
             type_config: {
               dataset: [
@@ -93,7 +94,7 @@ export class AppComponent {
                 { key: 'Female', value: 'female' },
               ],
               controls: [
-                { name: 'student_gender_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
+                { name: 'student_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
               ]
             },
           },
