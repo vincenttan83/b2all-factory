@@ -32,6 +32,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() inputAsyncValidatorFn: AsyncValidatorFn[] = [];
   @Input() removeButtonField = true;
   @Input() removeUndefinedField = true;
+  @Input() inputSavedData: { [key: string]: any } = {};
 
   @Output() formOnSubmit: EventEmitter<any> = new EventEmitter<any>();
 
@@ -43,11 +44,10 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.formGroup = this.createFormGroup(this.inputFormConfigs, null);
+    this.formGroup = this.createFormGroup(this.inputFormConfigs, null, this.inputSavedData);
   }
 
   ngOnChanges(): void {
-
   }
 
   formOnSubmitting(): void {
@@ -92,10 +92,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   }
 
-  createFormGroup(formConfigs: IFieldConfig[], validatorFn: ValidatorFn[] | null): FormGroup {
+  createFormGroup(formConfigs: IFieldConfig[], validatorFn: ValidatorFn[] | null, savedDatas: { [key: string]: any }): FormGroup {
     const group = this.privateFormBuilder.group({});
 
     formConfigs.forEach(element => {
+
       switch (element.type) {
         // array can is to render a form in repeative manner
         case EFieldConfigType.Array: {
@@ -110,6 +111,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
           // get the array config
           const arrayConfig = element.type_config as IFieldConfigForArrayConfig;
+          const fieldConfigs = arrayConfig.field_configs;
 
           // we have to render an init row with default value for add row usage
           // if saved data is provided, we have to merge the template with the save datasets
@@ -118,56 +120,45 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
 
           const arrayConfigs: any[] = [];
-          // iterate thru the saved data row
-          if (arrayConfig.saved_datas) {
-            arrayConfig.saved_datas.forEach(elementSavedData => {
+          if (savedDatas[element.name]) {
 
-              const datafieldConfigs: IFieldConfig[] = [];
+            // iterate thru the saved data row
+            savedDatas[element.name].forEach((elementSavedData: { [x: string]: any; }) => {
+              arrayConfigs.push(this.createFormGroup(fieldConfigs, null, elementSavedData));
 
-              // iterate thru the field configs
-              arrayConfig.field_configs.forEach(elementFieldConfig => {
+              // // iterate thru the field configs
+              // arrayConfig.field_configs.forEach(elementFieldConfig => {
 
-                let initFieldConfig: IFieldConfig;
-                initFieldConfig = elementFieldConfig;
+              //   let initFieldConfig: IFieldConfig;
+              //   initFieldConfig = elementFieldConfig;
 
-                if (initFieldConfig.type === EFieldConfigType.Select) {
-                  // abit tricky here, since all combo box has its own array of control for dependable combo setting.
-                  // we need to clone the template configs
-                  // we then iterate all the combo in the combo list, and merge with the value
-                  // last we replace the clone combo list to this merge combo list
+              //   if (initFieldConfig.type === EFieldConfigType.Select) {
+              //     // abit tricky here, since all combo box has its own array of control for dependable combo setting.
+              //     // we need to clone the template configs
+              //     // we then iterate all the combo in the combo list, and merge with the value
+              //     // last we replace the clone combo list to this merge combo list
+              //     initFieldConfig.type_config = this.prepForSelect(initFieldConfig, elementSavedData);
+              //   } else {
+              //     initFieldConfig.value = elementSavedData[elementFieldConfig.name];
+              //   }
 
-                  const templateSelectTypeConfig = initFieldConfig.type_config as IFieldConfigForSelectConfig;
-                  const templateSelectTypeConfigWithData: IFieldConfigForSelectConfig = { ...templateSelectTypeConfig };
-                  // // iterate thru the controls
-                  const theNewComboList: any[] = [];
-                  templateSelectTypeConfig.controls.forEach(elementCombo => {
-                    const newCombo = { ...elementCombo };
-                    newCombo.value = elementSavedData[elementCombo.name] ?? null;
-                    theNewComboList.push(newCombo);
-                  });
-                  templateSelectTypeConfigWithData.controls = theNewComboList;
-                  initFieldConfig.type_config = templateSelectTypeConfigWithData;
-                } else {
-                  initFieldConfig.value = elementSavedData[elementFieldConfig.name];
-                }
+              //   // if the field name match the save data property
+              //   // initFieldConfig.value = elementSavedData[elementFieldConfig.name];
+              //   // if (elementSavedData[elementFieldConfig.name]) {
+              //   //   initFieldConfig.value = elementSavedData[elementFieldConfig.name];
+              //   // }
+              //   datafieldConfigs.push(initFieldConfig);
+              // });
 
-                // if the field name match the save data property
-                // initFieldConfig.value = elementSavedData[elementFieldConfig.name];
-                // if (elementSavedData[elementFieldConfig.name]) {
-                //   initFieldConfig.value = elementSavedData[elementFieldConfig.name];
-                // }
-                datafieldConfigs.push(initFieldConfig);
-              });
-
-              arrayConfigs.push(this.createFormGroup(datafieldConfigs, null));
+              // arrayConfigs.push(this.createFormGroup(datafieldConfigs, null));
 
             });
           } else {
-            const datafieldConfigs: IFieldConfig[] = [];
-            arrayConfig.field_configs.forEach(elementFieldConfig => {
-              datafieldConfigs.push(elementFieldConfig);
-            });
-            arrayConfigs.push(this.createFormGroup(datafieldConfigs, null));
+            // const datafieldConfigs: IFieldConfig[] = [];
+            // arrayConfig.field_configs.forEach(elementFieldConfig => {
+            //   datafieldConfigs.push(elementFieldConfig);
+            // });
+            arrayConfigs.push(this.createFormGroup(fieldConfigs, null, {}));
           }
 
 
@@ -208,7 +199,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
             throw new Error('There is no point having a single radio button, do use array!');
           }
           // all good, apply the control to form
-          group.addControl(element.name, this.createControl(element));
+          group.addControl(element.name, this.createControl2(undefined, undefined, savedDatas[element.name]));
           break;
         }
         case EFieldConfigType.Textarea: {
@@ -216,7 +207,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           if (!isFieldConfigForTextareaConfig(element.type_config)) {
             throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
           }
-          group.addControl(element.name, this.createControl(element));
+          group.addControl(element.name, this.createControl2(undefined, undefined, savedDatas[element.name]));
           break;
         }
         // object render, need to iterate the giving field configs
@@ -226,7 +217,7 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
           const a = element.type_config as IFieldConfigForObjectConfig;
           let subGroup;
-          subGroup = this.createFormGroup(a.field_configs, null);
+          subGroup = this.createFormGroup(a.field_configs, null, savedDatas[element.name]);
           group.addControl(element.name, subGroup);
           break;
         }
@@ -240,13 +231,19 @@ export class DynamicFormComponent implements OnInit, OnChanges {
          * Workflows -> events -> jobs -> steps -> actions -> runners.
          */
         case EFieldConfigType.Select: {
+
           if (!isFieldConfigForSelectConfig(element.type_config)) {
             throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
           }
-          const a = element.type_config as IFieldConfigForSelectConfig;
+          const a = this.prepForSelect(element, savedDatas);
+
+
+          // const a = element.type_config as IFieldConfigForSelectConfig;
           a.controls.forEach(elementControl => {
             group.addControl(elementControl.name, this.createControl2(undefined, undefined, elementControl.value));
           });
+
+
           break;
         }
       }
@@ -254,6 +251,21 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     });
 
     return group;
+  }
+
+  // data and template merging
+  private prepForSelect(initFieldConfig: IFieldConfig, elementSavedData: { [x: string]: any; }): IFieldConfigForSelectConfig {
+    const templateSelectTypeConfig = initFieldConfig.type_config as IFieldConfigForSelectConfig;
+    const templateSelectTypeConfigWithData: IFieldConfigForSelectConfig = { ...templateSelectTypeConfig };
+    // // iterate thru the controls
+    const theNewComboList: any[] = [];
+    templateSelectTypeConfig.controls.forEach(elementCombo => {
+      const newCombo = { ...elementCombo };
+      newCombo.value = elementSavedData[elementCombo.name] ?? null;
+      theNewComboList.push(newCombo);
+    });
+    templateSelectTypeConfigWithData.controls = theNewComboList;
+    return templateSelectTypeConfigWithData;
   }
 
   createControl2(disabled: boolean | undefined, validationFn: ValidatorFn[] | undefined, value: any): FormControl {

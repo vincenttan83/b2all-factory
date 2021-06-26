@@ -12,7 +12,7 @@ export interface IFieldConfigForArrayConfig {
     //     field_configs: IFieldConfig[]
     // }[];
     field_configs: IFieldConfig[];
-    saved_datas: { [key: string]: any }[];
+    // saved_datas: { [key: string]: any }[];
     addable: boolean;
 }
 

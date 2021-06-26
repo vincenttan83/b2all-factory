@@ -39,9 +39,11 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
       // since latest db is ready
       // we need to update the reative from control of the "selected" value
       // so that HTML will render correctly without "selected" property
-      for (let i = 0; i < this.detailConfig.controls.length; i++) {
-        this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
-      }
+
+      // the following code obsolete, handle at dynamic form
+      // for (let i = 0; i < this.detailConfig.controls.length; i++) {
+      //   this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
+      // }
     });
   }
 

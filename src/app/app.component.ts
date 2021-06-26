@@ -14,7 +14,137 @@ export class AppComponent {
   title = 'b2all-factory';
   returnedValue: any;
 
+  myDatas: { [key: string]: any } = {
+    students: [
+      {
+        student_first_name: 'Vincent',
+        student_last_name: 'Tan',
+        student_gender_gender: 'female',
+      },
+      {
+        student_first_name: 'Leon',
+        student_last_name: 'Loke',
+        student_gender_gender: 'male',
+      }
+    ],
+    profile: {
+      first_name: 'Vince',
+      last_name: 'Tan'
+    },
+    country: 'malaysia',
+    state: 'selangor',
+    city: 'cyberjaya'
+  };
+
   myFields: IFieldConfig[] = [
+    {
+      name: 'country_selection',
+      type: EFieldConfigType.Select,
+      type_config: {
+        dataset: cs,
+        controls: [
+          { name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: null },
+          { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: null },
+          { name: 'city', label: 'City', key_field: 'key', value_field: 'value', value: null },
+        ]
+      },
+    },
+
+    {
+      name: 'divider_select',
+      type: EFieldConfigType.Divider,
+      type_config: null,
+    },
+
+    {
+      name: 'students',
+      type: EFieldConfigType.Array,
+      type_config: {
+        addable: true,
+        field_configs: [
+          {
+            name: 'student_first_name',
+            display_text: 'Input your first name: ',
+            type: EFieldConfigType.Input,
+            type_config: {
+              type: EFieldConfigInputType.Text,
+            }
+          },
+          {
+            name: 'student_last_name',
+            display_text: 'Input your last name: ',
+            type: EFieldConfigType.Input,
+            type_config: {
+              type: EFieldConfigInputType.Text,
+            }
+          },
+          {
+            name: 'student_gender',
+            type: EFieldConfigType.Select,
+            type_config: {
+              dataset: [
+                { key: 'Male', value: 'male' },
+                { key: 'Female', value: 'female' },
+              ],
+              controls: [
+                { name: 'student_gender_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
+              ]
+            },
+          },
+        ],
+
+      },
+    },
+
+    {
+      name: 'profile',
+      type: EFieldConfigType.Object,
+      type_config: {
+        field_configs: [
+          {
+            name: 'first_name',
+            display_text: 'Input your first name: ',
+            type: EFieldConfigType.Input,
+            type_config: {
+              type: EFieldConfigInputType.Text,
+            }
+          },
+          {
+            name: 'last_name',
+            display_text: 'Input your last name: ',
+            type: EFieldConfigType.Input,
+            type_config: {
+              type: EFieldConfigInputType.Text,
+            }
+          },
+        ]
+      },
+    },
+
+    {
+      name: 'button_submit',
+      display_text: 'Submit button',
+      type: EFieldConfigType.Button,
+      type_config: {
+        type: 'submit',
+      }
+    },
+  ];
+
+  hello(): Promise<void> {
+    return of(alert('hello world!')).toPromise();
+  }
+
+  async formOnSubmit(formValue: any): Promise<void> {
+
+    this.returnedValue = formValue;
+
+  }
+}
+
+
+
+
     // {
     //   name: 'input_color',
     //   display_text: 'Input a color: ',
@@ -190,249 +320,71 @@ export class AppComponent {
     //     ]
     //   },
     // },
-    {
-      name: 'divider_select',
-      type: EFieldConfigType.Divider,
-      type_config: null,
-    },
-    {
-      name: 'students',
-      type: EFieldConfigType.Array,
-      type_config: {
-        addable: true,
-        saved_datas: [
-          {
-            student_first_name: 'Vincent',
-            student_last_name: 'Tan',
-            student_gender_gender: 'male',
-          },
-          {
-            student_first_name: 'Leon',
-            student_last_name: 'Loke',
-            student_gender_gender: 'female',
-          }
-        ],
-        field_configs: [
-          {
-            name: 'student_first_name',
-            display_text: 'Input your first name: ',
-            type: EFieldConfigType.Input,
-            type_config: {
-              type: EFieldConfigInputType.Text,
-            }
-          },
-          {
-            name: 'student_last_name',
-            display_text: 'Input your last name: ',
-            type: EFieldConfigType.Input,
-            type_config: {
-              type: EFieldConfigInputType.Text,
-            }
-          },
-          {
-            name: 'student_gender',
-            type: EFieldConfigType.Select,
-            type_config: {
-              dataset: [
-                { key: 'Male', value: 'male' },
-                { key: 'Female', value: 'female' },
-              ],
-              controls: [
-                { name: 'student_gender_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: 'male' },
-              ]
-            },
-          },
-        ],
-        // templates: [
-        //   {
-        //     field_configs: [
-        //       {
-        //         name: 'object_something_input_text_firstname',
-        //         display_text: 'Input your first name: ',
-        //         value: 'index 0 first name',
-        //         type: EFieldConfigType.Input,
-        //         type_config: {
-        //           type: EFieldConfigInputType.Text,
-        //         }
-        //       },
-        //       {
-        //         name: 'object_something_input_text_last',
-        //         display_text: 'Input your last name: ',
-        //         value: 'index 0 last name',
-        //         type: EFieldConfigType.Input,
-        //         type_config: {
-        //           type: EFieldConfigInputType.Text,
-        //         }
-        //       },
-        //       {
-        //         name: 'gender_selection_profile',
-        //         type: EFieldConfigType.Select,
-        //         type_config: {
-        //           dataset: [
-        //             { key: 'Male', value: 'male' },
-        //             { key: 'Female', value: 'female' },
-        //           ],
-        //           controls: [
-        //             { name: 'gender_selection_profile_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: 'male' },
-        //           ]
-        //         },
-        //       },
-        //     ]
-        //   },
-        //   {
-        //     field_configs: [
-        //       {
-        //         name: 'object_something_input_text_firstname',
-        //         display_text: 'Input your first name: ',
-        //         value: 'index 1 first name',
-        //         type: EFieldConfigType.Input,
-        //         type_config: {
-        //           type: EFieldConfigInputType.Text,
-        //         }
-        //       },
-        //       {
-        //         name: 'object_something_input_text_last',
-        //         display_text: 'Input your last name: ',
-        //         value: 'index 1 last name',
-        //         type: EFieldConfigType.Input,
-        //         type_config: {
-        //           type: EFieldConfigInputType.Text,
-        //         }
-        //       },
-        //       {
-        //         name: 'gender_selection_profile',
-        //         type: EFieldConfigType.Select,
-        //         type_config: {
-        //           dataset: [
-        //             { key: 'Male', value: 'male' },
-        //             { key: 'Female', value: 'female' },
-        //           ],
-        //           controls: [
-        //             { name: 'gender_selection_profile_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: 'female' },
-        //           ]
-        //         },
-        //       },
-        //     ]
-        //   }
-        // ]
-        // field_configs: [
-        //   {
-        //     name: 'object_something_input_text_firstname',
-        //     display_text: 'Input your first name: ',
-        //     value: 'haha',
-        //     type: EFieldConfigType.Input,
-        //     type_config: {
-        //       type: EFieldConfigInputType.Text,
-        //     }
-        //   },
-        //   {
-        //     name: 'object_something_input_text_last',
-        //     display_text: 'Input your last name: ',
-        //     value: 'haha',
-        //     type: EFieldConfigType.Input,
-        //     type_config: {
-        //       type: EFieldConfigInputType.Text,
-        //     }
-        //   },
-        //   {
-        //     name: 'gender_selection_profile',
-        //     type: EFieldConfigType.Select,
-        //     type_config: {
-        //       dataset: [
-        //         { key: 'Male', value: 'male' },
-        //         { key: 'Female', value: 'female' },
-        //       ],
-        //       controls: [
-        //         { name: 'gender_selection_profile_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
-        //       ]
-        //     },
-        //   },
-        // ]
-      },
-    },
-    {
-      name: 'divider_array',
-      type: EFieldConfigType.Divider,
-      type_config: null,
-    },
-    {
-      name: 'object_something',
-      type: EFieldConfigType.Object,
-      type_config: {
-        field_configs: [
-          {
-            name: 'object_something_input_text_firstname',
-            display_text: 'Input your first name: ',
-            value: 'haha',
-            type: EFieldConfigType.Input,
-            type_config: {
-              type: EFieldConfigInputType.Text,
-            }
-          },
-          {
-            name: 'object_something_input_text_last',
-            display_text: 'Input your last name: ',
-            value: 'haha',
-            type: EFieldConfigType.Input,
-            type_config: {
-              type: EFieldConfigInputType.Text,
-            }
-          },
-          {
-            name: 'gender_selection_profile',
-            type: EFieldConfigType.Select,
-            type_config: {
-              dataset: [
-                { key: 'Male', value: 'male' },
-                { key: 'Female', value: 'female' },
-              ],
-              controls: [
-                { name: 'gender_selection_profile_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
-              ]
-            },
-          },
-        ]
-      },
-    },
-    {
-      name: 'divider_object',
-      type: EFieldConfigType.Divider,
-      type_config: null,
-    },
-    {
-      name: 'button_hello',
-      display_text: 'Fire local method',
-      type: EFieldConfigType.Button,
-      type_config: {
-        type: 'button',
-        onclick_fn: this.hello,
-      }
-    },
-    {
-      name: 'button_submit',
-      display_text: 'Submit button',
-      type: EFieldConfigType.Button,
-      type_config: {
-        type: 'submit',
-      }
-    },
+
+
+
+
     // {
-    //   name: 'buttn_reset',
-    //   display_text: 'Reset button',
+    //   name: 'divider_array',
+    //   type: EFieldConfigType.Divider,
+    //   type_config: null,
+    // },
+    // {
+    //   name: 'object_something',
+    //   type: EFieldConfigType.Object,
+    //   type_config: {
+    //     field_configs: [
+    //       {
+    //         name: 'object_something_input_text_firstname',
+    //         display_text: 'Input your first name: ',
+    //         value: 'haha',
+    //         type: EFieldConfigType.Input,
+    //         type_config: {
+    //           type: EFieldConfigInputType.Text,
+    //         }
+    //       },
+    //       {
+    //         name: 'object_something_input_text_last',
+    //         display_text: 'Input your last name: ',
+    //         value: 'haha',
+    //         type: EFieldConfigType.Input,
+    //         type_config: {
+    //           type: EFieldConfigInputType.Text,
+    //         }
+    //       },
+    //       {
+    //         name: 'gender_selection_profile',
+    //         type: EFieldConfigType.Select,
+    //         type_config: {
+    //           dataset: [
+    //             { key: 'Male', value: 'male' },
+    //             { key: 'Female', value: 'female' },
+    //           ],
+    //           controls: [
+    //             { name: 'gender_selection_profile_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
+    //           ]
+    //         },
+    //       },
+    //     ]
+    //   },
+    // },
+    // {
+    //   name: 'divider_object',
+    //   type: EFieldConfigType.Divider,
+    //   type_config: null,
+    // },
+
+
+
+
+
+
+    // {
+    //   name: 'button_hello',
+    //   display_text: 'Fire local method',
     //   type: EFieldConfigType.Button,
     //   type_config: {
-    //     type: 'reset',
+    //     type: 'button',
+    //     onclick_fn: this.hello,
     //   }
     // },
-  ];
-
-  hello(): Promise<void> {
-    return of(alert('hello world!')).toPromise();
-  }
-
-  async formOnSubmit(formValue: any): Promise<void> {
-
-    this.returnedValue = formValue;
-
-  }
-}

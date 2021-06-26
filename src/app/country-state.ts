@@ -8,6 +8,7 @@ export const cs: IMultiSelect[] = [
                 key: 'Selangor', value: 'selangor', children: [
                     { key: 'Subang Jaya', value: 'subang_jaya' },
                     { key: 'Petaling Jaya', value: 'petaling_jaya' },
+                    { key: 'Cyberjaya', value: 'cyberjaya' },
                 ]
             },
             {
