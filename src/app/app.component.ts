@@ -29,11 +29,16 @@ export class AppComponent {
     ],
     profile: {
       first_name: 'Vince',
-      last_name: 'Tan'
+      last_name: 'Tan',
+      interest: {
+        primary: 'Cycling',
+        secondary: 'Swimming',
+      },
     },
     country: 'malaysia',
     state: 'selangor',
-    city: 'cyberjaya'
+    city: 'cyberjaya',
+    summary: 'Start your long winded story here!\n\nlol',
   };
 
   myFields: IFieldConfig[] = [
@@ -58,6 +63,7 @@ export class AppComponent {
 
     {
       name: 'students',
+      display_text: 'List of student',
       type: EFieldConfigType.Array,
       type_config: {
         addable: true,
@@ -98,6 +104,7 @@ export class AppComponent {
 
     {
       name: 'profile',
+      display_text: 'About yourself',
       type: EFieldConfigType.Object,
       type_config: {
         field_configs: [
@@ -117,8 +124,43 @@ export class AppComponent {
               type: EFieldConfigInputType.Text,
             }
           },
+          {
+            name: 'interest',
+            display_text: 'Interest / Hobby',
+            type: EFieldConfigType.Object,
+            type_config: {
+              field_configs: [
+                {
+                  name: 'primary',
+                  display_text: 'Input your primary interest: ',
+                  type: EFieldConfigType.Input,
+                  type_config: {
+                    type: EFieldConfigInputType.Text,
+                  }
+                },
+                {
+                  name: 'secondary',
+                  display_text: 'Input your secondary interest: ',
+                  type: EFieldConfigType.Input,
+                  type_config: {
+                    type: EFieldConfigInputType.Text,
+                  }
+                },
+              ]
+            },
+          },
         ]
       },
+    },
+
+    {
+      name: 'summary',
+      display_text: 'Summary: ',
+      type: EFieldConfigType.Textarea,
+      type_config: {
+        row_count: 5,
+        col_count: 30,
+      }
     },
 
     {
