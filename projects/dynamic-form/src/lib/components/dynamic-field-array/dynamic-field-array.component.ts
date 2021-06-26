@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { DynamicFormGenerator } from '../../dynamic-form.static-class';
 import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
@@ -20,7 +21,9 @@ export class DynamicFieldArrayComponent implements OnInit, IField {
   theArrays!: FormArray;
   theIndexZeroFormGroup!: FormGroup;
 
-  constructor() { }
+  constructor(
+    private privateFormBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForArrayConfig);
@@ -29,7 +32,13 @@ export class DynamicFieldArrayComponent implements OnInit, IField {
   }
 
   addNew(): void {
-    this.theArrays.push(this.theIndexZeroFormGroup);
+    const dfg: DynamicFormGenerator = new DynamicFormGenerator(this.privateFormBuilder);
+    const newRow: FormGroup = dfg.createFormGroup(this.detailConfig.field_configs, null, {});
+    this.theArrays.push(newRow);
+  }
+
+  removeRow(index: number): void {
+    this.theArrays.removeAt(index);
   }
 
   getTheFromGroupFromArray(index: number): FormGroup {

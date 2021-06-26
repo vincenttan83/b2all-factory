@@ -1,27 +1,14 @@
-<button type="button" (click)="addNew()">Add new row</button>
-<br>
-<br>
 <div [formGroup]="group">
-    <h4>{{ config.display_text }}</h4>
+    <h4>{{ config.display_text }} <button type="button" (click)="addNew()">+</button> </h4>
 
     <div *ngFor="let control of theArrays.controls; index as i;">
 
-        # {{ (i + 1)}}:
+        # {{ (i + 1)}}: <button type="button" (click)="removeRow(i)">X</button>
 
         <div *ngFor="let field of detailConfig.field_configs">
             <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
             </ng-container>
         </div>
-
-
-        <!-- <div *ngFor="let field of detailConfig.tempates">
-
-            <ng-container b2allDynamicField [config]="field" [group]="theIndexZeroFormGroup" [index]="i">
-            </ng-container>
-
-        </div> -->
-
-
 
     </div>
 
