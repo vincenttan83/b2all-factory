@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { DynamicFormGenerator } from '../../dynamic-form.static-class';
+import { DynamicFormGenerator } from '../../dynamic-form-generator.class';
 import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';

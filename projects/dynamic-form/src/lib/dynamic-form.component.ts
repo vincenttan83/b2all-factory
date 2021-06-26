@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
-import { DynamicFormGenerator } from './dynamic-form.static-class';
+import { DynamicFormGenerator } from './dynamic-form-generator.class';
 import { EFieldConfigType } from './enums/field-config-type.enum';
 import { IFieldConfig } from './interfaces/field-config.interface';
 
