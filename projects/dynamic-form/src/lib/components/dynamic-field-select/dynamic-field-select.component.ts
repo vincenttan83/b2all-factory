@@ -13,7 +13,7 @@ import { DynamicFieldSelectService } from './dynamic-field-select.service';
   styleUrls: ['./dynamic-field-select.component.css'],
   providers: [DynamicFieldSelectService]
 })
-export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, AfterViewInit {
+export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
 
   config!: IFieldConfig;
   group!: FormGroup;
@@ -33,44 +33,25 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForSelectConfig);
-    this.privateDynamicFieldSelectService.setDatabase(this.detailConfig.dataset, this.detailConfig.controls.length);
+
+    const savedSelectedValue: string[] = [];
+    this.detailConfig.controls.forEach(element => {
+      savedSelectedValue.push(this.group.controls[element.name].value ?? null);
+    });
+
+    this.privateDynamicFieldSelectService.setDatabase(this.detailConfig.dataset, this.detailConfig.controls.length, savedSelectedValue);
+    this.latestDatabase = this.privateDynamicFieldSelectService.getDatabase();
+
+    // subscribe to handle user change combo box event
+    // it will then refresh the state data
+    // and update the formgroup data
+    // so that the combo box will auto select / reset the relavant option
     this.subscription = this.privateDynamicFieldSelectService.storageChanged$.subscribe(resp => {
       this.latestDatabase = { ...resp };
-      // since latest db is ready
-      // we need to update the reative from control of the "selected" value
-      // so that HTML will render correctly without "selected" property
-
-      // the following code obsolete, handle at dynamic form
-      // for (let i = 0; i < this.detailConfig.controls.length; i++) {
-      //   this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
-      // }
-    });
-  }
-
-  ngAfterViewInit(): void {
-    let atLeastOneTrigger = false;
-
-    // to avoid Expression has changed after it was checked. Previous value: 'undefined'. error
-    setTimeout(() => {
       for (let i = 0; i < this.detailConfig.controls.length; i++) {
-        // let's get the form control set value instead
-        const theComboValueFromForm = this.group.controls[this.detailConfig.controls[i].name].value;
-        if (theComboValueFromForm) {
-          this.privateDynamicFieldSelectService.setValue(theComboValueFromForm, i);
-          atLeastOneTrigger = true;
-        }
-        // if having any saved value, help user select it back...
-        // if (this.detailConfig.controls[i].value) {
-        //   this.privateDynamicFieldSelectService.setValue(this.detailConfig.controls[i].value, i);
-        //   atLeastOneTrigger = true;
-        // }
+        this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
       }
-
-      if (!atLeastOneTrigger) {
-        // is all new form n selection, let's trigger the root level
-        this.privateDynamicFieldSelectService.refreshStorage();
-      }
-    }, 0);
+    });
   }
 
   ngOnDestroy(): void {

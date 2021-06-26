@@ -17,13 +17,22 @@ export class DynamicFieldSelectService {
    * Should only call once
    * @param val the outer join database object
    */
-  setDatabase(originalDatabase: IMultiSelect[], maxLevel: number): void {
+  setDatabase(originalDatabase: IMultiSelect[], maxLevel: number, theSaveValues: string[]): void {
     this.privateDatabase = originalDatabase;
     this.maxLevel = maxLevel;
-    this.theLatestDatabase = { key_value_pair_0: this.getSelection(originalDatabase, 0) };
-    for (let i = 0; i < maxLevel; i++) {
-      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: null };
+    // this.theLatestDatabase = { key_value_pair_0: this.getSelection(originalDatabase, 0) };
+    // for (let i = 0; i < maxLevel; i++) {
+    //   this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: theSaveValues[i] };
+    // }
+
+    let i = 0;
+
+    for (const element of theSaveValues) {
+      this.theLatestDatabase = { ...this.theLatestDatabase, ['key_value_pair_' + i]: this.getSelection(originalDatabase, i), ['selected_value_' + i]: element };
+      i += 1;
+      if (!element) { break; }
     }
+
   }
 
   getDatabase(): { [key: string]: any } {
