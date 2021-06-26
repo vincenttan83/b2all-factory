@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs/internal/Observable';
 import { DynamicFormGenerator } from './dynamic-form-generator.class';
 import { EFieldConfigType } from './enums/field-config-type.enum';
 import { IFieldConfig } from './interfaces/field-config.interface';
 
 @Component({
+  exportAs: 'b2allDynamicForm',
   selector: 'b2all-dynamic-form',
   template: `
     <form class="dynamic-form" [formGroup]="formGroup" (ngSubmit)="formOnSubmitting()">
@@ -20,7 +22,7 @@ import { IFieldConfig } from './interfaces/field-config.interface';
   styles: [
   ]
 })
-export class DynamicFormComponent implements OnInit, OnChanges {
+export class DynamicFormComponent implements OnInit {
 
   @Input() inputFormConfigs: IFieldConfig[] = [];
   @Input() inputAsyncValidatorFn: AsyncValidatorFn[] = [];
@@ -33,6 +35,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   formGroup!: FormGroup;
   wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
 
+  get changes(): Observable<any> { return this.formGroup.valueChanges; }
+
   constructor(
     private privateFormBuilder: FormBuilder
   ) { }
@@ -40,9 +44,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     const dfg: DynamicFormGenerator = new DynamicFormGenerator(this.privateFormBuilder);
     this.formGroup = dfg.createFormGroup(this.inputFormConfigs, null, this.inputSavedData);
-  }
-
-  ngOnChanges(): void {
   }
 
   formOnSubmitting(): void {
@@ -94,11 +95,5 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   markAsUntouched(): void {
     this.formGroup.markAsUntouched();
   }
-
-  // createControl(config: IFieldConfig): FormControl {
-  //   const { disabled, validation_fn, value } = config;
-  //   return this.privateFormBuilder.control({ disabled, value }, validation_fn);
-  // }
-
 
 }
