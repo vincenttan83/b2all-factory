@@ -51,11 +51,17 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy, A
     // to avoid Expression has changed after it was checked. Previous value: 'undefined'. error
     setTimeout(() => {
       for (let i = 0; i < this.detailConfig.controls.length; i++) {
-        // if having any saved value, help user select it back...
-        if (this.detailConfig.controls[i].value) {
-          this.privateDynamicFieldSelectService.setValue(this.detailConfig.controls[i].value, i);
+        // let's get the form control set value instead
+        const theComboValueFromForm = this.group.controls[this.detailConfig.controls[i].name].value;
+        if (theComboValueFromForm) {
+          this.privateDynamicFieldSelectService.setValue(theComboValueFromForm, i);
           atLeastOneTrigger = true;
         }
+        // if having any saved value, help user select it back...
+        // if (this.detailConfig.controls[i].value) {
+        //   this.privateDynamicFieldSelectService.setValue(this.detailConfig.controls[i].value, i);
+        //   atLeastOneTrigger = true;
+        // }
       }
 
       if (!atLeastOneTrigger) {

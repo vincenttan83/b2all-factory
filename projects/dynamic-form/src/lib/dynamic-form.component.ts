@@ -102,17 +102,82 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           // basically it create an empty array group and attach into the main group.
           // later on on the html implementation, it will then apply the rendering in the
           // array form, most likely in a table tag
+
+          // to check if teh config type is comply to interface
           if (!isFieldConfigForArrayConfig(element.type_config)) {
             throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
           }
-          const a = element.type_config as IFieldConfigForArrayConfig;
-          const as: any[] = [];
-          a.templates.forEach(elementTemplate => {
-            as.push(this.createFormGroup(elementTemplate.field_configs, null));
-          });
+
+          // get the array config
+          const arrayConfig = element.type_config as IFieldConfigForArrayConfig;
+
+          // we have to render an init row with default value for add row usage
+          // if saved data is provided, we have to merge the template with the save datasets
+          // if no saved data is provided, we render the init row only, else
+          // we render the merge row
+
+
+          const arrayConfigs: any[] = [];
+          // iterate thru the saved data row
+          if (arrayConfig.saved_datas) {
+            arrayConfig.saved_datas.forEach(elementSavedData => {
+
+              const datafieldConfigs: IFieldConfig[] = [];
+
+              // iterate thru the field configs
+              arrayConfig.field_configs.forEach(elementFieldConfig => {
+
+                let initFieldConfig: IFieldConfig;
+                initFieldConfig = elementFieldConfig;
+
+                if (initFieldConfig.type === EFieldConfigType.Select) {
+                  // abit tricky here, since all combo box has its own array of control for dependable combo setting.
+                  // we need to clone the template configs
+                  // we then iterate all the combo in the combo list, and merge with the value
+                  // last we replace the clone combo list to this merge combo list
+
+                  const templateSelectTypeConfig = initFieldConfig.type_config as IFieldConfigForSelectConfig;
+                  const templateSelectTypeConfigWithData: IFieldConfigForSelectConfig = { ...templateSelectTypeConfig };
+                  // // iterate thru the controls
+                  const theNewComboList: any[] = [];
+                  templateSelectTypeConfig.controls.forEach(elementCombo => {
+                    const newCombo = { ...elementCombo };
+                    newCombo.value = elementSavedData[elementCombo.name] ?? null;
+                    theNewComboList.push(newCombo);
+                  });
+                  templateSelectTypeConfigWithData.controls = theNewComboList;
+                  initFieldConfig.type_config = templateSelectTypeConfigWithData;
+                } else {
+                  initFieldConfig.value = elementSavedData[elementFieldConfig.name];
+                }
+
+                // if the field name match the save data property
+                // initFieldConfig.value = elementSavedData[elementFieldConfig.name];
+                // if (elementSavedData[elementFieldConfig.name]) {
+                //   initFieldConfig.value = elementSavedData[elementFieldConfig.name];
+                // }
+                datafieldConfigs.push(initFieldConfig);
+              });
+
+              arrayConfigs.push(this.createFormGroup(datafieldConfigs, null));
+
+            });
+          } else {
+            const datafieldConfigs: IFieldConfig[] = [];
+            arrayConfig.field_configs.forEach(elementFieldConfig => {
+              datafieldConfigs.push(elementFieldConfig);
+            });
+            arrayConfigs.push(this.createFormGroup(datafieldConfigs, null));
+          }
+
+
+
+          // arrayConfig.templates.forEach(elementTemplate => {
+          //   as.push(this.createFormGroup(elementTemplate.field_configs, null));
+          // });
 
           let subGroup;
-          subGroup = this.privateFormBuilder.array(as, element.validation_fn);
+          subGroup = this.privateFormBuilder.array(arrayConfigs, element.validation_fn);
           group.addControl(element.name, subGroup);
           // console.log(group);
 
@@ -180,7 +245,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
           }
           const a = element.type_config as IFieldConfigForSelectConfig;
           a.controls.forEach(elementControl => {
-            // console.log(elementControl);
             group.addControl(elementControl.name, this.createControl2(undefined, undefined, elementControl.value));
           });
           break;

@@ -1,11 +1,15 @@
 <h6>Array</h6>
 <button type="button" (click)="addNew()">Add new row</button>
+<br>
+<br>
 <div [formGroup]="group">
 
-    <div *ngFor="let control of detailConfig.templates; index as i;">
+    <div *ngFor="let control of theArrays.controls; index as i;">
 
-        <div *ngFor="let field of control.field_configs">
-            <ng-container b2allDynamicField [config]="field" [group]="getTheFromGroupFromArray(i)" [index]="i">
+        Record {{ (i + 1)}}
+
+        <div *ngFor="let field of detailConfig.field_configs">
+            <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
             </ng-container>
         </div>
 

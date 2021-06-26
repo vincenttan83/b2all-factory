@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { DynamicFieldArrayComponent } from './components/dynamic-field-array/dynamic-field-array.component';
 import { DynamicFieldButtonComponent } from './components/dynamic-field-button/dynamic-field-button.component';
 import { DynamicFieldDividerComponent } from './components/dynamic-field-divider/dynamic-field-divider.component';
@@ -32,6 +32,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField {
   @Input() config!: IFieldConfig;
   @Input() group!: FormGroup;
   @Input() index!: number;
+  @Input() abstractControl!: AbstractControl;
 
   component!: ComponentRef<IField>;
 
@@ -55,7 +56,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField {
     const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField>(components[this.config.type]);
     this.component = this.privateViewContainerRef.createComponent(component);
     this.component.instance.config = this.config;
-    this.component.instance.group = this.group;
+    this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
     this.component.instance.index = this.index;
 
   }
@@ -63,7 +64,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField {
   ngOnChanges(): void {
     if (this.component) {
       this.component.instance.config = this.config;
-      this.component.instance.group = this.group;
+      this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
       this.component.instance.index = this.index;
     }
   }
