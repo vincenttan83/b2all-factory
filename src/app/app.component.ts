@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { DynamicFormComponent } from 'projects/dynamic-form/src/lib/dynamic-form.component';
 import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/enums/field-config-input-type.enum';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/enums/field-config-type.enum';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/interfaces/field-config.interface';
@@ -10,9 +11,11 @@ import { countries, cs } from './country-state';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'b2all-factory';
   returnedValue: any;
+
+  @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   savedData: { [key: string]: any } = {
     students: [
@@ -173,6 +176,17 @@ export class AppComponent {
       }
     },
   ];
+
+  ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+    this.dynamicForm.changes.subscribe(resp => {
+      // detect any value changes, so that we can perform some business logic accordingly.
+
+    });
+  }
 
   hello(): Promise<void> {
     return of(alert('hello world!')).toPromise();

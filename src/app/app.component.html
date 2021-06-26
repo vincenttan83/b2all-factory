@@ -1,12 +1,7 @@
 <p>Default</p>
 
-<b2all-dynamic-form [inputFormConfigs]="myFormDesign" [inputSavedData]="savedData" (formOnSubmit)="formOnSubmit($event)">
-</b2all-dynamic-form>
-<!-- 
-<p>Keep buttn & undefined</p>
-
-<b2all-dynamic-form [inputFormConfigs]="myFields" [removeButtonField]="false" [removeUndefinedField]="false"
+<b2all-dynamic-form #dynamicForm="b2allDynamicForm" [inputFormConfigs]="myFormDesign" [inputSavedData]="savedData"
     (formOnSubmit)="formOnSubmit($event)">
-</b2all-dynamic-form> -->
+</b2all-dynamic-form>
 
 <pre>{{ returnedValue | json }}</pre>
