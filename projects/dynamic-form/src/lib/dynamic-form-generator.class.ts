@@ -107,19 +107,30 @@ export class DynamicFormGenerator {
                         }
                     }
 
-                    if (objectTypeConfig.type === EFieldConfigInputType.Radio || objectTypeConfig.type === EFieldConfigInputType.CheckBox) {
-                        if (!objectTypeConfig.dataset) {
-                            throw new Error(`The ${element.type} - ${objectTypeConfig.type} required dataset to work properly!`);
+                    // check for list
+                    if (objectTypeConfig.list) {
+                        // for checkbox list or radiobutton list
+                        if (objectTypeConfig.type === EFieldConfigInputType.Radio ||
+                            objectTypeConfig.type === EFieldConfigInputType.CheckBox) {
+                            if (!objectTypeConfig.dataset) {
+                                throw new Error(`The ${element.type} - ${objectTypeConfig.type} required dataset to work properly!`);
+                            }
+                            if (objectTypeConfig.dataset?.length === 0) {
+                                throw new Error(`The ${element.type} - ${objectTypeConfig.type} required item(s) in dataset to work properly!`);
+                            }
                         }
-                        if (objectTypeConfig.dataset?.length === 0) {
-                            throw new Error(`The ${element.type} - ${objectTypeConfig.type} required item(s) in dataset to work properly!`);
+                    } else {
+                        // if not list, but radiobutton being selected, is wrong!
+                        if (objectTypeConfig.type === EFieldConfigInputType.Radio) {
+                            throw new Error('There is use cases for single radio button control!');
+                        }
+                        if (objectTypeConfig.dataset) {
+                            throw new Error(`The ${element.type} - ${objectTypeConfig.type} DO NOT required any dataset!`);
                         }
                     }
-                    // if (objectTypeConfig.type === EFieldConfigInputType.Radio) {
-                    //     throw new Error('There is no point having a single radio button, do use array!');
-                    // }
-                    // all good, apply the control to form
 
+
+                    // render the control n value
                     if (element.type_config.type === EFieldConfigInputType.CheckBox &&
                         objectTypeConfig.list) {
                         const listofArraySavedItems: string[] = [];

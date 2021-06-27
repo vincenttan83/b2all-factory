@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   savedData: { [key: string]: any } = {
+    accepted_agreement: false,
     age_group: 'middle_aged_adults',
     favorite_food: ['bananas', 'cherries'],
     students: [
@@ -48,8 +49,18 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   myFormDesign: IFieldConfig[] = [
     {
+      name: 'accepted_agreement',
+      display_text: 'I hereby giving the consent to bla bla bla to process my personal data.',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: EFieldConfigInputType.CheckBox,
+        list: false,
+        single_checkbox_display_text: 'I agree',
+      }
+    },
+    {
       name: 'age_group',
-      display_text: 'Select your age group!',
+      display_text: 'Select your age group:',
       type: EFieldConfigType.Input,
       type_config: {
         type: EFieldConfigInputType.Radio,
@@ -65,7 +76,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     },
     {
       name: 'favorite_food',
-      display_text: 'Select your favorite food!',
+      display_text: 'Select your favorite food:',
       type: EFieldConfigType.Input,
       type_config: {
         type: EFieldConfigInputType.CheckBox,

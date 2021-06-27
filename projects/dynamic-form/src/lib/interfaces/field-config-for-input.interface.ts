@@ -6,6 +6,7 @@ export interface IFieldConfigForInputConfig {
     list: boolean;
     dataset?: IKeyValueInString[];
     input_helper?: boolean;
+    single_checkbox_display_text?: string;
 }
 
 export function isFieldConfigForInputConfig(obj: any): obj is IFieldConfigForInputConfig {
