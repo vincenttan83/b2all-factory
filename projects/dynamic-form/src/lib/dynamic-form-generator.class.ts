@@ -100,12 +100,35 @@ export class DynamicFormGenerator {
                         throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
                     }
                     // to check further if type_config using wronlgy...
-                    const a = element.type_config as IFieldConfigForInputConfig;
-                    if (a.type === EFieldConfigInputType.Radio) {
-                        throw new Error('There is no point having a single radio button, do use array!');
+                    const objectTypeConfig = element.type_config as IFieldConfigForInputConfig;
+                    if (objectTypeConfig.type !== EFieldConfigInputType.Radio && objectTypeConfig.type !== EFieldConfigInputType.CheckBox) {
+                        if (objectTypeConfig.list) {
+                            throw new Error(`The ${element.type} - ${objectTypeConfig.type} error. Set the list to false!`);
+                        }
                     }
+
+                    if (objectTypeConfig.type === EFieldConfigInputType.Radio || objectTypeConfig.type === EFieldConfigInputType.CheckBox) {
+                        if (!objectTypeConfig.dataset) {
+                            throw new Error(`The ${element.type} - ${objectTypeConfig.type} required dataset to work properly!`);
+                        }
+                        if (objectTypeConfig.dataset?.length === 0) {
+                            throw new Error(`The ${element.type} - ${objectTypeConfig.type} required item(s) in dataset to work properly!`);
+                        }
+                    }
+                    // if (objectTypeConfig.type === EFieldConfigInputType.Radio) {
+                    //     throw new Error('There is no point having a single radio button, do use array!');
+                    // }
                     // all good, apply the control to form
-                    group.addControl(element.name, this.createControl2(undefined, undefined, savedDatas[element.name]));
+
+                    if (objectTypeConfig.list) {
+                        const listofArraySavedItems: string[] = [];
+                        savedDatas[element.name].forEach((elementSaveItem: string) => {
+                            listofArraySavedItems.push(elementSaveItem);
+                        });
+                        group.addControl(element.name, this.privateFormBuilder.array(listofArraySavedItems));
+                    } else {
+                        group.addControl(element.name, this.createControl2(undefined, undefined, savedDatas[element.name]));
+                    }
                     break;
                 }
                 case EFieldConfigType.Textarea: {

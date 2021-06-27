@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   savedData: { [key: string]: any } = {
+    favorite_food: ['bananas', 'cherries'],
     students: [
       {
         student_first_name: 'Vincent',
@@ -45,6 +46,21 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
 
   myFormDesign: IFieldConfig[] = [
+    {
+      name: 'favorite_food',
+      display_text: 'Select your favorite food!',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: EFieldConfigInputType.CheckBox,
+        list: true,
+        dataset: [
+          { key: 'Apples', value: 'apples' },
+          { key: 'Bananas', value: 'bananas' },
+          { key: 'Cherries', value: 'cherries' },
+          { key: 'Damson plum', value: 'damson_plum' },
+        ]
+      }
+    },
     {
       name: 'country_selection',
       type: EFieldConfigType.Select,
@@ -77,6 +93,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             type: EFieldConfigType.Input,
             type_config: {
               type: EFieldConfigInputType.Text,
+              list: false,
             }
           },
           {
@@ -85,6 +102,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             type: EFieldConfigType.Input,
             type_config: {
               type: EFieldConfigInputType.Text,
+              list: false,
             }
           },
           {
@@ -118,6 +136,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             type: EFieldConfigType.Input,
             type_config: {
               type: EFieldConfigInputType.Text,
+              list: false,
             }
           },
           {
@@ -126,6 +145,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             type: EFieldConfigType.Input,
             type_config: {
               type: EFieldConfigInputType.Text,
+              list: false,
             }
           },
           {
@@ -140,6 +160,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                   type: EFieldConfigType.Input,
                   type_config: {
                     type: EFieldConfigInputType.Text,
+                    list: false,
                   }
                 },
                 {
@@ -148,6 +169,7 @@ export class AppComponent implements OnInit, AfterViewInit {
                   type: EFieldConfigType.Input,
                   type_config: {
                     type: EFieldConfigInputType.Text,
+                    list: false,
                   }
                 },
               ]

@@ -1,8 +1,23 @@
 <div [formGroup]="group">
-    <label [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{ config.display_text }}</label><span
-        *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name] }}</span>
-    <br>
-    <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
-        [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
-        [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null">
+
+
+    <ng-container *ngIf="detailConfig.list; else nonListInput">
+        <div *ngFor="let choice of detailConfig.dataset; index as i;">
+            <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
+                (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
+                [checked]="shouldChecked(choice.value)">
+            <label [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
+        </div>
+    </ng-container>
+
+    <ng-template #nonListInput>
+        <label [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{ config.display_text }}</label><span
+            *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name] }}</span>
+        <br>
+
+        <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
+            [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
+            [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null">
+    </ng-template>
+
 </div>
