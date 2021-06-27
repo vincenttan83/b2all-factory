@@ -1,4 +1,4 @@
-export enum EFieldConfigInputType {
+export const enum EFieldConfigInputType {
     CheckBox = 'checkbox',
     Color = 'color',
     Date = 'date',
