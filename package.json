@@ -11,6 +11,7 @@
     "build_lib": "ng build dynamic-form --configuration production",
     "npm_pack": "cd dist/dynamic-form && npm pack",
     "package": "npm run build_lib && npm run npm_pack",
+    "packagr": "ng-packagr -p projects/dynamic-form/ng-package.json",
     "package_publish_b2allsolution": "npm run package && cd dist/dynamic-form && npm publish --access public"
   },
   "private": true,
@@ -41,7 +42,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.5.0",
-    "ng-packagr": "^12.0.8",
+    "ng-packagr": "^12.1.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
