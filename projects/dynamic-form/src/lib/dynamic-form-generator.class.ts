@@ -120,7 +120,8 @@ export class DynamicFormGenerator {
                     // }
                     // all good, apply the control to form
 
-                    if (objectTypeConfig.list) {
+                    if (element.type_config.type === EFieldConfigInputType.CheckBox &&
+                        objectTypeConfig.list) {
                         const listofArraySavedItems: string[] = [];
                         savedDatas[element.name].forEach((elementSaveItem: string) => {
                             listofArraySavedItems.push(elementSaveItem);

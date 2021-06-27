@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
@@ -24,39 +25,51 @@ export class DynamicFieldInputComponent implements OnInit, IField {
   }
 
   onCheckChange(event: any): void {
-    const fa: FormArray = this.group.get(this.config.name) as FormArray;
+    if (this.detailConfig.type === 'checkbox') {
+      const fa: FormArray = this.group.get(this.config.name) as FormArray;
 
-    if (event.target.checked) {
-      console.log(`adding ${event.target.value}`);
-      fa.push(new FormControl(event.target.value));
-    } else {
-      console.log(`removing ${event.target.value}`);
+      if (event.target.checked) {
+        console.log(`adding ${event.target.value}`);
+        fa.push(new FormControl(event.target.value));
+      } else {
+        console.log(`removing ${event.target.value}`);
 
-      let i = 0;
+        let i = 0;
 
-      for (const element of fa.controls) {
-        if (element.value === event.target.value) {
-          fa.removeAt(i);
-          break;
+        for (const element of fa.controls) {
+          if (element.value === event.target.value) {
+            fa.removeAt(i);
+            break;
+          }
+          i++;
         }
-        i++;
-      }
 
+      }
+    } else {
+      console.log(`opting for ${event.target.value}`);
+      this.group.controls[this.config.name].setValue(event.target.value);
     }
 
   }
 
   shouldChecked(val: string): boolean {
-    const fa: FormArray = this.group.get(this.config.name) as FormArray;
+    if (this.detailConfig.type === EFieldConfigInputType.CheckBox) {
+      const fa: FormArray = this.group.get(this.config.name) as FormArray;
 
-    let i = 0;
-    for (const element of fa.controls) {
-      if (element.value === val) {
-        return true;
+      let i = 0;
+      for (const element of fa.controls) {
+        if (element.value === val) {
+          return true;
+        }
+        i++;
       }
-      i++;
+    } else if (this.detailConfig.type === EFieldConfigInputType.Radio) {
+      return val === this.group.controls[this.config.name].value;
+    } else {
+      return false;
     }
     return false;
+
   }
 
 }

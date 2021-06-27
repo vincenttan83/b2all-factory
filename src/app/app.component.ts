@@ -18,6 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   savedData: { [key: string]: any } = {
+    age_group: 'middle_aged_adults',
     favorite_food: ['bananas', 'cherries'],
     students: [
       {
@@ -46,6 +47,22 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
 
   myFormDesign: IFieldConfig[] = [
+    {
+      name: 'age_group',
+      display_text: 'Select your age group!',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: EFieldConfigInputType.Radio,
+        list: true,
+        dataset: [
+          { key: 'Below 3', value: 'babies' },
+          { key: '3 ~ 16', value: 'children' },
+          { key: '17 ~ 30', value: 'young_adults' },
+          { key: '31 ~ 45', value: 'middle_aged_adults' },
+          { key: 'Above 45', value: 'old_adults' }
+        ]
+      }
+    },
     {
       name: 'favorite_food',
       display_text: 'Select your favorite food!',

@@ -5,6 +5,7 @@
         <div *ngFor="let choice of detailConfig.dataset; index as i;">
             <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
                 (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
+                [attr.name]="config.name"
                 [checked]="shouldChecked(choice.value)">
             <label [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
         </div>
