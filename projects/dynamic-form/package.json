@@ -1,11 +1,29 @@
 {
-  "name": "dynamic-form",
+  "name": "@b2allsolution/factory",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^11.2.14",
     "@angular/core": "^11.2.14"
   },
+  "private": false,
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+  "description": "This library is dynamic form generator based on configuration for angular project.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincenttan83/b2all-factory.git"
+  },
+  "keywords": [
+    "form generator",
+    "software factory",
+    "dynamic form"
+  ],
+  "author": "Vincent Tan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vincenttan83/b2all-factory/issues"
+  },
+  "homepage": "https://github.com/vincenttan83/b2all-factory#readme"
 }

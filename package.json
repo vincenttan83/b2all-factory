@@ -7,7 +7,11 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build_lib": "ng build b2all-factory --prod",
+    "npm_pack": "cd dist/b2all-factory && npm pack",
+    "package": "npm run build_lib && npm run npm_pack",
+    "package_publish_b2allsolution": "npm run package && cd dist/b2all-factory && npm publish --access public"
   },
   "private": true,
   "dependencies": {
