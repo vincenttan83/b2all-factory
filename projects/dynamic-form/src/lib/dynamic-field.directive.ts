@@ -7,12 +7,9 @@ import { DynamicFieldInputComponent } from './components/dynamic-field-input/dyn
 import { DynamicFieldObjectComponent } from './components/dynamic-field-object/dynamic-field-object.component';
 import { DynamicFieldSelectComponent } from './components/dynamic-field-select/dynamic-field-select.component';
 import { DynamicFieldTextareaComponent } from './components/dynamic-field-textarea/dynamic-field-textarea.component';
+import { IComponent } from './interfaces/component.interface';
 import { IFieldConfig } from './interfaces/field-config.interface';
 import { IField } from './interfaces/field.interface';
-
-interface IComponent {
-  [key: string]: any;
-}
 
 const components: IComponent = {
   array: DynamicFieldArrayComponent,

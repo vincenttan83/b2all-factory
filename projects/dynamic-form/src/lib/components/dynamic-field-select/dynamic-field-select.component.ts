@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
-import { IMultiSelect } from '../../interfaces/field-config-multiselect.interface';
+import { IMultiSelect } from '../../interfaces/multi-select.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
 import { DynamicFieldSelectService } from './dynamic-field-select.service';

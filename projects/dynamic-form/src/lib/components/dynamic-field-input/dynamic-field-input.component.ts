@@ -30,10 +30,10 @@ export class DynamicFieldInputComponent implements OnInit, IField {
         const fa: FormArray = this.group.get(this.config.name) as FormArray;
 
         if (event.target.checked) {
-          console.log(`adding ${event.target.value}`);
+          // console.log(`adding ${event.target.value}`);
           fa.push(new FormControl(event.target.value));
         } else {
-          console.log(`removing ${event.target.value}`);
+          // console.log(`removing ${event.target.value}`);
 
           let i = 0;
 
@@ -51,7 +51,7 @@ export class DynamicFieldInputComponent implements OnInit, IField {
       }
 
     } else {
-      console.log(`opting for ${event.target.value}`);
+      // console.log(`opting for ${event.target.value}`);
       this.group.controls[this.config.name].setValue(event.target.value);
     }
 

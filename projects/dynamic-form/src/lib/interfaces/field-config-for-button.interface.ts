@@ -1,5 +1,5 @@
 export interface IFieldConfigForButtonConfig {
-    type: 'button' | 'reset' | 'submit';
+    type: 'button' | 'submit'; // reset should be just refresh the page
     onclick_fn?: () => Promise<void>;
 }
 

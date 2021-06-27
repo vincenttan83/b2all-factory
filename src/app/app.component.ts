@@ -113,7 +113,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       display_text: 'List of student',
       type: EFieldConfigType.Array,
       type_config: {
-        addable: true,
         field_configs: [
           {
             name: 'student_first_name',

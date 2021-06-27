@@ -1,4 +1,4 @@
-import { IMultiSelect } from './field-config-multiselect.interface';
+import { IMultiSelect } from './multi-select.interface';
 
 export interface IFieldConfigForSelectConfig {
     /**

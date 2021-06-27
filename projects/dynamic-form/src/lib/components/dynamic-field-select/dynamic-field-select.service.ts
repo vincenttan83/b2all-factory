@@ -1,5 +1,5 @@
 import { Subject } from 'rxjs';
-import { IMultiSelect } from '../../interfaces/field-config-multiselect.interface';
+import { IMultiSelect } from '../../interfaces/multi-select.interface';
 
 export class DynamicFieldSelectService {
 
