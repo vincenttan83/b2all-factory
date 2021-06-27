@@ -33,4 +33,4 @@ import { CommonModule } from '@angular/common';
     DynamicFormComponent
   ]
 })
-export class DynamicFormModule { }
+export class B2allDynamicFormModule { }

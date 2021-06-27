@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { DynamicFormModule } from 'projects/dynamic-form/src/public-api';
+import { B2allDynamicFormModule } from 'projects/dynamic-form/src/public-api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DynamicFormModule,
+    B2allDynamicFormModule
   ],
   providers: [],
   bootstrap: [AppComponent]
