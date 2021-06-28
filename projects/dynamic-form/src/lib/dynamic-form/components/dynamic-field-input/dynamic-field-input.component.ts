@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { IFieldConfig, ICssClass, EFieldConfigInputType } from 'projects/dynamic-form/src/public-api';
+import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
+import { ICssClass } from '../../interfaces/css-class.interface';
 import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
+import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
 
 @Component({

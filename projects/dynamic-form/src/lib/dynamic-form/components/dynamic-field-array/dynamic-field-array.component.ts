@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { IFieldConfig, ICssClass } from 'projects/dynamic-form/src/public-api';
 import { DynamicFormGenerator } from '../../classes/dynamic-form-generator.class';
+import { ICssClass } from '../../interfaces/css-class.interface';
 import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
+import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
 
 @Component({

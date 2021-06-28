@@ -1,9 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IFieldConfig, ICssClass, IMultiSelect } from 'projects/dynamic-form/src/public-api';
 import { Subscription } from 'rxjs';
+import { ICssClass } from '../../interfaces/css-class.interface';
 import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
+import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
+import { IMultiSelect } from '../../interfaces/multi-select.interface';
 import { DynamicFieldSelectService } from './dynamic-field-select.service';
 
 @Component({

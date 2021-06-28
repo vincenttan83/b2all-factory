@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IFieldConfig } from 'projects/dynamic-form/src/public-api';
 import { IFieldConfigForObjectConfig } from '../../interfaces/field-config-for-object.interface';
+import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
 
 @Component({
