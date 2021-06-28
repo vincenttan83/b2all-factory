@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ICssClass } from '../../interfaces/css-class.interface';
+import { IFieldConfig, ICssClass } from 'projects/dynamic-form/src/public-api';
 import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
-import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
 
 @Component({

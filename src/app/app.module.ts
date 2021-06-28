@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ICssClass } from 'projects/dynamic-form/src/lib/interfaces/css-class.interface';
+import { ICssClass } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/css-class.interface';
 import { B2allDynamicFormModule } from 'projects/dynamic-form/src/public-api';
 
 import { AppRoutingModule } from './app-routing.module';

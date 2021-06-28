@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { DynamicFormComponent } from 'projects/dynamic-form/src/lib/dynamic-form.component';
-import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/enums/field-config-input-type.enum';
-import { EFieldConfigType } from 'projects/dynamic-form/src/lib/enums/field-config-type.enum';
-import { IFieldConfig } from 'projects/dynamic-form/src/lib/interfaces/field-config.interface';
+import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-input-type.enum';
+import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
+import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
 import { of } from 'rxjs/internal/observable/of';
 import { countries, cs } from './country-state';
 
