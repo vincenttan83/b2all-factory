@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
+import { ICssClass } from '../../interfaces/css-class.interface';
 import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
@@ -18,7 +19,13 @@ export class DynamicFieldInputComponent implements OnInit, IField {
 
   detailConfig!: IFieldConfigForInputConfig;
 
-  constructor() { }
+  cssClass!: ICssClass;
+
+  constructor(
+    @Inject('css_class') private privateCssClass: ICssClass,
+  ) {
+    this.cssClass = this.privateCssClass;
+  }
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForInputConfig);
@@ -30,11 +37,8 @@ export class DynamicFieldInputComponent implements OnInit, IField {
         const fa: FormArray = this.group.get(this.config.name) as FormArray;
 
         if (event.target.checked) {
-          // console.log(`adding ${event.target.value}`);
           fa.push(new FormControl(event.target.value));
         } else {
-          // console.log(`removing ${event.target.value}`);
-
           let i = 0;
 
           for (const element of fa.controls) {
@@ -51,7 +55,6 @@ export class DynamicFieldInputComponent implements OnInit, IField {
       }
 
     } else {
-      // console.log(`opting for ${event.target.value}`);
       this.group.controls[this.config.name].setValue(event.target.value);
     }
 

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { DynamicFormComponent } from './dynamic-form.component';
 import { DynamicFieldDirective } from './dynamic-field.directive';
 import { DynamicFieldInputComponent } from './components/dynamic-field-input/dynamic-field-input.component';
@@ -10,6 +10,7 @@ import { DynamicFieldButtonComponent } from './components/dynamic-field-button/d
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicFieldDividerComponent } from './components/dynamic-field-divider/dynamic-field-divider.component';
 import { CommonModule } from '@angular/common';
+import { ICssClass } from './interfaces/css-class.interface';
 
 
 
@@ -33,4 +34,13 @@ import { CommonModule } from '@angular/common';
     DynamicFormComponent
   ]
 })
-export class B2allDynamicFormModule { }
+export class B2allDynamicFormModule {
+  static forRoot(config: ICssClass): ModuleWithProviders<B2allDynamicFormModule> {
+    return {
+      ngModule: B2allDynamicFormModule,
+      providers: [
+        { provide: 'css_class', useValue: config },
+      ],
+    };
+  }
+}

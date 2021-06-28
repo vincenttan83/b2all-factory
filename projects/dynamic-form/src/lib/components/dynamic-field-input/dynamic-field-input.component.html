@@ -1,38 +1,56 @@
-<div [formGroup]="group" [ngClass]="{'reverselayout': detailConfig.type === 'checkbox' && !detailConfig.list}">
-
+<div [formGroup]="group">
 
     <ng-container *ngIf="detailConfig.list; else nonListInput">
         <label>{{ config.display_text }}</label>
-        <div *ngFor="let choice of detailConfig.dataset; index as i;">
-            <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
+        <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="cssClass.input.list.group">
+            <input [ngClass]="cssClass.input.list.input"
+                [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
                 (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
                 [attr.name]="config.name" [checked]="shouldChecked(choice.value)">
-            <label [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
+            <label [ngClass]="cssClass.input.list.label"
+                [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
         </div>
     </ng-container>
 
     <ng-template #nonListInput>
-        <label *ngIf="detailConfig.type !== 'checkbox'"
-            [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{ config.display_text }}</label>
+        <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
+            <div [ngClass]="cssClass.input.non_list.group">
 
+                <label [ngClass]="cssClass.input.non_list.label"
+                    [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
+                    config.display_text }}</label>
 
-        <label *ngIf="detailConfig.type === 'checkbox'">{{ config.display_text }}</label>
+                <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name]
+                    }}</span>
 
-        <div *ngIf="detailConfig.type === 'checkbox'" class="break"></div>
+                <br>
 
-        <label *ngIf="detailConfig.type === 'checkbox'"
-            [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
-            detailConfig.single_checkbox_display_text }}</label>
+                <input [ngClass]="cssClass.input.non_list.input"
+                    [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
+                    [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
+                    [attr.max]="detailConfig.type==='range' ? 100: null"
+                    [attr.step]="detailConfig.type==='range' ? 5: null">
 
-        <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name] }}</span>
+            </div>
 
-        <br *ngIf="detailConfig.type !== 'checkbox'">
+        </ng-container>
+        <ng-template #nonListInputForCheckbox>
 
-        <input [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
-            (change)="detailConfig.type === 'checkbox' ? onCheckChange($event) : null" [checked]="shouldChecked('')"
-            [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
-            [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null">
+            <label>{{ config.display_text }}</label>
 
+            <div [ngClass]="cssClass.input.list.group">
+
+                <input [ngClass]="cssClass.input.list.input"
+                    [attr.id]="detailConfig.type + '_' + config.name + '_' + index" (change)="onCheckChange($event)"
+                    [attr.type]="detailConfig.type" [attr.name]="config.name"
+                    [checked]="shouldChecked(group.controls[config.name].value)">
+                <label [ngClass]="cssClass.input.list.label"
+                    [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
+                    detailConfig.single_checkbox_display_text }}</label>
+
+            </div>
+
+        </ng-template>
 
     </ng-template>
 
