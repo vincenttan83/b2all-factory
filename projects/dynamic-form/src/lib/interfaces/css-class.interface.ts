@@ -11,4 +11,9 @@ export interface ICssClass {
             input: string;
         };
     };
+    text_area: {
+        group: string;
+        label: string;
+        input: string;
+    };
 }
