@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
@@ -6,6 +6,7 @@ import { IMultiSelect } from '../../interfaces/multi-select.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
 import { DynamicFieldSelectService } from './dynamic-field-select.service';
+import { ICssClass } from '../../interfaces/css-class.interface';
 
 @Component({
   selector: 'b2all-dynamic-field-select',
@@ -21,6 +22,8 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
 
   detailConfig!: IFieldConfigForSelectConfig;
 
+  cssClass!: ICssClass;
+
   runningValues: { key: string, value: string }[] = [];
 
   subscription!: Subscription;
@@ -28,8 +31,11 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
   latestDatabase: { [key: string]: any } = {};
 
   constructor(
+    @Inject('css_class') private privateCssClass: ICssClass,
     private privateDynamicFieldSelectService: DynamicFieldSelectService
-  ) { }
+  ) {
+    this.cssClass = this.privateCssClass;
+  }
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForSelectConfig);

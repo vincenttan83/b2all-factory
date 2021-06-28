@@ -16,4 +16,9 @@ export interface ICssClass {
         label: string;
         input: string;
     };
+    select: {
+        group: string;
+        label: string;
+        select: string;
+    };
 }
