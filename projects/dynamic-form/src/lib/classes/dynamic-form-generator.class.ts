@@ -1,13 +1,13 @@
 import { ValidatorFn, FormGroup, FormBuilder, FormControl } from '@angular/forms';
-import { EFieldConfigInputType } from './enums/field-config-input-type.enum';
-import { EFieldConfigType } from './enums/field-config-type.enum';
-import { isFieldConfigForArrayConfig, IFieldConfigForArrayConfig } from './interfaces/field-config-for-array.interface';
-import { isFieldConfigForButtonConfig } from './interfaces/field-config-for-button.interface';
-import { isFieldConfigForInputConfig, IFieldConfigForInputConfig } from './interfaces/field-config-for-input.interface';
-import { isFieldConfigForObjectConfig, IFieldConfigForObjectConfig } from './interfaces/field-config-for-object.interface';
-import { IFieldConfigForSelectConfig, isFieldConfigForSelectConfig } from './interfaces/field-config-for-select.interface';
-import { isFieldConfigForTextareaConfig } from './interfaces/field-config-for-textarea.interface';
-import { IFieldConfig } from './interfaces/field-config.interface';
+import { EFieldConfigInputType } from '../enums/field-config-input-type.enum';
+import { EFieldConfigType } from '../enums/field-config-type.enum';
+import { isFieldConfigForArrayConfig, IFieldConfigForArrayConfig } from '../interfaces/field-config-for-array.interface';
+import { isFieldConfigForButtonConfig } from '../interfaces/field-config-for-button.interface';
+import { isFieldConfigForInputConfig, IFieldConfigForInputConfig } from '../interfaces/field-config-for-input.interface';
+import { isFieldConfigForObjectConfig, IFieldConfigForObjectConfig } from '../interfaces/field-config-for-object.interface';
+import { IFieldConfigForSelectConfig, isFieldConfigForSelectConfig } from '../interfaces/field-config-for-select.interface';
+import { isFieldConfigForTextareaConfig } from '../interfaces/field-config-for-textarea.interface';
+import { IFieldConfig } from '../interfaces/field-config.interface';
 
 export class DynamicFormGenerator {
     wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';

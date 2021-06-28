@@ -1,15 +1,15 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { DynamicFieldArrayComponent } from './components/dynamic-field-array/dynamic-field-array.component';
-import { DynamicFieldButtonComponent } from './components/dynamic-field-button/dynamic-field-button.component';
-import { DynamicFieldDividerComponent } from './components/dynamic-field-divider/dynamic-field-divider.component';
-import { DynamicFieldInputComponent } from './components/dynamic-field-input/dynamic-field-input.component';
-import { DynamicFieldObjectComponent } from './components/dynamic-field-object/dynamic-field-object.component';
-import { DynamicFieldSelectComponent } from './components/dynamic-field-select/dynamic-field-select.component';
-import { DynamicFieldTextareaComponent } from './components/dynamic-field-textarea/dynamic-field-textarea.component';
-import { IComponent } from './interfaces/component.interface';
-import { IFieldConfig } from './interfaces/field-config.interface';
-import { IField } from './interfaces/field.interface';
+import { DynamicFieldArrayComponent } from '../components/dynamic-field-array/dynamic-field-array.component';
+import { DynamicFieldButtonComponent } from '../components/dynamic-field-button/dynamic-field-button.component';
+import { DynamicFieldDividerComponent } from '../components/dynamic-field-divider/dynamic-field-divider.component';
+import { DynamicFieldInputComponent } from '../components/dynamic-field-input/dynamic-field-input.component';
+import { DynamicFieldObjectComponent } from '../components/dynamic-field-object/dynamic-field-object.component';
+import { DynamicFieldSelectComponent } from '../components/dynamic-field-select/dynamic-field-select.component';
+import { DynamicFieldTextareaComponent } from '../components/dynamic-field-textarea/dynamic-field-textarea.component';
+import { IComponent } from '../interfaces/component.interface';
+import { IFieldConfig } from '../interfaces/field-config.interface';
+import { IField } from '../interfaces/field.interface';
 
 const components: IComponent = {
   array: DynamicFieldArrayComponent,
