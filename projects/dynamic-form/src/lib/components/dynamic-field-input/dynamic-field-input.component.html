@@ -1,14 +1,14 @@
 <div [formGroup]="group">
 
     <ng-container *ngIf="detailConfig.list; else nonListInput">
-        <label>{{ config.display_text }}</label>
-        <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="cssClass.input.list.group">
-            <input [ngClass]="cssClass.input.list.input"
+        <label [ngClass]="cssClass.input.list.label">{{ config.display_text }}</label>
+        <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="cssClass.input.list.item.group">
+            <input [ngClass]="cssClass.input.list.item.input"
                 [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
                 (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
                 [attr.name]="config.name" [checked]="shouldChecked(choice.value)">
 
-            <label [ngClass]="cssClass.input.list.label"
+            <label [ngClass]="cssClass.input.list.item.label"
                 [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
         </div>
     </ng-container>
@@ -35,15 +35,15 @@
         </ng-container>
         <ng-template #nonListInputForCheckbox>
 
-            <label>{{ config.display_text }}</label>
+            <label [ngClass]="cssClass.input.list.label">{{ config.display_text }}</label>
 
-            <div [ngClass]="cssClass.input.list.group">
+            <div [ngClass]="cssClass.input.list.item.group">
 
-                <input [ngClass]="cssClass.input.list.input"
+                <input [ngClass]="cssClass.input.list.item.input"
                     [attr.id]="detailConfig.type + '_' + config.name + '_' + index" (change)="onCheckChange($event)"
                     [attr.type]="detailConfig.type" [attr.name]="config.name"
                     [checked]="shouldChecked(group.controls[config.name].value)">
-                <label [ngClass]="cssClass.input.list.label"
+                <label [ngClass]="cssClass.input.list.item.label"
                     [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
                     detailConfig.single_checkbox_display_text }}</label>
 

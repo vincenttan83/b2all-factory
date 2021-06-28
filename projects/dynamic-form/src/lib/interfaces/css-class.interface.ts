@@ -1,9 +1,12 @@
 export interface ICssClass {
     input: {
         list: {
-            group: string;
             label: string;
-            input: string;
+            item: {
+                group: string;
+                label: string;
+                input: string;
+            };
         };
         non_list: {
             group: string;
@@ -20,5 +23,13 @@ export interface ICssClass {
         group: string;
         label: string;
         select: string;
+    };
+    button: {
+        button: string;
+    };
+    array: {
+        button: string;
+        item: string;
+        item_label: string;
     };
 }

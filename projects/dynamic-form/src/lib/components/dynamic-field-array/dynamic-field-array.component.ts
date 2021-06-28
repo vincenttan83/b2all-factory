@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { DynamicFormGenerator } from '../../dynamic-form-generator.class';
+import { ICssClass } from '../../interfaces/css-class.interface';
 import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
@@ -18,12 +19,17 @@ export class DynamicFieldArrayComponent implements OnInit, IField {
 
   detailConfig!: IFieldConfigForArrayConfig;
 
+  cssClass!: ICssClass;
+
   theArrays!: FormArray;
   theIndexZeroFormGroup!: FormGroup;
 
   constructor(
+    @Inject('css_class') private privateCssClass: ICssClass,
     private privateFormBuilder: FormBuilder
-  ) { }
+  ) {
+    this.cssClass = this.privateCssClass;
+  }
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForArrayConfig);

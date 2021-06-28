@@ -18,7 +18,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   savedData: { [key: string]: any } = {
-    accepted_agreement: false,
+    accepted_agreement: true,
     age_group: 'middle_aged_adults',
     favorite_food: ['bananas', 'cherries'],
     students: [

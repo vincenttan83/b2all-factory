@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ICssClass } from '../../interfaces/css-class.interface';
 import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IField } from '../../interfaces/field.interface';
@@ -17,7 +18,13 @@ export class DynamicFieldButtonComponent implements OnInit, IField {
 
   detailConfig!: IFieldConfigForButtonConfig;
 
-  constructor() { }
+  cssClass!: ICssClass;
+
+  constructor(
+    @Inject('css_class') private privateCssClass: ICssClass,
+  ) {
+    this.cssClass = this.privateCssClass;
+  }
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForButtonConfig);
