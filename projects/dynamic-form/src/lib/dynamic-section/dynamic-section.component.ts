@@ -5,11 +5,13 @@ import { IDivConfig } from './interfaces/div-config.interface';
   exportAs: 'b2allDynamicSection',
   selector: 'b2all-dynamic-section',
   template: `
-    <div class="row" *ngFor="let div of inputSectionConfigs">
-      <div class="col">
-        <ng-container b2allDynamicDiv [config]="div"></ng-container>
+    <section>
+      <div class="row" *ngFor="let div of inputSectionConfigs">
+        <div class="col">
+          <ng-container b2allDynamicDiv [config]="div"></ng-container>
+        </div>
       </div>
-    </div>
+    </section>
   `,
   styleUrls: []
 })
