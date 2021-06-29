@@ -8,6 +8,8 @@ import { IFieldConfigForObjectConfig } from 'projects/dynamic-form/src/lib/dynam
 import { IFieldConfigForSelectConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-select.interface';
 import { IFieldConfigForTextareaConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
+import { EDivConfigType } from 'projects/dynamic-form/src/lib/dynamic-section/enums/div-config-type.enum';
+import { IDivConfig, IDivConfigForButton, IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-section/interfaces/div-config.interface';
 import { DynamicFormComponent } from 'projects/dynamic-form/src/public-api';
 import { of } from 'rxjs/internal/observable/of';
 import { countries, cs } from './country-state';
@@ -246,6 +248,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.profileControl,
     this.summaryControl,
     this.buttonControl,
+  ];
+
+  headingRender: IDivConfig<IDivConfigForHeadings> = {
+    content: {
+      text: 'hello World',
+    },
+    type: EDivConfigType.Headings,
+  };
+  buttonRender: IDivConfig<IDivConfigForButton> = {
+    content: {
+      class: 'btn btn-primary', disabled: false, text: 'hello', onclick_fn: undefined,
+    },
+    type: EDivConfigType.Button,
+  };
+
+  mySectionDesign: IDivConfig<any>[] = [
+    this.headingRender,
+    this.buttonRender,
   ];
 
   ngOnInit(): void {

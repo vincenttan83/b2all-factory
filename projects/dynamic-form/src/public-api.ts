@@ -13,3 +13,12 @@ export * from './lib/dynamic-form/interfaces/multi-select.interface';
 export * from './lib/dynamic-form/interfaces/css-class.interface';
 
 export * from './lib/dynamic-form/directives/dynamic-field.directive';
+
+
+/*
+ * Public API Surface of dynamic-section
+ */
+export * from './lib/dynamic-section/dynamic-section.module';
+
+export * from './lib/dynamic-section/dynamic-section.component';
+
