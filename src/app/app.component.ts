@@ -253,12 +253,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   headingRender: IDivConfig<IDivConfigForHeadings> = {
     content: {
       text: 'hello World',
+      class: 'h3'
     },
     type: EDivConfigType.Headings,
   };
   buttonRender: IDivConfig<IDivConfigForButton> = {
     content: {
-      class: 'btn btn-primary', disabled: false, text: 'hello', onclick_fn: undefined,
+      class: 'btn btn-primary', disabled: false, text: 'hello', onclick_fn: this.hello,
     },
     type: EDivConfigType.Button,
   };
