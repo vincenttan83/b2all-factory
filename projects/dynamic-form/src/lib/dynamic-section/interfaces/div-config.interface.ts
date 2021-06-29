@@ -10,6 +10,7 @@ import { EDivConfigType } from '../enums/div-config-type.enum';
 
 export interface IDivConfigForHeadings {
     text: string;
+    class: string;
 }
 
 export interface IDivConfigForBreadcrumb {
@@ -19,7 +20,7 @@ export interface IDivConfigForBreadcrumb {
 
 export interface IDivConfigForButton {
     text: string;
-    onclick_fn?: () => Promise<void>;
+    onclick_fn: () => Promise<void>;
     class: string;
     disabled: boolean;
 }
