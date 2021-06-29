@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { DynamicFormGenerator } from './classes/dynamic-form-generator.class';
