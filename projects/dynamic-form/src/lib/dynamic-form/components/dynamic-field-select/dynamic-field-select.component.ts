@@ -14,9 +14,9 @@ import { DynamicFieldSelectService } from './dynamic-field-select.service';
   styleUrls: ['./dynamic-field-select.component.css'],
   providers: [DynamicFieldSelectService]
 })
-export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
+export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigForSelectConfig>, OnDestroy {
 
-  config!: IFieldConfig;
+  config!: IFieldConfig<IFieldConfigForSelectConfig>;
   group!: FormGroup;
   index!: number;
 

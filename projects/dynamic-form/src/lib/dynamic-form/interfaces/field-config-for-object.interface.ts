@@ -1,10 +1,10 @@
 import { IFieldConfig } from './field-config.interface';
 
-export interface IFieldConfigForObjectConfig {
-    field_configs: IFieldConfig[];
+export interface IFieldConfigForObjectConfig<T> {
+    field_configs: IFieldConfig<T>[];
 }
 
-export function isFieldConfigForObjectConfig(obj: any): obj is IFieldConfigForObjectConfig {
+export function isFieldConfigForObjectConfig<T>(obj: any): obj is IFieldConfigForObjectConfig<T> {
     return (
         obj !== null &&
         obj.field_configs !== null &&

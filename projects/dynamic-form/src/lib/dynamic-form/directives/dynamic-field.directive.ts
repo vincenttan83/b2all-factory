@@ -24,14 +24,14 @@ const components: IComponent = {
 @Directive({
   selector: '[b2allDynamicField]'
 })
-export class DynamicFieldDirective implements OnInit, OnChanges, IField {
+export class DynamicFieldDirective implements OnInit, OnChanges, IField<any> {
 
-  @Input() config!: IFieldConfig;
+  @Input() config!: IFieldConfig<any>;
   @Input() group!: FormGroup;
   @Input() index!: number;
   @Input() abstractControl!: AbstractControl;
 
-  component!: ComponentRef<IField>;
+  component!: ComponentRef<IField<any>>;
 
   constructor(
     private privateComponentFactoryResolver: ComponentFactoryResolver,
@@ -50,7 +50,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField {
         Supported types: ${supportedTypes}`
       );
     }
-    const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField>(components[this.config.type]);
+    const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField<any>>(components[this.config.type]);
     this.component = this.privateViewContainerRef.createComponent(component);
     this.component.instance.config = this.config;
     this.component.instance.group = this.group ?? this.abstractControl as FormGroup;

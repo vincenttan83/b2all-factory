@@ -24,7 +24,7 @@ import { IFieldConfig } from './interfaces/field-config.interface';
 })
 export class DynamicFormComponent implements OnInit {
 
-  @Input() inputFormConfigs: IFieldConfig[] = [];
+  @Input() inputFormConfigs: IFieldConfig<any>[] = [];
   @Input() inputAsyncValidatorFn: AsyncValidatorFn[] = [];
   @Input() removeButtonField = true;
   @Input() removeUndefinedField = true;

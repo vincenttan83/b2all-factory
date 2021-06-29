@@ -10,9 +10,9 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-textarea.component.html',
   styleUrls: ['./dynamic-field-textarea.component.css']
 })
-export class DynamicFieldTextareaComponent implements OnInit, IField {
+export class DynamicFieldTextareaComponent implements OnInit, IField<IFieldConfigForTextareaConfig> {
 
-  config!: IFieldConfig;
+  config!: IFieldConfig<IFieldConfigForTextareaConfig>;
   group!: FormGroup;
   index!: number;
 

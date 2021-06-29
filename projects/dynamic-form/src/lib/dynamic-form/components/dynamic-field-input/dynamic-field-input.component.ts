@@ -11,9 +11,9 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-input.component.html',
   styleUrls: ['./dynamic-field-input.component.css']
 })
-export class DynamicFieldInputComponent implements OnInit, IField {
+export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigForInputConfig> {
 
-  config!: IFieldConfig;
+  config!: IFieldConfig<IFieldConfigForInputConfig>;
   group!: FormGroup;
   index!: number;
 

@@ -11,13 +11,13 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-array.component.html',
   styleUrls: ['./dynamic-field-array.component.css']
 })
-export class DynamicFieldArrayComponent implements OnInit, IField {
+export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
 
-  config!: IFieldConfig;
+  config!: IFieldConfig<T>;
   group!: FormGroup;
   index!: number;
 
-  detailConfig!: IFieldConfigForArrayConfig;
+  detailConfig!: IFieldConfigForArrayConfig<T>;
 
   cssClass!: ICssClass;
 
@@ -32,7 +32,7 @@ export class DynamicFieldArrayComponent implements OnInit, IField {
   }
 
   ngOnInit(): void {
-    this.detailConfig = (this.config.type_config as IFieldConfigForArrayConfig);
+    this.detailConfig = (this.config.type_config as unknown as IFieldConfigForArrayConfig<T>);
     this.theArrays = this.group.controls[this.config.name] as FormArray;
     this.theIndexZeroFormGroup = this.theArrays.controls[0] as FormGroup;
   }

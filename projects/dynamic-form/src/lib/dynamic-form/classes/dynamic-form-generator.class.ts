@@ -17,7 +17,7 @@ export class DynamicFormGenerator {
     ) { }
 
     // data and template merging
-    private prepForSelect(initFieldConfig: IFieldConfig, elementSavedData: { [x: string]: any; }): IFieldConfigForSelectConfig {
+    private prepForSelect(initFieldConfig: IFieldConfig<any>, elementSavedData: { [x: string]: any; }): IFieldConfigForSelectConfig {
         const templateSelectTypeConfig = initFieldConfig.type_config as IFieldConfigForSelectConfig;
         const templateSelectTypeConfigWithData: IFieldConfigForSelectConfig = { ...templateSelectTypeConfig };
         // // iterate thru the controls
@@ -35,7 +35,7 @@ export class DynamicFormGenerator {
         return this.privateFormBuilder.control({ disabled, value }, validationFn);
     }
 
-    createFormGroup(formConfigs: IFieldConfig[], validatorFn: ValidatorFn[] | null, savedDatas: { [key: string]: any }): FormGroup {
+    createFormGroup(formConfigs: IFieldConfig<any>[], validatorFn: ValidatorFn[] | null, savedDatas: { [key: string]: any }): FormGroup {
         const group = this.privateFormBuilder.group({});
 
         formConfigs.forEach(element => {
@@ -53,7 +53,7 @@ export class DynamicFormGenerator {
                     }
 
                     // get the array config
-                    const arrayConfig = element.type_config as IFieldConfigForArrayConfig;
+                    const arrayConfig = element.type_config as IFieldConfigForArrayConfig<any>;
                     const fieldConfigs = arrayConfig.field_configs;
 
                     // we have to render an init row with default value for add row usage
@@ -156,7 +156,7 @@ export class DynamicFormGenerator {
                     if (!isFieldConfigForObjectConfig(element.type_config)) {
                         throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
                     }
-                    const objectTypeConfig = element.type_config as IFieldConfigForObjectConfig;
+                    const objectTypeConfig = element.type_config as IFieldConfigForObjectConfig<any>;
                     // since it's an object, it should be an object as the property
                     let subGroup;
                     subGroup = this.createFormGroup(objectTypeConfig.field_configs, null, savedDatas[element.name]);

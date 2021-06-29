@@ -6,7 +6,7 @@ export interface IFieldConfigForButtonConfig {
 export function isFieldConfigForButtonConfig(obj: any): obj is IFieldConfigForButtonConfig {
     return (
         obj !== null &&
-        (obj.type === 'button' || obj.type === 'reset' || obj.type === 'submit') &&
+        (obj.type === 'button' || obj.type === 'submit') &&
         (typeof obj.onclick_fn === 'undefined' || typeof obj.onclick_fn === 'function')
     );
 }

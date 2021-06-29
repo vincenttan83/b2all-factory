@@ -9,20 +9,20 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-object.component.html',
   styleUrls: ['./dynamic-field-object.component.css']
 })
-export class DynamicFieldObjectComponent implements OnInit, IField {
+export class DynamicFieldObjectComponent<T> implements OnInit, IField<T> {
 
-  config!: IFieldConfig;
+  config!: IFieldConfig<T>;
   group!: FormGroup;
   index!: number;
 
-  detailConfig!: IFieldConfigForObjectConfig;
+  detailConfig!: IFieldConfigForObjectConfig<T>;
 
   theSubGroup!: FormGroup; // = this.group.controls[this.config.name];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.detailConfig = (this.config.type_config as IFieldConfigForObjectConfig);
+    this.detailConfig = (this.config.type_config as unknown as IFieldConfigForObjectConfig<T>);
     this.theSubGroup = this.group.controls[this.config.name] as FormGroup;
   }
 

@@ -10,9 +10,9 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-button.component.html',
   styleUrls: ['./dynamic-field-button.component.css']
 })
-export class DynamicFieldButtonComponent implements OnInit, IField {
+export class DynamicFieldButtonComponent implements OnInit, IField<IFieldConfigForButtonConfig> {
 
-  config!: IFieldConfig;
+  config!: IFieldConfig<IFieldConfigForButtonConfig>;
   group!: FormGroup;
   index!: number;
 
