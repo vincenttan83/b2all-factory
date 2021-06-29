@@ -22,3 +22,6 @@ export * from './lib/dynamic-section/dynamic-section.module';
 
 export * from './lib/dynamic-section/dynamic-section.component';
 
+export * from './lib/dynamic-section/enums/div-config-type.enum';
+
+export * from './lib/dynamic-section/interfaces/div-config.interface';
