@@ -1,8 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { DynamicFormComponent } from 'projects/dynamic-form/src/lib/dynamic-form.component';
 import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-input-type.enum';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
+import { IFieldConfigForArrayConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-array.interface';
+import { IFieldConfigForButtonConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-button.interface';
+import { IFieldConfigForInputConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-input.interface';
+import { IFieldConfigForObjectConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-object.interface';
+import { IFieldConfigForSelectConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-select.interface';
+import { IFieldConfigForTextareaConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
+import { DynamicFormComponent } from 'projects/dynamic-form/src/public-api';
 import { of } from 'rxjs/internal/observable/of';
 import { countries, cs } from './country-state';
 
@@ -47,111 +53,117 @@ export class AppComponent implements OnInit, AfterViewInit {
     summary: 'Start your long winded story here!\n\nlol',
   };
 
-  myFormDesign: IFieldConfig[] = [
-    {
-      name: 'accepted_agreement',
-      display_text: 'I hereby giving the consent to bla bla bla to process my personal data.',
-      type: EFieldConfigType.Input,
-      type_config: {
-        type: EFieldConfigInputType.CheckBox,
-        list: false,
-        single_checkbox_display_text: 'I agree',
-      }
+  // for the field configs
+  agreementAcceptanceControl: IFieldConfig<IFieldConfigForInputConfig> = {
+    name: 'accepted_agreement',
+    display_text: 'I hereby giving the consent to bla bla bla to process my personal data.',
+    type: EFieldConfigType.Input,
+    type_config: {
+      type: EFieldConfigInputType.CheckBox,
+      list: false,
+      single_checkbox_display_text: 'I agree',
+    }
+  };
+  ageGroupControl: IFieldConfig<IFieldConfigForInputConfig> = {
+    name: 'age_group',
+    display_text: 'Select your age group:',
+    type: EFieldConfigType.Input,
+    type_config: {
+      type: EFieldConfigInputType.Radio,
+      list: true,
+      dataset: [
+        { key: 'Below 3', value: 'babies' },
+        { key: '3 ~ 16', value: 'children' },
+        { key: '17 ~ 30', value: 'young_adults' },
+        { key: '31 ~ 45', value: 'middle_aged_adults' },
+        { key: 'Above 45', value: 'old_adults' }
+      ]
+    }
+  };
+  favoriteFoodControl: IFieldConfig<IFieldConfigForInputConfig> = {
+    name: 'favorite_food',
+    display_text: 'Select your favorite food:',
+    type: EFieldConfigType.Input,
+    type_config: {
+      type: EFieldConfigInputType.CheckBox,
+      list: true,
+      dataset: [
+        { key: 'Apples', value: 'apples' },
+        { key: 'Bananas', value: 'bananas' },
+        { key: 'Cherries', value: 'cherries' },
+        { key: 'Damson plum', value: 'damson_plum' },
+      ]
+    }
+  };
+  countrySelectionControl: IFieldConfig<IFieldConfigForSelectConfig> = {
+    name: 'country_selection',
+    type: EFieldConfigType.Select,
+    type_config: {
+      dataset: cs,
+      controls: [
+        { name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: null },
+        { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: null },
+        { name: 'city', label: 'City', key_field: 'key', value_field: 'value', value: null },
+      ]
     },
-    {
-      name: 'age_group',
-      display_text: 'Select your age group:',
-      type: EFieldConfigType.Input,
-      type_config: {
-        type: EFieldConfigInputType.Radio,
-        list: true,
-        dataset: [
-          { key: 'Below 3', value: 'babies' },
-          { key: '3 ~ 16', value: 'children' },
-          { key: '17 ~ 30', value: 'young_adults' },
-          { key: '31 ~ 45', value: 'middle_aged_adults' },
-          { key: 'Above 45', value: 'old_adults' }
-        ]
-      }
-    },
-    {
-      name: 'favorite_food',
-      display_text: 'Select your favorite food:',
-      type: EFieldConfigType.Input,
-      type_config: {
-        type: EFieldConfigInputType.CheckBox,
-        list: true,
-        dataset: [
-          { key: 'Apples', value: 'apples' },
-          { key: 'Bananas', value: 'bananas' },
-          { key: 'Cherries', value: 'cherries' },
-          { key: 'Damson plum', value: 'damson_plum' },
-        ]
-      }
-    },
-    {
-      name: 'country_selection',
-      type: EFieldConfigType.Select,
-      type_config: {
-        dataset: cs,
-        controls: [
-          { name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: null },
-          { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: null },
-          { name: 'city', label: 'City', key_field: 'key', value_field: 'value', value: null },
-        ]
-      },
-    },
+  };
+  dividerControl: IFieldConfig<null> = {
+    name: 'divider_select',
+    type: EFieldConfigType.Divider,
+    type_config: null,
+  };
 
-    {
-      name: 'divider_select',
-      type: EFieldConfigType.Divider,
-      type_config: null,
-    },
-
-    {
-      name: 'students',
-      display_text: 'List of student',
-      type: EFieldConfigType.Array,
-      type_config: {
-        field_configs: [
-          {
-            name: 'student_first_name',
-            display_text: 'Input your first name: ',
-            type: EFieldConfigType.Input,
-            type_config: {
-              type: EFieldConfigInputType.Text,
-              list: false,
-            }
+  studentArrayControl: IFieldConfig<IFieldConfigForArrayConfig<IFieldConfigForInputConfig | IFieldConfigForSelectConfig>> = {
+    name: 'students',
+    display_text: 'List of student',
+    type: EFieldConfigType.Array,
+    type_config: {
+      field_configs: [
+        {
+          name: 'student_first_name',
+          display_text: 'Input your first name: ',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+          }
+        },
+        {
+          name: 'student_last_name',
+          display_text: 'Input your last name: ',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+          }
+        },
+        {
+          name: 'student_gender_selection',
+          display_text: 'Gender',
+          type: EFieldConfigType.Select,
+          type_config: {
+            dataset: [
+              { key: 'Male', value: 'male' },
+              { key: 'Female', value: 'female' },
+            ],
+            controls: [
+              { name: 'student_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
+            ]
           },
-          {
-            name: 'student_last_name',
-            display_text: 'Input your last name: ',
-            type: EFieldConfigType.Input,
-            type_config: {
-              type: EFieldConfigInputType.Text,
-              list: false,
-            }
-          },
-          {
-            name: 'student_gender_selection',
-            display_text: 'Gender',
-            type: EFieldConfigType.Select,
-            type_config: {
-              dataset: [
-                { key: 'Male', value: 'male' },
-                { key: 'Female', value: 'female' },
-              ],
-              controls: [
-                { name: 'student_gender', label: 'Gender', key_field: 'key', value_field: 'value', value: null },
-              ]
-            },
-          },
-        ],
+        },
+      ],
 
-      },
     },
+  };
 
-    {
+  profileControl: IFieldConfig<
+    IFieldConfigForObjectConfig<
+      IFieldConfigForInputConfig |
+      IFieldConfigForObjectConfig<
+        IFieldConfigForInputConfig
+      >
+    >
+  > = {
       name: 'profile',
       display_text: 'About yourself',
       type: EFieldConfigType.Object,
@@ -204,26 +216,36 @@ export class AppComponent implements OnInit, AfterViewInit {
           },
         ]
       },
-    },
+    };
 
-    {
-      name: 'summary',
-      display_text: 'Summary: ',
-      type: EFieldConfigType.Textarea,
-      type_config: {
-        row_count: 5,
-        col_count: 30,
-      }
-    },
+  summaryControl: IFieldConfig<IFieldConfigForTextareaConfig> = {
+    name: 'summary',
+    display_text: 'Summary: ',
+    type: EFieldConfigType.Textarea,
+    type_config: {
+      row_count: 5,
+      col_count: 30,
+    }
+  };
+  buttonControl: IFieldConfig<IFieldConfigForButtonConfig> = {
+    name: 'button_submit',
+    display_text: 'Submit button',
+    type: EFieldConfigType.Button,
+    type_config: {
+      type: 'submit',
+    }
+  };
 
-    {
-      name: 'button_submit',
-      display_text: 'Submit button',
-      type: EFieldConfigType.Button,
-      type_config: {
-        type: 'submit',
-      }
-    },
+  myFormDesign: IFieldConfig<any>[] = [
+    this.agreementAcceptanceControl,
+    this.ageGroupControl,
+    this.favoriteFoodControl,
+    this.countrySelectionControl,
+    this.dividerControl,
+    this.studentArrayControl,
+    this.profileControl,
+    this.summaryControl,
+    this.buttonControl,
   ];
 
   ngOnInit(): void {
