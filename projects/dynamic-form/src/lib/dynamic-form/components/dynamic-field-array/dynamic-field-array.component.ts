@@ -38,6 +38,7 @@ export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
   }
 
   addNew(): void {
+    // todo: Do we need to use it as singleton or new instance as the current one?
     const dfg: DynamicFormGenerator = new DynamicFormGenerator(this.privateFormBuilder);
     const newRow: FormGroup = dfg.createFormGroup(this.detailConfig.field_configs, null, {});
     this.theArrays.push(newRow);
