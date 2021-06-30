@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IDivConfig, IDivConfigForHeadings } from '../../interfaces/div-config.interface';
+import { IDivConfigForHeadings } from '../../interfaces/div-config-for-headings.interface';
+import { IDivConfig } from '../../interfaces/div-config.interface';
 import { IDiv } from '../../interfaces/div.interface';
 
 @Component({

@@ -1,5 +1,9 @@
-import { IFieldConfig } from 'projects/dynamic-form/src/public-api';
 import { EDivConfigType } from '../enums/div-config-type.enum';
+
+export interface IDivConfig<T> {
+    content: T;
+    type: EDivConfigType;
+}
 
 // a page can have multiple section
 // a section is fix with one design but with top bottom left right divided area
@@ -8,118 +12,99 @@ import { EDivConfigType } from '../enums/div-config-type.enum';
 // section footer, is the important notes, some audit trail information
 // section right, is only needed if the content required alot of hints input
 
-export interface IDivConfigForForm {
-    form_unique_name: string; // for used when data return identity;
-    form_design: IFieldConfig<any>[];
-    saved_data: { [key: string]: any };
-}
 
-export interface IDivConfigForHeadings {
-    text: string;
-    class: string;
-}
+// export interface IDivConfigForBreadcrumb {
+//     items: { text: string; link: string }[];
+//     class: string;
+// }
 
-export interface IDivConfigForBreadcrumb {
-    items: { text: string; link: string }[];
-    class: string;
-}
 
-export interface IDivConfigForButton {
-    text: string;
-    onclick_fn: () => Promise<void>;
-    class: string;
-    disabled: boolean;
-}
 
-export interface IDivConfigForAlert {
-    text: string;
-    class: string;
-    dismissible: boolean;
-}
+// export interface IDivConfigForAlert {
+//     text: string;
+//     class: string;
+//     dismissible: boolean;
+// }
 
-export interface IDivConfigForCard {
-    header_text: string;
-    header_image: string;
-    body_texxt: string;
-    footer_test: string;
-}
+// export interface IDivConfigForCard {
+//     header_text: string;
+//     header_image: string;
+//     body_texxt: string;
+//     footer_test: string;
+// }
 
-export interface IDivConfigForPagination {
-    items: string[];
-}
+// export interface IDivConfigForPagination {
+//     items: string[];
+// }
 
-export interface IDivConfigForProgress {
-    is_running: boolean;
-    max: number;
-    current: number;
-    class: string;
-}
+// export interface IDivConfigForProgress {
+//     is_running: boolean;
+//     max: number;
+//     current: number;
+//     class: string;
+// }
 
-export interface IDivConfigForSpinners {
-    is_running: boolean;
-    class: string;
-}
+// export interface IDivConfigForSpinners {
+//     is_running: boolean;
+//     class: string;
+// }
 
-export interface IDivConfigToast {
-    text: string;
-    actions: {
-        text: string;
-        onclick_fn?: () => void;
-        onclick_fn_promise?: () => Promise<void>;
-    }[];
-}
+// export interface IDivConfigToast {
+//     text: string;
+//     actions: {
+//         text: string;
+//         onclick_fn?: () => void;
+//         onclick_fn_promise?: () => Promise<void>;
+//     }[];
+// }
 
-export interface IDivConfigTableForTextColumn {
-    header_text: string;
-    field_name: string;
-    render_type: string;
-    class: string;
-}
+// export interface IDivConfigTableForTextColumn {
+//     header_text: string;
+//     field_name: string;
+//     render_type: string;
+//     class: string;
+// }
 
-export interface IDivConfigTableForButtonColumn {
-    text: string;
-    onclick_fn?: () => void;
-    onclick_fn_promise?: () => Promise<void>;
-}
+// export interface IDivConfigTableForButtonColumn {
+//     text: string;
+//     onclick_fn?: () => void;
+//     onclick_fn_promise?: () => Promise<void>;
+// }
 
-export interface IDivConfigForTable {
-    columns: IDivConfigTableForTextColumn[] | IDivConfigTableForButtonColumn[];
-}
+// export interface IDivConfigForTable {
+//     columns: IDivConfigTableForTextColumn[] | IDivConfigTableForButtonColumn[];
+// }
 
-export interface IDivConfig<T> {
-    content: T;
-    type: EDivConfigType;
-}
 
-export interface ISection<T> {
-    configs: IDivConfig<T>[];
-}
+// export interface ISection<T> {
+//     configs: IDivConfig<T>[];
+// }
 
-export interface IBody {
-    sections: ISection<
-        IDivConfigForHeadings |
-        IDivConfigForBreadcrumb
-    >;
-}
+// export interface IBody {
+//     sections: ISection<
+//         IDivConfigForHeadings |
+//         IDivConfigForBreadcrumb
+//     >;
+// }
 
 
 
 
-export const enum EEntityName {
-    UserProfile = 'user_profile',
-}
+// export const enum EEntityName {
+//     UserProfile = 'user_profile',
+// }
 
-export const enum EColletionName {
-    Master = 'master_datas',
-    Transaction = 'transaction_datas',
-    Reference = 'reference_datas',
-}
+// export const enum EColletionName {
+//     Master = 'master_datas',
+//     Transaction = 'transaction_datas',
+//     Reference = 'reference_datas',
+// }
 
-export interface IWidgetBased {
-    collection_name: EColletionName;
-    doc_id?: string;
-    [key: string]: any;
-}
+// export interface IWidgetBased {
+//     collection_name: EColletionName;
+//     doc_id?: string;
+//     [key: string]: any;
+// }
 
 
 // INFORMATION ARCHITECT VS DATA ARCHITECT

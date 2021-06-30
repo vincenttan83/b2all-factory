@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { DynamicFormComponent } from 'projects/dynamic-form/src/public-api';
-import { IDivConfig, IDivConfigForForm } from '../../interfaces/div-config.interface';
+import { AfterViewInit, Component, EventEmitter, ViewChild } from '@angular/core';
+import { IDivConfigForForm } from '../../interfaces/div-config-for-form.interface';
+import { IDivConfig } from '../../interfaces/div-config.interface';
 import { IDiv } from '../../interfaces/div.interface';
+import { DynamicFormComponent } from '../dynamic-form.component';
 
 @Component({
   selector: 'b2all-dynamic-div-form',

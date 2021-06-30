@@ -1,27 +1,26 @@
 /*
  * Public API Surface of dynamic-form
  */
+
+// module
 export * from './lib/dynamic-form/dynamic-form.module';
 
-export * from './lib/dynamic-form/dynamic-form.component';
+// components
+export * from './lib/dynamic-form/components/dynamic-form.component';
+export * from './lib/dynamic-form/components/dynamic-section.component';
 
+// enums
 export * from './lib/dynamic-form/enums/field-config-input-type.enum';
 export * from './lib/dynamic-form/enums/field-config-type.enum';
+export * from './lib/dynamic-form/enums/div-config-type.enum';
 
+// interfaces
 export * from './lib/dynamic-form/interfaces/field-config.interface';
 export * from './lib/dynamic-form/interfaces/multi-select.interface';
 export * from './lib/dynamic-form/interfaces/css-class.interface';
+export * from './lib/dynamic-form/interfaces/div-config.interface';
 
+// directives
 export * from './lib/dynamic-form/directives/dynamic-field.directive';
+export * from './lib/dynamic-form/directives/dynamic-div.directive';
 
-
-/*
- * Public API Surface of dynamic-section
- */
-export * from './lib/dynamic-section/dynamic-section.module';
-
-export * from './lib/dynamic-section/dynamic-section.component';
-
-export * from './lib/dynamic-section/enums/div-config-type.enum';
-
-export * from './lib/dynamic-section/interfaces/div-config.interface';

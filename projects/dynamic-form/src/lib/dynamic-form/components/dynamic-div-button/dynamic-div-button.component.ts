@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IDivConfig, IDivConfigForButton } from '../../interfaces/div-config.interface';
+import { IDivConfigForButton } from '../../interfaces/div-config-for-button.interface';
+import { IDivConfig } from '../../interfaces/div-config.interface';
 import { IDiv } from '../../interfaces/div.interface';
 
 @Component({

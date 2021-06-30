@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { EDivConfigType } from './enums/div-config-type.enum';
-import { IDivConfig, IDivConfigForForm } from './interfaces/div-config.interface';
+import { EDivConfigType } from '../enums/div-config-type.enum';
+import { IDivConfigForForm } from '../interfaces/div-config-for-form.interface';
+import { IDivConfig } from '../interfaces/div-config.interface';
 
 @Component({
   exportAs: 'b2allDynamicSection',
@@ -47,8 +48,13 @@ export class DynamicSectionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
+    if (changes && changes.inputSectionConfigs) {
+      for (const element of this.inputSectionConfigs) {
+        if (!element) {
+          throw new Error('Empty section detected!');
+        }
+      }
+    }
   }
-
 
 }

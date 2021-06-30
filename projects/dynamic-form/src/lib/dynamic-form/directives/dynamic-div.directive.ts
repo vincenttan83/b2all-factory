@@ -1,8 +1,7 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, EventEmitter, Input, OnChanges, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { DynamicDivButtonComponent } from '../components/dynamic-div-button/dynamic-div-button.component';
-import { DynamicDivFormComponent } from '../components/dynamic-div-form/dynamic-div-form.component';
-import { DynamicDivHeadingsComponent } from '../components/dynamic-div-headings/dynamic-div-headings.component';
+import { ComponentFactoryResolver, ComponentRef, Directive, EventEmitter, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
+import { DynamicDivButtonComponent } from '../../dynamic-form/components/dynamic-div-button/dynamic-div-button.component';
+import { DynamicDivFormComponent } from '../../dynamic-form/components/dynamic-div-form/dynamic-div-form.component';
+import { DynamicDivHeadingsComponent } from '../../dynamic-form/components/dynamic-div-headings/dynamic-div-headings.component';
 import { IDivConfig } from '../interfaces/div-config.interface';
 import { IDiv } from '../interfaces/div.interface';
 
