@@ -1,11 +1,14 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, ComponentRef, Directive, EventEmitter, Input, OnChanges, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DynamicDivButtonComponent } from '../components/dynamic-div-button/dynamic-div-button.component';
+import { DynamicDivFormComponent } from '../components/dynamic-div-form/dynamic-div-form.component';
 import { DynamicDivHeadingsComponent } from '../components/dynamic-div-headings/dynamic-div-headings.component';
 import { IDivConfig } from '../interfaces/div-config.interface';
 import { IDiv } from '../interfaces/div.interface';
 
 const components: { [key: string]: any } = {
   button: DynamicDivButtonComponent,
+  form: DynamicDivFormComponent,
   headings: DynamicDivHeadingsComponent,
 };
 
@@ -16,6 +19,8 @@ export class DynamicDivDirective implements OnInit, OnChanges, IDiv<any> {
 
   @Input() config!: IDivConfig<any>;
   @Input() index!: number;
+  @Input() formSubmitEvent?: EventEmitter<any>;
+  @Input() formChangeEvent?: EventEmitter<any>;
 
   component!: ComponentRef<IDiv<any>>;
 
@@ -37,7 +42,8 @@ export class DynamicDivDirective implements OnInit, OnChanges, IDiv<any> {
     this.component = this.privateViewContainerRef.createComponent(component);
     this.component.instance.config = this.config;
     this.component.instance.index = this.index;
-
+    this.component.instance.formSubmitEvent = this.formSubmitEvent;
+    this.component.instance.formChangeEvent = this.formChangeEvent;
   }
 
   ngOnChanges(): void {

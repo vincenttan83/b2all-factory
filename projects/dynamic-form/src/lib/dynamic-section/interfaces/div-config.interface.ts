@@ -1,3 +1,4 @@
+import { IFieldConfig } from 'projects/dynamic-form/src/public-api';
 import { EDivConfigType } from '../enums/div-config-type.enum';
 
 // a page can have multiple section
@@ -7,6 +8,11 @@ import { EDivConfigType } from '../enums/div-config-type.enum';
 // section footer, is the important notes, some audit trail information
 // section right, is only needed if the content required alot of hints input
 
+export interface IDivConfigForForm {
+    form_unique_name: string; // for used when data return identity;
+    form_design: IFieldConfig<any>[];
+    saved_data: { [key: string]: any };
+}
 
 export interface IDivConfigForHeadings {
     text: string;

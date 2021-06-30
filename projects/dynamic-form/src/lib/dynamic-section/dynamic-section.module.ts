@@ -4,6 +4,8 @@ import { DynamicDivDirective } from './directives/dynamic-div.directive';
 import { DynamicDivButtonComponent } from './components/dynamic-div-button/dynamic-div-button.component';
 import { DynamicDivHeadingsComponent } from './components/dynamic-div-headings/dynamic-div-headings.component';
 import { DynamicSectionComponent } from './dynamic-section.component';
+import { B2allDynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { DynamicDivFormComponent } from './components/dynamic-div-form/dynamic-div-form.component';
 
 
 /**
@@ -46,10 +48,12 @@ import { DynamicSectionComponent } from './dynamic-section.component';
     DynamicDivDirective,
     DynamicDivButtonComponent,
     DynamicDivHeadingsComponent,
-    DynamicSectionComponent
+    DynamicSectionComponent,
+    DynamicDivFormComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    B2allDynamicFormModule,
   ],
   exports: [
     DynamicSectionComponent,
