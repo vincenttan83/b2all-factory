@@ -9,8 +9,8 @@ import { IFieldConfigForSelectConfig } from 'projects/dynamic-form/src/lib/dynam
 import { IFieldConfigForTextareaConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
 import { EDivConfigType } from 'projects/dynamic-form/src/lib/dynamic-section/enums/div-config-type.enum';
-import { IDivConfig, IDivConfigForButton, IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-section/interfaces/div-config.interface';
-import { DynamicFormComponent } from 'projects/dynamic-form/src/public-api';
+import { IDivConfig, IDivConfigForButton, IDivConfigForForm, IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-section/interfaces/div-config.interface';
+import { DynamicFormComponent, DynamicSectionComponent } from 'projects/dynamic-form/src/public-api';
 import { of } from 'rxjs/internal/observable/of';
 import { countries, cs } from './country-state';
 
@@ -23,7 +23,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   title = 'b2all-factory';
   returnedValue: any;
 
-  @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
+  // @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
+  // @ViewChild(DynamicSectionComponent) dynamicSection!: DynamicSectionComponent;
 
   savedData: { [key: string]: any } = {
     accepted_agreement: true,
@@ -54,6 +55,32 @@ export class AppComponent implements OnInit, AfterViewInit {
     city: 'cyberjaya',
     summary: 'Start your long winded story here!\n\nlol',
   };
+
+  savedData2: { [key: string]: any } = {
+    accepted_agreement: false,
+    age_group: 'middle_aged_adults',
+    favorite_food: ['bananas', 'cherries'],
+    students: [
+      {
+        student_first_name: 'Vincent',
+        student_last_name: 'Tan',
+        student_gender: 'female',
+      },
+    ],
+    profile: {
+      first_name: 'Vince',
+      last_name: 'Tan',
+      interest: {
+        primary: 'Cycling',
+        secondary: 'Swimming',
+      },
+    },
+    country: 'malaysia',
+    state: 'selangor',
+    city: 'cyberjaya',
+    summary: 'huat ar',
+  };
+
 
   // for the field configs
   agreementAcceptanceControl: IFieldConfig<IFieldConfigForInputConfig> = {
@@ -264,9 +291,29 @@ export class AppComponent implements OnInit, AfterViewInit {
     type: EDivConfigType.Button,
   };
 
+  theFormRender: IDivConfig<IDivConfigForForm> = {
+    content: {
+      form_unique_name: 'form1',
+      form_design: this.myFormDesign,
+      saved_data: this.savedData,
+    },
+    type: EDivConfigType.Form,
+  };
+
+  theFormRender2: IDivConfig<IDivConfigForForm> = {
+    content: {
+      form_unique_name: 'form2',
+      form_design: this.myFormDesign,
+      saved_data: this.savedData2,
+    },
+    type: EDivConfigType.Form,
+  };
+
   mySectionDesign: IDivConfig<any>[] = [
     this.headingRender,
     this.buttonRender,
+    this.theFormRender,
+    this.theFormRender2,
   ];
 
   ngOnInit(): void {
@@ -274,10 +321,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dynamicForm.changes.subscribe(resp => {
-      // detect any value changes, so that we can perform some business logic accordingly.
+    // this.dynamicSection.changes.subscribe(resp => {
+    //   // detect any value changes, so that we can perform some business logic accordingly.
 
-    });
+    // });
   }
 
   hello(): Promise<void> {
@@ -285,10 +332,17 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   async formOnSubmit(formValue: any): Promise<void> {
-
-    this.returnedValue = formValue;
-
+    console.log('formOnSubmit');
+    console.log(formValue);
   }
+
+  async formOnChange(formValue: any): Promise<void> {
+    console.log('formOnChange');
+    console.log(formValue);
+
+    this.mySectionDesign.push(this.headingRender);
+  }
+
 }
 
 
