@@ -15,6 +15,7 @@ import { cs } from './country-state';
 import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-headings.interface';
 import { IDivConfigForButton } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-button.interface';
 import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -386,10 +387,11 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'full_name',
             display_text: 'Full name: ',
             type: EFieldConfigType.Input,
+            validation_fn: [Validators.required],
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: 'form-group', group_label: '', input: 'form-control mb-3', input_label: 'mb-1' },
+              css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' },
             },
             css_class: 'col-12'
           },
@@ -397,10 +399,11 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'address1',
             display_text: 'Address 1: ',
             type: EFieldConfigType.Input,
+            validation_fn: [Validators.required],
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: 'form-group', group_label: '', input: 'form-control mb-3', input_label: 'mb-1' }
+              css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
             },
             css_class: 'col-lg-6'
           },
@@ -411,7 +414,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: 'form-group', group_label: '', input: 'form-control mb-3', input_label: 'mb-1' }
+              css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
             },
             css_class: 'col-lg-6'
           },
@@ -421,9 +424,12 @@ export class AppComponent implements OnInit, AfterViewInit {
             type_config: {
               dataset: cs,
               controls: [
-                { name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: null },
-                { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: null },
-                { name: 'city', label: 'City', key_field: 'key', value_field: 'value', value: null },
+                {
+                  name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: '',
+                  validation_fn: [Validators.required],
+                },
+                { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: '' },
+                { name: 'city', label: 'City', key_field: 'key', value_field: 'value', value: '' },
               ],
               css_class: { group: 'col-12 col-lg-4 mb-3', select: 'form-select', select_label: 'mb-1' }
             },
@@ -433,10 +439,11 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'post_code',
             display_text: 'Post code:',
             type: EFieldConfigType.Input,
+            validation_fn: [Validators.min(10000), Validators.max(99999)],
             type_config: {
               type: EFieldConfigInputType.Number,
               list: false,
-              css_class: { group: 'form-group', group_label: '', input: 'form-control mb-3', input_label: 'mb-1' }
+              css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
             },
             css_class: 'col-lg-2'
           },
@@ -444,11 +451,26 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'about_yourself',
             display_text: 'About yourself',
             type: EFieldConfigType.Textarea,
+            validation_fn: [Validators.required],
             type_config: {
               row_count: 10,
-              css_class: { group: 'form-group', group_label: '', input: 'form-control mb-3', input_label: 'mb-1' }
+              css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
             },
             css_class: 'col-12'
+          },
+          {
+            name: 'agreement',
+            display_text: 'Before a user can update for the profile, its Terms and Conditions must be agreed to by checking a box:',
+            type: EFieldConfigType.Input,
+            validation_fn: [Validators.requiredTrue],
+            type_config: {
+              type: EFieldConfigInputType.CheckBox,
+              list: false,
+              single_checkbox_display_text: 'I agree',
+              css_class: {
+                group: 'form-check', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label'
+              }
+            }
           },
           {
             name: 'button_submit',
@@ -481,6 +503,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   async formOnSubmit(formValue: any): Promise<void> {
     console.log('formOnSubmit');
     console.log(formValue);
+    if (!formValue.form_data.agreement) {
+      alert('Do not try to by pass my validation!');
+    }
+
   }
 
   async formOnChange(formValue: any): Promise<void> {
