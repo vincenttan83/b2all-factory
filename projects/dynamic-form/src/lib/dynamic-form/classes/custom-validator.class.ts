@@ -14,8 +14,6 @@ export function requireCheckboxesToBeCheckedValidator(minRequired = 1): Validato
 
 export function requiredWordCountValidator(minRequired = 1): ValidatorFn {
     return (control: AbstractControl) => {
-        console.log(control);
-
         if (control.value) {
             const count = (control.value as string).split(' ').length;
 

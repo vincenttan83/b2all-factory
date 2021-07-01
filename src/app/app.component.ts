@@ -547,8 +547,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   async formOnSubmit(formValue: any): Promise<void> {
-    console.log('formOnSubmit');
-    console.log(formValue);
     if (!formValue.form_data.agreement) {
       alert('Do not try to by pass my validation!');
     }
