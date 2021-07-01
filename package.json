@@ -12,7 +12,7 @@
     "npm_pack": "cd dist/dynamic-form && npm pack",
     "package": "npm run build_lib && npm run npm_pack",
     "packagr": "ng-packagr -p projects/dynamic-form/ng-package.json",
-    "package_publish_b2allsolution": "npm run packagr && cd dist/dynamic-form && npm publish --access public"
+    "publish": "npm run packagr && cd dist/dynamic-form && npm publish --access public"
   },
   "private": true,
   "dependencies": {
