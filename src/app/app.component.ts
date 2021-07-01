@@ -16,7 +16,7 @@ import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-for
 import { IDivConfigForButton } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-button.interface';
 import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
 import { Validators } from '@angular/forms';
-import { requireCheckboxesToBeCheckedValidator } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
+import { requireCheckboxesToBeCheckedValidator, requiredWordCountValidator } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
 
 @Component({
   selector: 'app-root',
@@ -452,7 +452,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'about_yourself',
             display_text: 'About yourself',
             type: EFieldConfigType.Textarea,
-            validation_fn: [Validators.required],
+            validation_fn: [Validators.required, requiredWordCountValidator(10)],
             type_config: {
               row_count: 10,
               css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
