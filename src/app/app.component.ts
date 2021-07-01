@@ -464,7 +464,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'favorite_food',
             display_text: 'Select your favorite food:',
             type: EFieldConfigType.Input,
-            validation_fn: [requireCheckboxesToBeCheckedValidator(3)],
+            validation_fn: [requireCheckboxesToBeCheckedValidator(2)],
             type_config: {
               type: EFieldConfigInputType.CheckBox,
               list: true,
@@ -476,6 +476,28 @@ export class AppComponent implements OnInit, AfterViewInit {
               ],
               css_class: {
                 group: 'form-check', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label'
+              }
+            },
+            css_class: 'mb-3'
+          },
+
+          {
+            name: 'age_group',
+            display_text: 'Select your age group:',
+            type: EFieldConfigType.Input,
+            validation_fn: [Validators.required],
+            type_config: {
+              type: EFieldConfigInputType.Radio,
+              list: true,
+              dataset: [
+                { key: 'Below 3', value: 'babies' },
+                { key: '3 ~ 16', value: 'children' },
+                { key: '17 ~ 30', value: 'young_adults' },
+                { key: '31 ~ 45', value: 'middle_aged_adults' },
+                { key: 'Above 45', value: 'old_adults' }
+              ],
+              css_class: {
+                group: 'form-check col', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label'
               }
             },
             css_class: 'mb-3'

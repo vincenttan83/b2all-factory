@@ -135,6 +135,9 @@ export class DynamicFormGenerator {
                         objectTypeConfig.list) {
                         const listofArraySavedItems: string[] = [];
                         if (savedDatas[element.name]) {
+                            if (!Array.isArray(savedDatas[element.name])) {
+                                throw new Error('Only accept list of string data type.');
+                            }
                             savedDatas[element.name].forEach((elementSaveItem: string) => {
                                 listofArraySavedItems.push(elementSaveItem);
                             });
