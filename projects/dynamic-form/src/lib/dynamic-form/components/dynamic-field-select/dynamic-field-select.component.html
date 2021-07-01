@@ -1,9 +1,9 @@
 <div class="row" [formGroup]="group">
 
-    <div [ngClass]="cssClass.select.group" *ngFor="let control of detailConfig.controls; index as i;">
-        <label [ngClass]="cssClass.select.label" [attr.for]="'select_' + control.name + '_' + index">{{ control.label
+    <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of detailConfig.controls; index as i;">
+        <label [ngClass]="detailConfig.css_class.select_label" [attr.for]="'select_' + control.name + '_' + index">{{ control.label
             }}</label>
-        <select [ngClass]="cssClass.select.select" [attr.id]="'select_' + control.name + '_' + index"
+        <select [ngClass]="detailConfig.css_class.select" [attr.id]="'select_' + control.name + '_' + index"
             [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name"
             (change)="onChange($event, i)">
 

@@ -1,6 +1,11 @@
 export interface IFieldConfigForTextareaConfig {
     row_count: number;
     col_count?: number;
+    css_class: {
+        group: string;
+        input_label: string;
+        input: string;
+    };
 }
 
 export function isFieldConfigForTextareaConfig(obj: any): obj is IFieldConfigForTextareaConfig {

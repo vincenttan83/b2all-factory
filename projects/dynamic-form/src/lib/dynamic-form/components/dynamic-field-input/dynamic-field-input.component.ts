@@ -19,12 +19,12 @@ export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigFo
 
   detailConfig!: IFieldConfigForInputConfig;
 
-  cssClass!: ICssClass;
+  // cssClass!: ICssClass;
 
   constructor(
-    @Inject('css_class') private privateCssClass: ICssClass,
+    // @Inject('css_class') private privateCssClass: ICssClass,
   ) {
-    this.cssClass = this.privateCssClass;
+    // this.cssClass = this.privateCssClass;
   }
 
   ngOnInit(): void {

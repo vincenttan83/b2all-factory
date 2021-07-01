@@ -36,7 +36,7 @@ export class DynamicSectionComponent implements OnInit, OnChanges {
     const formNames: string[] = [];
     this.inputSectionConfigs.forEach(element => {
       if (element.type === EDivConfigType.Form) {
-        formNames.push((element.content as IDivConfigForForm).form_unique_name);
+        formNames.push((element.content as IDivConfigForForm<any>).form_unique_name);
       }
     });
 

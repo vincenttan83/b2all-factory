@@ -19,16 +19,16 @@ export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
 
   detailConfig!: IFieldConfigForArrayConfig<T>;
 
-  cssClass!: ICssClass;
+  // cssClass!: ICssClass;
 
   theArrays!: FormArray;
   theIndexZeroFormGroup!: FormGroup;
 
   constructor(
-    @Inject('css_class') private privateCssClass: ICssClass,
+    // @Inject('css_class') private privateCssClass: ICssClass,
     private privateFormBuilder: FormBuilder
   ) {
-    this.cssClass = this.privateCssClass;
+    // this.cssClass = this.privateCssClass;
   }
 
   ngOnInit(): void {

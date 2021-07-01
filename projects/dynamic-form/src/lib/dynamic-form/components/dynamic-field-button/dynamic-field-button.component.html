@@ -1,4 +1,7 @@
 <div [formGroup]="group">
-    <button [ngClass]="cssClass.button.button" [attr.type]="detailConfig.type" (click)="detailConfig.onclick_fn ? detailConfig.onclick_fn() : null">{{
-        config.display_text }}</button>
+    <div [ngClass]="detailConfig.css_class.group">
+        <button [ngClass]="detailConfig.css_class.button" [attr.type]="detailConfig.type"
+            (click)="detailConfig.onclick_fn ? detailConfig.onclick_fn() : null">{{
+            config.display_text }}</button>
+    </div>
 </div>

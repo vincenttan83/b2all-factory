@@ -1,30 +1,31 @@
 <div [formGroup]="group">
 
     <ng-container *ngIf="detailConfig.list; else nonListInput">
-        <label [ngClass]="cssClass.input.list.label">{{ config.display_text }}</label>
-        <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="cssClass.input.list.item.group">
-            <input [ngClass]="cssClass.input.list.item.input"
+        <label [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+
+        <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group ?? ''">
+            <input [ngClass]="detailConfig.css_class.input ?? ''"
                 [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
                 (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
                 [attr.name]="config.name" [checked]="shouldChecked(choice.value)">
 
-            <label [ngClass]="cssClass.input.list.item.label"
+            <label [ngClass]="detailConfig.css_class.input_label ?? ''"
                 [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
         </div>
     </ng-container>
 
     <ng-template #nonListInput>
         <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
-            <div [ngClass]="cssClass.input.non_list.group">
+            <div [ngClass]="detailConfig.css_class.group ?? ''">
 
-                <label [ngClass]="cssClass.input.non_list.label"
+                <label [ngClass]="detailConfig.css_class.input_label ?? ''"
                     [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
                     config.display_text }}</label>
 
                 <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name]
                     }}</span>
 
-                <input [ngClass]="cssClass.input.non_list.input"
+                <input [ngClass]="detailConfig.css_class.input ?? ''"
                     [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
                     [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
                     [attr.max]="detailConfig.type==='range' ? 100: null"
@@ -35,15 +36,15 @@
         </ng-container>
         <ng-template #nonListInputForCheckbox>
 
-            <label [ngClass]="cssClass.input.list.label">{{ config.display_text }}</label>
+            <label [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
 
-            <div [ngClass]="cssClass.input.list.item.group">
+            <div [ngClass]="detailConfig.css_class.group ?? ''">
 
-                <input [ngClass]="cssClass.input.list.item.input"
+                <input [ngClass]="detailConfig.css_class.input ?? ''"
                     [attr.id]="detailConfig.type + '_' + config.name + '_' + index" (change)="onCheckChange($event)"
                     [attr.type]="detailConfig.type" [attr.name]="config.name"
                     [checked]="shouldChecked(group.controls[config.name].value)">
-                <label [ngClass]="cssClass.input.list.item.label"
+                <label [ngClass]="detailConfig.css_class.input_label ?? ''"
                     [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
                     detailConfig.single_checkbox_display_text }}</label>
 

@@ -22,7 +22,7 @@ export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigF
 
   detailConfig!: IFieldConfigForSelectConfig;
 
-  cssClass!: ICssClass;
+  // cssClass!: ICssClass;
 
   runningValues: { key: string, value: string }[] = [];
 
@@ -31,10 +31,10 @@ export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigF
   latestDatabase: { [key: string]: any } = {};
 
   constructor(
-    @Inject('css_class') private privateCssClass: ICssClass,
+    // @Inject('css_class') private privateCssClass: ICssClass,
     private privateDynamicFieldSelectService: DynamicFieldSelectService
   ) {
-    this.cssClass = this.privateCssClass;
+    // this.cssClass = this.privateCssClass;
   }
 
   ngOnInit(): void {

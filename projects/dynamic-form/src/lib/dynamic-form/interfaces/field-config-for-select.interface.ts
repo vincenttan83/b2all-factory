@@ -13,6 +13,11 @@ export interface IFieldConfigForSelectConfig {
         value_field: string;
         value: string | null;
     }[];
+    css_class: {
+        group: string;
+        select_label: string;
+        select: string;
+    };
 }
 
 export function isFieldConfigForSelectConfig(obj: any): obj is IFieldConfigForSelectConfig {

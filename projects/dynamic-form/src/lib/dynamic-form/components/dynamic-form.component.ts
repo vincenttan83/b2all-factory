@@ -11,9 +11,11 @@ import { IFieldConfig } from '../interfaces/field-config.interface';
   template: `
     <form class="dynamic-form" [formGroup]="formGroup" (ngSubmit)="formOnSubmitting()">
 
-      <div *ngFor="let field of inputFormConfigs;" [ngClass]="field.ng_class ?? ''">
+    <div class="row">
+      <div *ngFor="let field of inputFormConfigs;" [ngClass]="field.css_class ?? ''">
         <ng-container b2allDynamicField [config]="field" [group]="formGroup">
         </ng-container>
+      </div>
       </div>
 
     </form>

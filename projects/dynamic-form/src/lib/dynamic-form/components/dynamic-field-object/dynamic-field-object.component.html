@@ -1,5 +1,5 @@
 <div [formGroup]="group">
-    <h4>{{ config.display_text }}</h4>
+    <p [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }}</p>
 
     <div *ngFor="let field of detailConfig.field_configs">
         <ng-container b2allDynamicField [config]="field" [group]="theSubGroup">

@@ -1,6 +1,10 @@
 export interface IFieldConfigForButtonConfig {
     type: 'button' | 'submit'; // reset should be just refresh the page
     onclick_fn?: () => Promise<void>;
+    css_class: {
+        group: string;
+        button: string;
+    };
 }
 
 export function isFieldConfigForButtonConfig(obj: any): obj is IFieldConfigForButtonConfig {

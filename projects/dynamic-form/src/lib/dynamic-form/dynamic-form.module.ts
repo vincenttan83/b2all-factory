@@ -51,13 +51,16 @@ import { DynamicDivFormComponent } from './components/dynamic-div-form/dynamic-d
     DynamicSectionComponent,
   ]
 })
-export class B2allDynamicFormModule {
-  static forRoot(config: ICssClass): ModuleWithProviders<B2allDynamicFormModule> {
-    return {
-      ngModule: B2allDynamicFormModule,
-      providers: [
-        { provide: 'css_class', useValue: config },
-      ],
-    };
-  }
-}
+export class B2allDynamicFormModule { }
+
+// Temporary NOT required
+// export class B2allDynamicFormModule {
+//   static forRoot(config: ICssClass): ModuleWithProviders<B2allDynamicFormModule> {
+//     return {
+//       ngModule: B2allDynamicFormModule,
+//       providers: [
+//         { provide: 'css_class', useValue: config },
+//       ],
+//     };
+//   }
+// }

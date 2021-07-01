@@ -1,11 +1,12 @@
 <div [formGroup]="group">
-    <h4>{{ config.display_text }} <button [ngClass]="cssClass.array.button" type="button" (click)="addNew()">+</button>
-    </h4>
+    <p [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }} <button
+            [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+</button>
+    </p>
 
-    <div [ngClass]="cssClass.array.item" *ngFor="let control of theArrays.controls; index as i;">
+    <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of theArrays.controls; index as i;">
 
-        <label [ngClass]="cssClass.array.item_label"># {{ (i + 1)}}: </label><button [ngClass]="cssClass.array.button"
-            type="button" (click)="removeRow(i)">X</button>
+        <label [ngClass]="detailConfig.css_class.label"># {{ (i + 1)}}: </label>
+        <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">X</button>
 
         <div *ngFor="let field of detailConfig.field_configs">
             <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">

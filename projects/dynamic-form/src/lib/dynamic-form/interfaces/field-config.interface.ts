@@ -30,6 +30,6 @@ export interface IFieldConfig<T> {
     /** for field sorting */
     index?: number;
     /** for css class */
-    ng_class?: string;
+    css_class?: string;
 
 }

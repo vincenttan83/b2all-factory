@@ -7,6 +7,12 @@ export interface IFieldConfigForInputConfig {
     dataset?: IKeyValueInString[];
     input_helper?: boolean;
     single_checkbox_display_text?: string;
+    css_class: {
+        group_label: string;
+        group: string;
+        input_label: string;
+        input: string;
+    };
 }
 
 export function isFieldConfigForInputConfig(obj: any): obj is IFieldConfigForInputConfig {
