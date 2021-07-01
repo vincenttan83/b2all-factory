@@ -11,6 +11,10 @@
     At least {{validation?.minChecked?.requiredLength}} checked required. {{ (validation?.minChecked?.requiredLength - validation?.minChecked?.checkedLenght) }} more to go.
 </small>
 
+<small *ngIf="validation?.minCount" class="text-danger ms-1">
+    At least {{validation?.minCount?.requiredCount}} words required. {{ (validation?.minCount?.requiredCount - validation?.minCount?.checkedCount) }} more words to go.
+</small>
+
 <small *ngIf="validation?.email" class="text-danger ms-1">
     Email format is invalid.</small>
 <small *ngIf="validation?.min" class="text-danger ms-1">

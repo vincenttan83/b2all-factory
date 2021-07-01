@@ -11,3 +11,19 @@ export function requireCheckboxesToBeCheckedValidator(minRequired = 1): Validato
         return null;
     };
 }
+
+export function requiredWordCountValidator(minRequired = 1): ValidatorFn {
+    return (control: AbstractControl) => {
+        console.log(control);
+
+        if (control.value) {
+            const count = (control.value as string).split(' ').length;
+
+            if (count < minRequired) {
+                return { minCount: { requiredCount: minRequired, checkedCount: count } };
+            }
+
+        }
+        return null;
+    };
+}
