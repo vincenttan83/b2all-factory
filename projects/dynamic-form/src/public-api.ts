@@ -24,3 +24,5 @@ export * from './lib/dynamic-form/interfaces/div-config.interface';
 export * from './lib/dynamic-form/directives/dynamic-field.directive';
 export * from './lib/dynamic-form/directives/dynamic-div.directive';
 
+// functions
+export * from './lib/dynamic-form/classes/custom-validator.class';
