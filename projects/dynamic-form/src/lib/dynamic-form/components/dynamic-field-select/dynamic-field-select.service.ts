@@ -50,7 +50,7 @@ export class DynamicFieldSelectService {
     // catch the next level if any, and reset the following lever after the next level
     for (let i = currentLevel; i < this.maxLevel; i++) {
       // clean the next level of selected value, current value keep
-      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: currentLevel === i ? selectedValue : null };
+      this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: currentLevel === i ? selectedValue : '' };
       // clean the next leve of key value
       if (i !== currentLevel) {
         this.theLatestDatabase = { ...this.theLatestDatabase, ['key_value_pair_' + i]: [] };

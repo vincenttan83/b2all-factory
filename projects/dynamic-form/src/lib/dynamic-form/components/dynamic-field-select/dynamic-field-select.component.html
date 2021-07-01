@@ -1,19 +1,32 @@
 <div class="row" [formGroup]="group">
 
     <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of detailConfig.controls; index as i;">
-        <label [ngClass]="detailConfig.css_class.select_label" [attr.for]="'select_' + control.name + '_' + index">{{ control.label
+        <label [ngClass]="detailConfig.css_class.select_label" [attr.for]="'select_' + control.name + '_' + index">{{
+            control.label
             }}</label>
-        <select [ngClass]="detailConfig.css_class.select" [attr.id]="'select_' + control.name + '_' + index"
+        <select [ngClass]="
+                        control.validation_fn ? 
+                            group.controls[control.name].touched ? 
+                                group.controls[control.name].valid ? 
+                                    detailConfig.css_class.select ? detailConfig.css_class.select + ' is-valid' : 'is-valid' 
+                                : detailConfig.css_class.select ? detailConfig.css_class.select + ' is-invalid': 'is-invalid' 
+                            : detailConfig.css_class.select ?? '' 
+                        : detailConfig.css_class.select ?? ''" [attr.id]="'select_' + control.name + '_' + index"
             [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name"
             (change)="onChange($event, i)">
 
-            <option [value]="null">Select {{ control.label.toLowerCase() }}</option>
+            <option [value]="''">Select {{ control.label.toLowerCase() }}</option>
 
             <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]">
                 {{ choice[control.key_field] }}
             </option>
 
         </select>
+
+        <div *ngIf="control.validation_fn && group.controls[control.name].touched">
+            <b2all-validator-hint *ngIf="group.controls[control.name].errors"
+                [validation]="group.controls[control.name].errors"></b2all-validator-hint>
+        </div>
 
     </div>
 

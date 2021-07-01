@@ -16,7 +16,7 @@ import { IFieldConfig } from '../interfaces/field-config.interface';
         <ng-container b2allDynamicField [config]="field" [group]="formGroup">
         </ng-container>
       </div>
-      </div>
+    </div>
 
     </form>
   `,

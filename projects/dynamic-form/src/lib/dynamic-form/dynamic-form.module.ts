@@ -22,6 +22,7 @@ import { DynamicDivDirective } from './directives/dynamic-div.directive';
 import { DynamicDivButtonComponent } from './components/dynamic-div-button/dynamic-div-button.component';
 import { DynamicDivHeadingsComponent } from './components/dynamic-div-headings/dynamic-div-headings.component';
 import { DynamicDivFormComponent } from './components/dynamic-div-form/dynamic-div-form.component';
+import { ValidatorHintComponent } from './components/validator-hint/validator-hint.component';
 
 
 
@@ -41,6 +42,7 @@ import { DynamicDivFormComponent } from './components/dynamic-div-form/dynamic-d
     DynamicDivButtonComponent,
     DynamicDivHeadingsComponent,
     DynamicDivFormComponent,
+    ValidatorHintComponent,
   ],
   imports: [
     CommonModule,

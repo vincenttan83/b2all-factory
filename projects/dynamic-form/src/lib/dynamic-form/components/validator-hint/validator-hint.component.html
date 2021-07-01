@@ -1,0 +1,14 @@
+<small *ngIf="validation?.required" class="text-danger ms-1">
+    This field is required.</small>
+<small *ngIf="validation?.minlength" class="text-danger ms-1">
+    This field is required min {{validation?.minlength?.requiredLength}}
+    length.</small>
+<small *ngIf="validation?.maxlength" class="text-danger ms-1">
+    This field is required max {{validation?.maxlength?.requiredLength}}
+    length.</small>
+<small *ngIf="validation?.email" class="text-danger ms-1">
+    Email format is invalid.</small>
+<small *ngIf="validation?.min" class="text-danger ms-1">
+    >= {{validation?.min?.min}}.</small>
+<small *ngIf="validation?.max" class="text-danger ms-1">
+    <= {{validation?.max?.max}}.</small>

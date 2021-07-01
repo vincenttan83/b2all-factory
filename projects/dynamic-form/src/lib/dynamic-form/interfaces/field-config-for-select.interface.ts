@@ -1,3 +1,4 @@
+import { ValidatorFn } from '@angular/forms';
 import { IMultiSelect } from './multi-select.interface';
 
 export interface IFieldConfigForSelectConfig {
@@ -11,7 +12,8 @@ export interface IFieldConfigForSelectConfig {
         label: string;
         key_field: string;
         value_field: string;
-        value: string | null;
+        value: string | '';
+        validation_fn?: ValidatorFn[];
     }[];
     css_class: {
         group: string;

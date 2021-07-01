@@ -24,7 +24,7 @@ export class DynamicFormGenerator {
         const theNewComboList: any[] = [];
         templateSelectTypeConfig.controls.forEach(elementCombo => {
             const newCombo = { ...elementCombo };
-            newCombo.value = elementSavedData[elementCombo.name] ?? null;
+            newCombo.value = elementSavedData[elementCombo.name] ?? '';
             theNewComboList.push(newCombo);
         });
         templateSelectTypeConfigWithData.controls = theNewComboList;
@@ -139,7 +139,7 @@ export class DynamicFormGenerator {
                         });
                         group.addControl(element.name, this.privateFormBuilder.array(listofArraySavedItems));
                     } else {
-                        group.addControl(element.name, this.createControl2(undefined, undefined, savedDatas[element.name]));
+                        group.addControl(element.name, this.createControl2(undefined, element.validation_fn, savedDatas[element.name]));
                     }
                     break;
                 }
@@ -148,7 +148,7 @@ export class DynamicFormGenerator {
                     if (!isFieldConfigForTextareaConfig(element.type_config)) {
                         throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
                     }
-                    group.addControl(element.name, this.createControl2(undefined, undefined, savedDatas[element.name]));
+                    group.addControl(element.name, this.createControl2(undefined, element.validation_fn, savedDatas[element.name]));
                     break;
                 }
                 // object render, need to iterate the giving field configs
@@ -179,7 +179,8 @@ export class DynamicFormGenerator {
                     }
                     const selectTypeConfig = this.prepForSelect(element, savedDatas);
                     selectTypeConfig.controls.forEach(elementControl => {
-                        group.addControl(elementControl.name, this.createControl2(undefined, undefined, elementControl.value));
+                        group.addControl(elementControl.name,
+                            this.createControl2(undefined, elementControl.validation_fn, elementControl.value));
                     });
                     break;
                 }

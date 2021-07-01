@@ -22,15 +22,51 @@
                     [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
                     config.display_text }}</label>
 
-                <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">{{ group.value[config.name]
-                    }}</span>
+                <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">
+                    {{ group.value[config.name] }}</span>
 
-                <input [ngClass]="detailConfig.css_class.input ?? ''"
+                <!-- validation logic:
+                    if the validation required?
+                        yes:
+                            if the control is "touched"?
+                                yes:
+                                    if is valid?
+                                        yes:
+                                            if template css is null ?
+                                                yes:  apply is-valid
+                                                no: apply template css with is-valid
+                                        no:
+                                            if template css is null ?
+                                                yes: apply is-invalid
+                                                no: apply template css with is-invalid
+                                no: 
+                                    if template css is null ?
+                                        yes: apply empty string
+                                        no: apply template css
+                        no:
+                            if template css is null ?
+                                yes: apply empty string
+                                no: apply template css
+                 -->
+                <input [ngClass]="
+                        config.validation_fn ? 
+                            group.controls[config.name].touched ? 
+                                group.controls[config.name].valid ? 
+                                    detailConfig.css_class.input ? detailConfig.css_class.input + ' is-valid' : 'is-valid' 
+                                : detailConfig.css_class.input ? detailConfig.css_class.input + ' is-invalid': 'is-invalid' 
+                            : detailConfig.css_class.input ?? '' 
+                        : detailConfig.css_class.input ?? ''"
                     [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
                     [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
                     [attr.max]="detailConfig.type==='range' ? 100: null"
                     [attr.step]="detailConfig.type==='range' ? 5: null">
 
+                <div *ngIf="config.validation_fn && group.controls[config.name].touched">
+
+                    <b2all-validator-hint *ngIf="group.controls[config.name].errors"
+                        [validation]="group.controls[config.name].errors"></b2all-validator-hint>
+
+                </div>
             </div>
 
         </ng-container>
@@ -47,6 +83,13 @@
                 <label [ngClass]="detailConfig.css_class.input_label ?? ''"
                     [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
                     detailConfig.single_checkbox_display_text }}</label>
+
+                <div *ngIf="config.validation_fn">
+
+                    <b2all-validator-hint *ngIf="group.controls[config.name].errors"
+                        [validation]="group.controls[config.name].errors"></b2all-validator-hint>
+
+                </div>
 
             </div>
 
