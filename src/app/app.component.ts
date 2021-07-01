@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-input-type.enum';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
 import { IFieldConfigForArrayConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-array.interface';
@@ -8,11 +8,13 @@ import { IFieldConfigForObjectConfig } from 'projects/dynamic-form/src/lib/dynam
 import { IFieldConfigForSelectConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-select.interface';
 import { IFieldConfigForTextareaConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
-import { EDivConfigType } from 'projects/dynamic-form/src/lib/dynamic-section/enums/div-config-type.enum';
-import { IDivConfig, IDivConfigForButton, IDivConfigForForm, IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-section/interfaces/div-config.interface';
-import { DynamicFormComponent, DynamicSectionComponent } from 'projects/dynamic-form/src/public-api';
+import { EDivConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/div-config-type.enum';
+import { IDivConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config.interface';
 import { of } from 'rxjs/internal/observable/of';
-import { countries, cs } from './country-state';
+import { cs } from './country-state';
+import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-headings.interface';
+import { IDivConfigForButton } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-button.interface';
+import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
 
 @Component({
   selector: 'app-root',
@@ -267,12 +269,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   myFormDesign: IFieldConfig<any>[] = [
     this.agreementAcceptanceControl,
-    this.ageGroupControl,
-    this.favoriteFoodControl,
-    this.countrySelectionControl,
-    this.dividerControl,
-    this.studentArrayControl,
-    this.profileControl,
+    // this.ageGroupControl,
+    // this.favoriteFoodControl,
+    // this.countrySelectionControl,
+    // this.dividerControl,
+    // this.studentArrayControl,
+    // this.profileControl,
     this.summaryControl,
     this.buttonControl,
   ];
@@ -309,14 +311,21 @@ export class AppComponent implements OnInit, AfterViewInit {
     type: EDivConfigType.Form,
   };
 
-  mySectionDesign: IDivConfig<any>[] = [
-    this.headingRender,
-    this.buttonRender,
-    this.theFormRender,
-    this.theFormRender2,
-  ];
+  myNewSectionDesign = new Array<IDivConfig<any>>(2);
+
+  // mySectionDesign: IDivConfig<any>[] = [
+  //   this.headingRender,
+  //   this.buttonRender,
+  //   this.theFormRender,
+  //   this.theFormRender2,
+  // ];
 
   ngOnInit(): void {
+
+    this.myNewSectionDesign[0] = this.headingRender;
+    this.myNewSectionDesign[1] = this.theFormRender;
+    // this.myNewSectionDesign[2] = this.theFormRender2;
+
 
   }
 
@@ -337,10 +346,42 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   async formOnChange(formValue: any): Promise<void> {
-    console.log('formOnChange');
-    console.log(formValue);
+    // console.log('formOnChange');
+    // console.log(formValue.form_data.summary);
 
-    this.mySectionDesign.push(this.headingRender);
+    const somethingNew: IDivConfig<IDivConfigForHeadings> = {
+      content: {
+        text: formValue.form_data.summary,
+        class: 'h3'
+      },
+      type: EDivConfigType.Headings,
+    };
+
+    let newFormRender = this.theFormRender;
+    newFormRender = {
+      ...newFormRender,
+      content: {
+        ...newFormRender.content,
+        saved_data: {
+          ...newFormRender.content.saved_data,
+          accepted_agreement: !formValue.form_data.accepted_agreement,
+          summary: formValue.form_data.summary,
+        }
+      },
+    };
+
+
+
+    // newFormRender = {}
+
+    // newFormRender.content.saved_data.accepted_agreement: !formValue.form_data.accepted_agreement
+
+    console.log(newFormRender);
+
+
+    this.myNewSectionDesign[0] = somethingNew;
+    this.myNewSectionDesign[1] = newFormRender;
+    // this.mySectionDesign.push(somethingNew);
   }
 
 }
