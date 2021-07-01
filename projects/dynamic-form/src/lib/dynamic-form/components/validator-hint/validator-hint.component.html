@@ -6,6 +6,11 @@
 <small *ngIf="validation?.maxlength" class="text-danger ms-1">
     This field is required max {{validation?.maxlength?.requiredLength}}
     length.</small>
+
+<small *ngIf="validation?.minChecked" class="text-danger ms-1">
+    At least {{validation?.minChecked?.requiredLength}} checked required. {{ (validation?.minChecked?.requiredLength - validation?.minChecked?.checkedLenght) }} more to go.
+</small>
+
 <small *ngIf="validation?.email" class="text-danger ms-1">
     Email format is invalid.</small>
 <small *ngIf="validation?.min" class="text-danger ms-1">

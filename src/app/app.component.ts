@@ -16,6 +16,7 @@ import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-for
 import { IDivConfigForButton } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-button.interface';
 import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
 import { Validators } from '@angular/forms';
+import { requireCheckboxesToBeCheckedValidator } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
 
 @Component({
   selector: 'app-root',
@@ -458,6 +459,29 @@ export class AppComponent implements OnInit, AfterViewInit {
             },
             css_class: 'col-12'
           },
+
+          {
+            name: 'favorite_food',
+            display_text: 'Select your favorite food:',
+            type: EFieldConfigType.Input,
+            validation_fn: [requireCheckboxesToBeCheckedValidator(3)],
+            type_config: {
+              type: EFieldConfigInputType.CheckBox,
+              list: true,
+              dataset: [
+                { key: 'Apples', value: 'apples' },
+                { key: 'Bananas', value: 'bananas' },
+                { key: 'Cherries', value: 'cherries' },
+                { key: 'Damson plum', value: 'damson_plum' },
+              ],
+              css_class: {
+                group: 'form-check', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label'
+              }
+            },
+            css_class: 'mb-3'
+          },
+
+
           {
             name: 'agreement',
             display_text: 'Before a user can update for the profile, its Terms and Conditions must be agreed to by checking a box:',

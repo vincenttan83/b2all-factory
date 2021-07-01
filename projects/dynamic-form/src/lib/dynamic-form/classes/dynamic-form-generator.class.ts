@@ -134,10 +134,12 @@ export class DynamicFormGenerator {
                     if (element.type_config.type === EFieldConfigInputType.CheckBox &&
                         objectTypeConfig.list) {
                         const listofArraySavedItems: string[] = [];
-                        savedDatas[element.name].forEach((elementSaveItem: string) => {
-                            listofArraySavedItems.push(elementSaveItem);
-                        });
-                        group.addControl(element.name, this.privateFormBuilder.array(listofArraySavedItems));
+                        if (savedDatas[element.name]) {
+                            savedDatas[element.name].forEach((elementSaveItem: string) => {
+                                listofArraySavedItems.push(elementSaveItem);
+                            });
+                        }
+                        group.addControl(element.name, this.privateFormBuilder.array(listofArraySavedItems, element.validation_fn));
                     } else {
                         group.addControl(element.name, this.createControl2(undefined, element.validation_fn, savedDatas[element.name]));
                     }

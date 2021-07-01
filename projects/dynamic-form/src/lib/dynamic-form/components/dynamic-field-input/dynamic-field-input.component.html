@@ -12,6 +12,12 @@
             <label [ngClass]="detailConfig.css_class.input_label ?? ''"
                 [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
         </div>
+
+        <div *ngIf="config.validation_fn">
+            <b2all-validator-hint *ngIf="group.controls[config.name].errors"
+                [validation]="group.controls[config.name].errors"></b2all-validator-hint>
+
+        </div>
     </ng-container>
 
     <ng-template #nonListInput>
