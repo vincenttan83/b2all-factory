@@ -13,6 +13,7 @@ export * from './lib/dynamic-form/components/dynamic-section.component';
 export * from './lib/dynamic-form/enums/field-config-input-type.enum';
 export * from './lib/dynamic-form/enums/field-config-type.enum';
 export * from './lib/dynamic-form/enums/div-config-type.enum';
+export * from './lib/dynamic-form/enums/form-validator.enum';
 
 // interfaces
 export * from './lib/dynamic-form/interfaces/field-config.interface';
