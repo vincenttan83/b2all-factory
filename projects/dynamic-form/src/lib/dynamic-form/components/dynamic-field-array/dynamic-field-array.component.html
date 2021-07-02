@@ -5,12 +5,17 @@
 
     <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of theArrays.controls; index as i;">
 
-        <label [ngClass]="detailConfig.css_class.label"># {{ (i + 1)}}: </label>
-        <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">X</button>
+        <div class="col align-bottom">
+            <label [ngClass]="detailConfig.css_class.label"># {{ (i + 1)}}: </label>
+        </div>
 
-        <div *ngFor="let field of detailConfig.field_configs">
+        <div *ngFor="let field of detailConfig.field_configs" [ngClass]="detailConfig.css_class.array_item">
             <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
             </ng-container>
+        </div>
+
+        <div class="col">
+            <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">X</button>
         </div>
 
     </div>
