@@ -1,5 +1,9 @@
 <small *ngIf="validation?.required" class="text-danger ms-1">
     This field is required.</small>
+<small *ngIf="validation?.email" class="text-danger ms-1">
+    Email format is invalid.</small>
+
+
 <small *ngIf="validation?.minlength" class="text-danger ms-1">
     This field is required min {{validation?.minlength?.requiredLength}}
     length.</small>
@@ -7,17 +11,28 @@
     This field is required max {{validation?.maxlength?.requiredLength}}
     length.</small>
 
+
 <small *ngIf="validation?.minChecked" class="text-danger ms-1">
-    At least {{validation?.minChecked?.requiredLength}} checked required. {{ (validation?.minChecked?.requiredLength - validation?.minChecked?.checkedLenght) }} more to go.
+    At least {{validation?.minChecked?.requiredLength}} checked required. {{ (validation?.minChecked?.requiredLength -
+    validation?.minChecked?.checkedLenght) }} more to go.
 </small>
+<small *ngIf="validation?.maxChecked" class="text-danger ms-1">
+    Max support {{validation?.maxChecked?.requiredLength}} checked. Over {{ (validation?.maxChecked?.checkedLenght -
+    validation?.maxChecked?.requiredLength) }} checked detected.
+</small>
+
 
 <small *ngIf="validation?.minCount" class="text-danger ms-1">
-    At least {{validation?.minCount?.requiredCount}} words required. {{ (validation?.minCount?.requiredCount - validation?.minCount?.checkedCount) }} more words to go.
+    At least {{validation?.minCount?.requiredCount}} words required. {{ (validation?.minCount?.requiredCount -
+    validation?.minCount?.checkedCount) }} more word(s) to go.
+</small>
+<small *ngIf="validation?.maxCount" class="text-danger ms-1">
+    Max support {{validation?.maxCount?.requiredCount}} words. Over {{ (validation?.maxCount?.checkedCount -
+    validation?.maxCount?.requiredCount) }} word(s) detected.
 </small>
 
-<small *ngIf="validation?.email" class="text-danger ms-1">
-    Email format is invalid.</small>
+
 <small *ngIf="validation?.min" class="text-danger ms-1">
-    >= {{validation?.min?.min}}.</small>
+    &gt;= {{validation?.min?.min}}.</small>
 <small *ngIf="validation?.max" class="text-danger ms-1">
-    <= {{validation?.max?.max}}.</small>
+    &lt;= {{validation?.max?.max}}.</small>
