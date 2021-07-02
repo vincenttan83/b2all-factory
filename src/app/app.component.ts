@@ -16,7 +16,8 @@ import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-for
 import { IDivConfigForButton } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-button.interface';
 import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
 import { Validators } from '@angular/forms';
-import { requireCheckboxesToBeCheckedValidator, requiredWordCountValidator } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
+import { getValidators } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
+import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums/form-validator.enum';
 
 @Component({
   selector: 'app-root',
@@ -380,6 +381,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       IFieldConfigForInputConfig | IFieldConfigForSelectConfig | IFieldConfigForButtonConfig | IFieldConfigForTextareaConfig
     >
   > {
+
     return {
       content: {
         form_unique_name: 'form01',
@@ -388,7 +390,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'full_name',
             display_text: 'Full name: ',
             type: EFieldConfigType.Input,
-            validation_fn: [Validators.required],
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
@@ -400,7 +402,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'address1',
             display_text: 'Address 1: ',
             type: EFieldConfigType.Input,
-            validation_fn: [Validators.required],
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
@@ -427,7 +429,7 @@ export class AppComponent implements OnInit, AfterViewInit {
               controls: [
                 {
                   name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: '',
-                  validation_fn: [Validators.required],
+                  validation_fn: getValidators([{ type: EFormValidator.Required }]),
                 },
                 { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: '' },
                 { name: 'city', label: 'City', key_field: 'key', value_field: 'value', value: '' },
@@ -440,7 +442,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'post_code',
             display_text: 'Post code:',
             type: EFieldConfigType.Input,
-            validation_fn: [Validators.min(10000), Validators.max(99999)],
+            validation_fn: getValidators([{ type: EFormValidator.Min, param: 10000 }, { type: EFormValidator.Max, param: 99999 }]),
             type_config: {
               type: EFieldConfigInputType.Number,
               list: false,
@@ -452,7 +454,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'about_yourself',
             display_text: 'About yourself',
             type: EFieldConfigType.Textarea,
-            validation_fn: [Validators.required, requiredWordCountValidator(10)],
+            validation_fn: getValidators([{ type: EFormValidator.Required }, { type: EFormValidator.MinCount, param: 10 }]),
             type_config: {
               row_count: 10,
               css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
@@ -464,7 +466,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'favorite_food',
             display_text: 'Select your favorite food:',
             type: EFieldConfigType.Input,
-            validation_fn: [requireCheckboxesToBeCheckedValidator(2)],
+            validation_fn: getValidators([{ type: EFormValidator.MinChecked, param: 2 }]),
             type_config: {
               type: EFieldConfigInputType.CheckBox,
               list: true,
@@ -485,7 +487,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'age_group',
             display_text: 'Select your age group:',
             type: EFieldConfigType.Input,
-            validation_fn: [Validators.required],
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Radio,
               list: true,
