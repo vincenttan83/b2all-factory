@@ -1,23 +1,32 @@
 <div [formGroup]="group">
-    <p [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }} <button
-            [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+</button>
+    <p *ngIf="theArrays.controls.length > 0" [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }}
     </p>
+    <button *ngIf="theArrays.controls.length === 0" [ngClass]="detailConfig.css_class.add_button" type="button"
+        (click)="addNew()">+ {{ config.display_text }}</button>
 
     <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of theArrays.controls; index as i;">
 
-        <div class="col align-bottom">
-            <label [ngClass]="detailConfig.css_class.label"># {{ (i + 1)}}: </label>
+        <div class="row">
+            <div class="col">
+                <label [ngClass]="detailConfig.css_class.label"># {{ (i + 1)}}: </label>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngFor="let field of detailConfig.field_configs" [ngClass]="field.css_class ?? ''">
+                <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
+                </ng-container>
+            </div>
         </div>
 
-        <div *ngFor="let field of detailConfig.field_configs" [ngClass]="detailConfig.css_class.array_item">
-            <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
-            </ng-container>
-        </div>
-
-        <div class="col">
-            <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">X</button>
+        <div class="row">
+            <div class="col">
+                <button *ngIf="i === theArrays.controls.length - 1" [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+</button>
+                <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">X</button>
+            </div>
         </div>
 
     </div>
+
+
 
 </div>

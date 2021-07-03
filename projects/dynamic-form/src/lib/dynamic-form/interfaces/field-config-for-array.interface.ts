@@ -8,7 +8,6 @@ export interface IFieldConfigForArrayConfig<T> {
         group: string;
         group_label: string;
         label: string;
-        array_item: string;
     };
 }
 
