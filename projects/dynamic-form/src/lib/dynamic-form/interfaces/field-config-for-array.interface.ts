@@ -1,6 +1,10 @@
 import { IFieldConfig } from './field-config.interface';
 
 export interface IFieldConfigForArrayConfig<T> {
+    hierarchy_level?: {
+        cur_level: number;
+        max_level: number;
+    };
     field_configs: IFieldConfig<T>[];
     css_class: {
         add_button: string;
