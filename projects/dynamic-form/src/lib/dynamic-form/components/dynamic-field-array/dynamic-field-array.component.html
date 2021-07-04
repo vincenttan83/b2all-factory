@@ -1,11 +1,11 @@
 <div [formGroup]="group">
-    <p *ngIf="theArrays.controls.length > 0" [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }}
-    </p>
-    <button *ngIf="theArrays.controls.length === 0" [ngClass]="detailConfig.css_class.add_button" type="button"
-        (click)="addNew()">+ {{ config.display_text }}</button>
+    <!-- <p *ngIf="theArrays.controls.length > 0" [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }}
+    </p> -->
+    <!-- <button *ngIf="theArrays.controls.length === 0" [ngClass]="detailConfig.css_class.add_button" type="button"
+        (click)="addNew()">+ {{ config.display_text }}</button> -->
 
-    <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of theArrays.controls; index as i;">
-
+    <!-- <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of theArrays.controls; index as i;"> -->
+    <!-- 
         <div class="row">
             <div class="col">
                 <label [ngClass]="detailConfig.css_class.label"># {{ (i + 1)}}: </label>
@@ -20,12 +20,44 @@
 
         <div class="row">
             <div class="col">
-                <button *ngIf="i === theArrays.controls.length - 1" [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+</button>
+                <button *ngIf="i === theArrays.controls.length - 1" [ngClass]="detailConfig.css_class.add_button"
+                    type="button" (click)="addNew()">+</button>
                 <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">X</button>
             </div>
-        </div>
+        </div> -->
 
-    </div>
+    <table class="table table-bordered table-hover mb-0">
+        <thead>
+            <tr>
+                <th [attr.colspan]="detailConfig.field_configs.length + 2">{{ config.display_text }}</th>
+            </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" *ngFor="let field of detailConfig.field_configs">{{ field.name }}</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let control of theArrays.controls; index as i;">
+            <tr>
+                <th scope="row">{{ (i + 1) }}</th>
+                <td *ngFor="let field of detailConfig.field_configs">
+                    <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
+                    </ng-container>
+                </td>
+                <td><button [ngClass]="detailConfig.css_class.del_button" type="button"
+                        (click)="removeRow(i)">X</button></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td [attr.colspan]="detailConfig.field_configs.length + 2">
+                    <button [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+</button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <!-- </div> -->
 
 
 
