@@ -13,6 +13,13 @@ export interface IFieldConfigForArrayConfig<T> {
         group_label: string;
         label: string;
     };
+    /**
+     * Configuration for recursive enabled tempalte
+     */
+    hierarchy_config?: {
+        column_names: string[];
+    };
+
 }
 
 export function isFieldConfigForArrayConfig<T>(obj: any): obj is IFieldConfigForArrayConfig<T> {

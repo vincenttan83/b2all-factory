@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../../enums/field-config-type.enum';
+import { EFormValidator } from '../../enums/form-validator.enum';
 import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
 import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
 import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
@@ -44,15 +46,15 @@ export class MultiselectDatasetComponent implements OnInit {
     let lvlTemplate: any;
     for (let i = values.length - 1; i >= 0; i--) {
       if (i === (values.length - 1)) {
-        lvlTemplate = this.generateTemplateForLastLevel(values[i], values.length - 1, i);
+        lvlTemplate = this.generateTemplateForLastLevel(values[i], values.length - 1, i, ['Key', 'Value']);
       } else {
-        lvlTemplate = this.genearteTemplateForLevelHasChildren(values[i], lvlTemplate, values.length - 1, i);
+        lvlTemplate = this.genearteTemplateForLevelHasChildren(values[i], lvlTemplate, values.length - 1, i, ['Key', 'Value', 'Children']);
       }
     }
     return lvlTemplate;
   }
 
-  generateTemplateForLastLevel(displayText: string, maxIndex: number, curIndex: number): any {
+  generateTemplateForLastLevel(displayText: string, maxIndex: number, curIndex: number, columnNames: string[]): any {
     return {
       name: 'children',
       display_text: displayText,
@@ -61,10 +63,14 @@ export class MultiselectDatasetComponent implements OnInit {
         hierarchy_level: {
           cur_level: curIndex, max_level: maxIndex,
         },
+        hierarchy_config: {
+          column_names: columnNames,
+        },
         field_configs: [
           {
             name: 'key',
             type: EFieldConfigType.Input,
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
@@ -75,6 +81,7 @@ export class MultiselectDatasetComponent implements OnInit {
           {
             name: 'value',
             type: EFieldConfigType.Input,
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
@@ -94,7 +101,10 @@ export class MultiselectDatasetComponent implements OnInit {
     };
   }
 
-  genearteTemplateForLevelHasChildren(displayText: string, theNextLevelTemplate: any, maxIndex: number, curIndex: number): any {
+  genearteTemplateForLevelHasChildren(
+    displayText: string, theNextLevelTemplate: any,
+    maxIndex: number, curIndex: number, columnNames: string[]): any {
+
     return {
       name: 'children',
       display_text: displayText,
@@ -103,10 +113,14 @@ export class MultiselectDatasetComponent implements OnInit {
         hierarchy_level: {
           cur_level: curIndex, max_level: maxIndex,
         },
+        hierarchy_config: {
+          column_names: columnNames,
+        },
         field_configs: [
           {
             name: 'key',
             type: EFieldConfigType.Input,
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
@@ -117,6 +131,7 @@ export class MultiselectDatasetComponent implements OnInit {
           {
             name: 'value',
             type: EFieldConfigType.Input,
+            validation_fn: getValidators([{ type: EFormValidator.Required }]),
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
