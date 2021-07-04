@@ -26,14 +26,15 @@
             </div>
         </div> -->
 
-    <table class="table table-sm table-bordered table-hover mb-0">
+    <table class="table table-sm table-bordered table-hover">
         <thead>
             <tr>
-                <th [attr.colspan]="detailConfig.field_configs.length + (lastHierachyLevel() ? 2 : 1)">{{ config.display_text }}</th>
+                <th [attr.colspan]="detailConfig.field_configs.length + (lastHierachyLevel() ? 2 : 1)">{{
+                    config.display_text }}</th>
             </tr>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col" *ngFor="let name of detailConfig.hierarchy_config?.column_names">{{ name }}</th>
+                <th scope="col" *ngFor="let name of detailConfig.table_column_names">{{ name }}</th>
                 <th scope="col" *ngIf="lastHierachyLevel()"></th>
             </tr>
         </thead>

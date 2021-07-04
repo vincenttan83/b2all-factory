@@ -107,7 +107,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   myTemplateWithData(data: any): IDivConfig<
     IDivConfigForForm<
-      IFieldConfigForInputConfig | IFieldConfigForSelectConfig | IFieldConfigForButtonConfig | IFieldConfigForTextareaConfig
+      IFieldConfigForInputConfig | IFieldConfigForSelectConfig | IFieldConfigForButtonConfig |
+      IFieldConfigForTextareaConfig | IFieldConfigForArrayConfig<any>
     >
   > {
 
@@ -179,6 +180,52 @@ export class AppComponent implements OnInit, AfterViewInit {
             },
             css_class: 'col-lg-2'
           },
+
+          {
+            name: 'students',
+            display_text: 'List of student',
+            type: EFieldConfigType.Array,
+            type_config: {
+              table_column_names: ['First name', 'Last name', 'Gender'],
+              field_configs: [
+                {
+                  name: 'student_first_name',
+                  type: EFieldConfigType.Input,
+                  type_config: {
+                    type: EFieldConfigInputType.Text,
+                    list: false,
+                    css_class: { group: 'form-group', group_label: '', input: 'form-control', input_label: 'mb-1' },
+                  },
+                },
+                {
+                  name: 'student_last_name',
+                  type: EFieldConfigType.Input,
+                  type_config: {
+                    type: EFieldConfigInputType.Text,
+                    list: false,
+                    css_class: { group: 'form-group', group_label: '', input: 'form-control', input_label: 'mb-1' },
+                  }
+                },
+                {
+                  name: 'student_gender_selection',
+                  type: EFieldConfigType.Select,
+                  type_config: {
+                    dataset: [
+                      { key: 'Male', value: 'male' },
+                      { key: 'Female', value: 'female' },
+                    ],
+                    controls: [
+                      { name: 'student_gender', label: '', key_field: 'key', value_field: 'value', value: null },
+                    ],
+                    css_class: { group: '', select: 'form-select', select_label: 'mb-1' }
+                  },
+                },
+              ],
+              css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: 'h4', label: '' }
+            },
+          },
+
+
           {
             name: 'about_yourself',
             display_text: 'About yourself',

@@ -16,10 +16,7 @@ export interface IFieldConfigForArrayConfig<T> {
     /**
      * Configuration for recursive enabled tempalte
      */
-    hierarchy_config?: {
-        column_names: string[];
-    };
-
+    table_column_names?: string[];
 }
 
 export function isFieldConfigForArrayConfig<T>(obj: any): obj is IFieldConfigForArrayConfig<T> {

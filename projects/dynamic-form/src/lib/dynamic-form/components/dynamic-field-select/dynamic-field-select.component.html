@@ -1,7 +1,8 @@
 <div class="row" [formGroup]="group">
 
     <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of detailConfig.controls; index as i;">
-        <label [ngClass]="detailConfig.css_class.select_label" [attr.for]="'select_' + control.name + '_' + index">{{
+        <label *ngIf="control.label" [ngClass]="detailConfig.css_class.select_label"
+            [attr.for]="'select_' + control.name + '_' + index">{{
             control.label
             }}</label>
         <select [ngClass]="

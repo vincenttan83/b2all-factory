@@ -63,9 +63,7 @@ export class MultiselectDatasetComponent implements OnInit {
         hierarchy_level: {
           cur_level: curIndex, max_level: maxIndex,
         },
-        hierarchy_config: {
-          column_names: columnNames,
-        },
+        table_column_names: columnNames,
         field_configs: [
           {
             name: 'key',
@@ -113,9 +111,7 @@ export class MultiselectDatasetComponent implements OnInit {
         hierarchy_level: {
           cur_level: curIndex, max_level: maxIndex,
         },
-        hierarchy_config: {
-          column_names: columnNames,
-        },
+        table_column_names: columnNames,
         field_configs: [
           {
             name: 'key',
