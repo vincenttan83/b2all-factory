@@ -5,6 +5,7 @@ import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-ar
 import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
 import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
+import { IMultiSelect } from '../../interfaces/multi-select.interface';
 
 @Component({
   selector: 'b2all-multiselect-dataset',
@@ -182,17 +183,84 @@ export class MultiselectDatasetComponent implements OnInit {
     const b = { ...firstLevelArray };
     this.multiSelectTemplate.push(b);
     this.multiSelectTemplate.push(submitButton);
+
+    this.savedData = {
+      children: [
+        {
+          key: 'Thailand', value: 'thailand', children: [
+            {
+              key: 'Bangkok', value: 'bangkok', children: [
+                { key: 'Phra Nakhon District', value: 'phra_nakhon_district' }
+              ]
+            }
+          ]
+        },
+        {
+          key: 'Malaysia', value: 'malaysia', children: [
+            {
+              key: 'Selangor', value: 'selangor', children: [
+                { key: 'Subang Jaya', value: 'subang_jaya' },
+                { key: 'Petaling Jaya', value: 'petaling_jaya' },
+                { key: 'Cyberjaya', value: 'cyberjaya' },
+              ]
+            },
+            {
+              key: 'Melaka', value: 'melaka', children: [
+                { key: 'Melaka Tengah', value: 'melaka_tengah' },
+                { key: 'Aloh Gajah', value: 'aloh_gajah' },
+              ]
+            },
+            {
+              key: 'Perak', value: 'perak', children: [
+                { key: 'Ipoh', value: 'ipoh' },
+                { key: 'Kampar', value: 'kampar' },
+              ]
+            },
+          ]
+        },
+        {
+          key: 'Singapore', value: 'singapore', children: [
+            {
+              key: 'Singapore', value: 'singapore', children: [
+                { key: 'Singapore', value: 'singapore' }
+              ]
+            }
+          ]
+        },
+      ]
+    };
   }
 
   ngOnInit(): void {
   }
 
-  formOnSubmit(val: any): void {
+  formOnSubmit(val: IMultiSelect): void {
+    this.theData = this.recursiveSort(val);
+  }
 
-    console.log(val);
-    this.theData = val;
+  recursiveSort(value: IMultiSelect): IMultiSelect {
+    if (value && value.children) {
+      const sortedObject: IMultiSelect = { key: value.key, value: value.value, children: this.arrayOfObjectSort(value.children) };
+      const newChildren: IMultiSelect[] = [];
+      sortedObject.children?.forEach(element => {
+        newChildren.push(this.recursiveSort(element));
+      });
+      return { key: value.key, value: value.value, children: newChildren };
+    } else {
+      return value;
+    }
+  }
 
-
+  arrayOfObjectSort(oriArray: IMultiSelect[]): IMultiSelect[] {
+    return oriArray.sort((obj1: IMultiSelect, obje2: IMultiSelect) => {
+      if (obj1.key > obje2.key) {
+        return 1;
+      }
+      if (obj1.key < obje2.key) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
 }
