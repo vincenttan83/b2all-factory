@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   title = 'b2all-factory';
   returnedValue: any;
 
-  multiselectHierarchyLevels: string[] = ['Country', 'State', 'City'];
+  multiselectHierarchyLevels: string[] = ['Country', 'State'];
   multiselectData: { [key: string]: any } = {
     children: [
       {
@@ -281,7 +281,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (!formValue.form_data.agreement) {
       alert('Do not try to by pass my validation!');
     }
+  }
 
+  formOnSubmitMultiselect(val: any): void {
+    console.log(val);
   }
 
   async formOnChange(formValue: any): Promise<void> {
