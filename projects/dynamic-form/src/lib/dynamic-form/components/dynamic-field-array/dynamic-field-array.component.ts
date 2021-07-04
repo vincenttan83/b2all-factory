@@ -54,4 +54,12 @@ export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
     return this.theArrays.controls[index] as FormGroup;
   }
 
+  lastHierachyLevel(): boolean {
+    return (this.detailConfig.hierarchy_level?.cur_level === this.detailConfig.hierarchy_level?.max_level);
+  }
+
+  firstHierachyLevel(): boolean {
+    return (this.detailConfig.hierarchy_level?.cur_level === 0);
+  }
+
 }

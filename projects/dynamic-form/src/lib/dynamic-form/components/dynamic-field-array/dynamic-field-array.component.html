@@ -1,4 +1,4 @@
-<div [formGroup]="group">
+<div [formGroup]="group" [ngClass]="firstHierachyLevel() ? 'table-responsive-md': ''">
     <!-- <p *ngIf="theArrays.controls.length > 0" [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }}
     </p> -->
     <!-- <button *ngIf="theArrays.controls.length === 0" [ngClass]="detailConfig.css_class.add_button" type="button"
@@ -34,7 +34,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col" *ngFor="let field of detailConfig.field_configs">{{ field.name }}</th>
-                <th scope="col"></th>
+                <th scope="col" *ngIf="lastHierachyLevel()"></th>
             </tr>
         </thead>
         <tbody *ngFor="let control of theArrays.controls; index as i;">
@@ -44,14 +44,24 @@
                     <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [index]="i">
                     </ng-container>
                 </td>
-                <td><button [ngClass]="detailConfig.css_class.del_button" type="button"
-                        (click)="removeRow(i)">X</button></td>
+                <td *ngIf="lastHierachyLevel()">
+                    <button [ngClass]="detailConfig.css_class.del_button" type="button"
+                        (click)="removeRow(i)">-</button>
+                </td>
+            </tr>
+            <tr *ngIf="!lastHierachyLevel()">
+                <td></td>
+                <td [attr.colspan]="detailConfig.field_configs.length + 1">
+                    <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">- {{
+                        control.value.key }}</button>
+                </td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
                 <td [attr.colspan]="detailConfig.field_configs.length + 2">
-                    <button [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+</button>
+                    <button [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+ {{
+                        config.display_text }}</button>
                 </td>
             </tr>
         </tfoot>
