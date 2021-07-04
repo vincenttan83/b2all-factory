@@ -18,6 +18,7 @@ export * from './lib/dynamic-form/enums/form-validator.enum';
 
 // interfaces
 export * from './lib/dynamic-form/interfaces/field-config.interface';
+export * from './lib/dynamic-form/interfaces/field-config-for-button.interface';
 export * from './lib/dynamic-form/interfaces/multi-select.interface';
 export * from './lib/dynamic-form/interfaces/css-class.interface';
 export * from './lib/dynamic-form/interfaces/div-config.interface';
