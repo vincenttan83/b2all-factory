@@ -24,7 +24,7 @@
         <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
             <div [ngClass]="detailConfig.css_class.group ?? ''">
 
-                <label [ngClass]="detailConfig.css_class.input_label ?? ''"
+                <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label ?? ''"
                     [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
                     config.display_text }}</label>
 
