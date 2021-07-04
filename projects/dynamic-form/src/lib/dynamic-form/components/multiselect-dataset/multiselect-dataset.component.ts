@@ -68,9 +68,9 @@ export class MultiselectDatasetComponent implements OnInit {
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: '', group_label: '', input: 'form-control', input_label: '' }
+              css_class: { group: '', group_label: '', input: 'form-control form-control-sm', input_label: '' }
             },
-            css_class: ''
+            css_class: 'key-width-non-child'
           },
           {
             name: 'value',
@@ -78,14 +78,14 @@ export class MultiselectDatasetComponent implements OnInit {
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: '', group_label: '', input: 'form-control', input_label: '' }
+              css_class: { group: '', group_label: '', input: 'form-control form-control-sm', input_label: '' }
             },
-            css_class: ''
+            css_class: 'val-width-non-child'
           },
         ],
         css_class: {
-          add_button: 'btn btn-primary',
-          del_button: 'btn btn-danger',
+          add_button: 'btn btn-sm btn-primary',
+          del_button: 'btn btn-sm btn-danger',
           group: '',
           group_label: '',
           label: ''
@@ -110,9 +110,9 @@ export class MultiselectDatasetComponent implements OnInit {
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: '', group_label: '', input: 'form-control', input_label: '' }
+              css_class: { group: '', group_label: '', input: 'form-control form-control-sm', input_label: '' }
             },
-            css_class: 'b2all-min-width-xl'
+            css_class: 'key-width-has-child'
           },
           {
             name: 'value',
@@ -120,17 +120,17 @@ export class MultiselectDatasetComponent implements OnInit {
             type_config: {
               type: EFieldConfigInputType.Text,
               list: false,
-              css_class: { group: '', group_label: '', input: 'form-control', input_label: '' }
+              css_class: { group: '', group_label: '', input: 'form-control form-control-sm', input_label: '' }
             },
-            css_class: ''
+            css_class: 'val-width-has-child'
           },
           {
             ...theNextLevelTemplate
           }
         ],
         css_class: {
-          add_button: 'btn btn-primary',
-          del_button: 'btn btn-danger',
+          add_button: 'btn btn-sm btn-primary',
+          del_button: 'btn btn-sm btn-danger',
           group: '',
           group_label: '',
           label: ''
