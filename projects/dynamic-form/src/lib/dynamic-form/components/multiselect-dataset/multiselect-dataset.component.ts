@@ -17,7 +17,7 @@ export class MultiselectDatasetComponent implements OnInit {
   @Input() inputHierarchyLevels!: string[];
   @Input() inputData!: { [key: string]: any };
   @Input() inputSubmitButtonTemplate!: IFieldConfig<IFieldConfigForButtonConfig>;
-  @Output() formOnSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
 
   multiSelectTemplate: IFieldConfig<any>[] = [];
   formReady = false;
@@ -37,27 +37,30 @@ export class MultiselectDatasetComponent implements OnInit {
   }
 
   formOnSubmitting(val: any): void {
-    this.formOnSubmit.emit(this.recursiveSort(val));
+    this.outputFormOnSubmit.emit(this.recursiveSort(val));
   }
 
   generateTemplate(values: string[]): any {
     let lvlTemplate: any;
     for (let i = values.length - 1; i >= 0; i--) {
       if (i === (values.length - 1)) {
-        lvlTemplate = this.generateTemplateForLastLevel(values[i]);
+        lvlTemplate = this.generateTemplateForLastLevel(values[i], values.length - 1, i);
       } else {
-        lvlTemplate = this.genearteTemplateForLevelHasChildren(values[i], lvlTemplate);
+        lvlTemplate = this.genearteTemplateForLevelHasChildren(values[i], lvlTemplate, values.length - 1, i);
       }
     }
     return lvlTemplate;
   }
 
-  generateTemplateForLastLevel(displayText: string): any {
+  generateTemplateForLastLevel(displayText: string, maxIndex: number, curIndex: number): any {
     return {
       name: 'children',
       display_text: displayText,
       type: EFieldConfigType.Array,
       type_config: {
+        hierarchy_level: {
+          cur_level: curIndex, max_level: maxIndex,
+        },
         field_configs: [
           {
             name: 'key',
@@ -82,8 +85,8 @@ export class MultiselectDatasetComponent implements OnInit {
         ],
         css_class: {
           add_button: 'btn btn-primary',
-          del_button: 'btn btn-primary',
-          group: 'mb-3',
+          del_button: 'btn btn-danger',
+          group: '',
           group_label: '',
           label: ''
         }
@@ -91,12 +94,15 @@ export class MultiselectDatasetComponent implements OnInit {
     };
   }
 
-  genearteTemplateForLevelHasChildren(displayText: string, theNextLevelTemplate: any): any {
+  genearteTemplateForLevelHasChildren(displayText: string, theNextLevelTemplate: any, maxIndex: number, curIndex: number): any {
     return {
       name: 'children',
       display_text: displayText,
       type: EFieldConfigType.Array,
       type_config: {
+        hierarchy_level: {
+          cur_level: curIndex, max_level: maxIndex,
+        },
         field_configs: [
           {
             name: 'key',
@@ -106,7 +112,7 @@ export class MultiselectDatasetComponent implements OnInit {
               list: false,
               css_class: { group: '', group_label: '', input: 'form-control', input_label: '' }
             },
-            css_class: ''
+            css_class: 'b2all-min-width-xl'
           },
           {
             name: 'value',
@@ -124,8 +130,8 @@ export class MultiselectDatasetComponent implements OnInit {
         ],
         css_class: {
           add_button: 'btn btn-primary',
-          del_button: 'btn btn-primary',
-          group: 'mb-3',
+          del_button: 'btn btn-danger',
+          group: '',
           group_label: '',
           label: ''
         }
