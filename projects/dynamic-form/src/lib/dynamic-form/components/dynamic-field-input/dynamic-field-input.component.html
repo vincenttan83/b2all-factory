@@ -54,14 +54,17 @@
                                 yes: apply empty string
                                 no: apply template css
                  -->
-                <input [ngClass]="
+                <!-- 
+                 [ngClass]="
                         config.validation_fn ? 
                             group.controls[config.name].touched ? 
                                 group.controls[config.name].valid ? 
                                     detailConfig.css_class.input ? detailConfig.css_class.input + ' is-valid' : 'is-valid' 
                                 : detailConfig.css_class.input ? detailConfig.css_class.input + ' is-invalid': 'is-invalid' 
                             : detailConfig.css_class.input ?? '' 
-                        : detailConfig.css_class.input ?? ''"
+                        : detailConfig.css_class.input ?? ''" -->
+
+                <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
                     [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
                     [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
                     [attr.max]="detailConfig.type==='range' ? 100: null"

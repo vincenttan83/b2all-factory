@@ -31,6 +31,34 @@ export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigFo
     this.detailConfig = (this.config.type_config as IFieldConfigForInputConfig);
   }
 
+  getCssClasses(touched: boolean, valid: boolean): string {
+
+    const hasValidation = (this.config.validation_fn && this.config.validation_fn.length > 0);
+
+    if (hasValidation) {
+      if (touched) {
+        if (valid) {
+          return this.getBasicCss() + ' is-valid' + this.getSpecialCss();
+        } else {
+          return this.getBasicCss() + ' is-invalid' + this.getSpecialCss();
+        }
+      } else {
+        return this.getBasicCss() + this.getSpecialCss();
+      }
+    } else {
+      return this.getBasicCss() + this.getSpecialCss();
+    }
+
+  }
+
+  getBasicCss(): string {
+    return this.detailConfig.css_class.input ? ` ${this.detailConfig.css_class.input}` : '';
+  }
+
+  getSpecialCss(): string {
+    return this.config.css_class ? ` ${this.config.css_class}` : '';
+  }
+
   onCheckChange(event: any): void {
     if (this.detailConfig.type === 'checkbox') {
       if (this.detailConfig.list) {
