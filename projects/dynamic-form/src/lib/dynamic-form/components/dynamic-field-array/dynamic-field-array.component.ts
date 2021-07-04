@@ -45,7 +45,9 @@ export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
   }
 
   removeRow(index: number): void {
-    this.theArrays.removeAt(index);
+    if (confirm('Are you sure?')) {
+      this.theArrays.removeAt(index);
+    }
   }
 
   getTheFromGroupFromArray(index: number): FormGroup {
