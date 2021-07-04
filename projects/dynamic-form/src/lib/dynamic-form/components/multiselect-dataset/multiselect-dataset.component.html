@@ -1,3 +1,3 @@
-<b2all-dynamic-form *ngIf="multiSelectTemplate.length > 0" #dynamicForm="b2allDynamicForm" [inputFormConfigs]="multiSelectTemplate" [inputSavedData]="savedData"
+<b2all-dynamic-form *ngIf="formReady && multiSelectTemplate.length > 0" #dynamicForm="b2allDynamicForm" [inputFormConfigs]="multiSelectTemplate" [inputSavedData]="savedData"
     (formOnSubmit)="formOnSubmit($event)">
 </b2all-dynamic-form>
