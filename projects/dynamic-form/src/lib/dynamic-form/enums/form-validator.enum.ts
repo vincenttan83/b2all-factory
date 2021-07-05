@@ -1,5 +1,6 @@
 export const enum EFormValidator {
     Required = 'required',
+    RequiredTrue = 'required_true',
     MinLength = 'min_length',
     MaxLength = 'max_length',
     Min = 'min',

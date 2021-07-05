@@ -242,7 +242,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'favorite_food',
             display_text: 'Select your favorite food:',
             type: EFieldConfigType.Input,
-            validation_fn: getValidators([{ type: EFormValidator.MinChecked, param: 2 }]),
+            validation_fn: getValidators([{ type: EFormValidator.MinChecked, param: 3 }]),
             type_config: {
               type: EFieldConfigInputType.CheckBox,
               list: true,
@@ -286,7 +286,7 @@ export class AppComponent implements OnInit, AfterViewInit {
             name: 'agreement',
             display_text: 'Before a user can update for the profile, its Terms and Conditions must be agreed to by checking a box:',
             type: EFieldConfigType.Input,
-            validation_fn: [Validators.requiredTrue],
+            validation_fn: getValidators([{ type: EFormValidator.RequiredTrue }]),
             type_config: {
               type: EFieldConfigInputType.CheckBox,
               list: false,

@@ -62,6 +62,10 @@ export function getValidators(choice: ICustomFormConfigValidator[]): ValidatorFn
                 validatorFunctions.push(Validators.required);
                 break;
             }
+            case EFormValidator.RequiredTrue: {
+                validatorFunctions.push(Validators.requiredTrue);
+                break;
+            }
             case EFormValidator.Email: {
                 validatorFunctions.push(Validators.email);
                 break;
