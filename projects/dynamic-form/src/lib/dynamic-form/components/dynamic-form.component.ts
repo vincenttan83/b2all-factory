@@ -75,11 +75,7 @@ export class DynamicFormComponent implements OnInit {
     // check if required to remove undefined values?
     if (this.removeUndefinedField) {
       // iterate for removing undefined value field
-      Object.keys(newFormValue).forEach(element => {
-        if (newFormValue[element] !== undefined) {
-          newFormValueCleanForUndefined = { ...newFormValueCleanForUndefined, [element]: newFormValue[element] };
-        }
-      });
+      newFormValueCleanForUndefined = this.removedUndefined(newFormValue, newFormValueCleanForUndefined);
     } else {
       newFormValueCleanForUndefined = { ...newFormValue };
     }
@@ -87,6 +83,41 @@ export class DynamicFormComponent implements OnInit {
     // fire emit of the new formvalue
     this.formOnSubmit.emit(newFormValueCleanForUndefined);
 
+  }
+
+  removedUndefined(objectWithValue: { [keys: string]: any; }, newFormValueCleanForUndefined: { [keys: string]: any; })
+    : { [keys: string]: any; } {
+    Object.keys(objectWithValue).forEach(fieldName => {
+      // if is array?
+      // if is object?
+      // else
+      if (typeof objectWithValue[fieldName] === 'object') {
+        if (Array.isArray(objectWithValue[fieldName])) {
+          const oldArray = objectWithValue[fieldName] as any[];
+          const cleanArray: any[] = [];
+          // iterate then clean
+          oldArray.forEach(objectWithValueArrayItem => {
+            const newFormValueCleanForUndefinedArray: { [keys: string]: any } = {};
+            cleanArray.push(this.removedUndefined(objectWithValueArrayItem, newFormValueCleanForUndefinedArray));
+          });
+
+          newFormValueCleanForUndefined = {
+            ...newFormValueCleanForUndefined, [fieldName]: cleanArray
+          };
+
+        } else {
+          const newFormValueCleanForUndefinedObject: { [keys: string]: any } = {};
+          newFormValueCleanForUndefined = {
+            ...newFormValueCleanForUndefined,
+            [fieldName]: this.removedUndefined(objectWithValue[fieldName], newFormValueCleanForUndefinedObject)
+          };
+        }
+
+      } else if (objectWithValue[fieldName] !== undefined) {
+        newFormValueCleanForUndefined = { ...newFormValueCleanForUndefined, [fieldName]: objectWithValue[fieldName] };
+      }
+    });
+    return newFormValueCleanForUndefined;
   }
 
   markAsPristine(): void {
