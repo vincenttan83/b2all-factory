@@ -24,7 +24,11 @@ export class DynamicFormGenerator {
         const theNewComboList: any[] = [];
         templateSelectTypeConfig.controls.forEach(elementCombo => {
             const newCombo = { ...elementCombo };
-            newCombo.value = elementSavedData[elementCombo.name] ?? '';
+            if (elementSavedData) {
+                newCombo.value = elementSavedData[elementCombo.name] ?? '';
+            } else {
+                newCombo.value = '';
+            }
             theNewComboList.push(newCombo);
         });
         templateSelectTypeConfigWithData.controls = theNewComboList;
@@ -146,7 +150,14 @@ export class DynamicFormGenerator {
                             }
                             group.addControl(element.name, this.privateFormBuilder.array(listofArraySavedItems, element.validation_fn));
                         } else {
-                            group.addControl(element.name, this.createControl2(undefined, element.validation_fn, savedDatas[element.name]));
+                            if (savedDatas) {
+                                group.addControl(element.name, this.createControl2(
+                                    undefined, element.validation_fn, savedDatas[element.name]));
+                            } else {
+                                group.addControl(element.name, this.createControl2(
+                                    undefined, element.validation_fn, undefined));
+                            }
+
                         }
                         break;
                     }
