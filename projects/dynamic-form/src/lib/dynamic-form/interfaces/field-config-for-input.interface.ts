@@ -4,7 +4,7 @@ import { IKeyValueInString } from './key-value.interface';
 export interface IFieldConfigForInputConfig {
     readonly?: boolean;
     type: EFieldConfigInputType;
-    list: boolean;
+    list?: boolean;
     dataset?: IKeyValueInString[];
     input_helper?: boolean;
     single_checkbox_display_text?: string;
@@ -20,7 +20,7 @@ export function isFieldConfigForInputConfig(obj: any): obj is IFieldConfigForInp
     return (
         obj !== null &&
         typeof obj.type === 'string' &&
-        typeof obj.list === 'boolean' &&
+        // typeof obj.list === 'boolean' &&
         (typeof obj.dataset === 'undefined' || typeof obj.dataset === 'object') &&
         (typeof obj.input_helper === 'undefined' || typeof obj.input_helper === 'boolean') &&
         (typeof obj.single_checkbox_display_text === 'undefined' || typeof obj.single_checkbox_display_text === 'string')
