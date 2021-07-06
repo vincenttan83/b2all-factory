@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { Subject } from 'rxjs';
 import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../../enums/field-config-type.enum';
@@ -9,7 +10,8 @@ import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-in
 import { IFieldConfigForObjectConfig } from '../../interfaces/field-config-for-object.interface';
 import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
-
+import { DynamicFormComponent } from '../dynamic-form.component';
+import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'b2all-form-designare',
   templateUrl: './form-designare.component.html',
@@ -20,15 +22,16 @@ export class FormDesignareComponent implements OnInit {
   @Input() inputData!: { [key: string]: any };
   @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
 
-  designareTemplate: IFieldConfig<any>[] = [];
-  savedData: { [key: string]: any } = {};
+  @ViewChildren('dynamicForms') dynamicForms!: QueryList<DynamicFormComponent>;
 
+  previewTemplate: any[] = [];
   fields: {
     template: IFieldConfig<
       IFieldConfigForInputConfig |
       IFieldConfigForButtonConfig
-    >[],
-    saved_data: { [key: string]: any },
+    >[];
+    saved_data: { [key: string]: any };
+    valid: boolean;
   }[] = [];
 
   constructor() { }
@@ -38,53 +41,147 @@ export class FormDesignareComponent implements OnInit {
     // generate the multiselect template based on the level received
     // const theTemplate = this.generateTemplate();
     // push the template into the fields stack
-    this.designareTemplate.push(this.generateTemplate());
-    this.designareTemplate.push(this.generateSubmitButton());
-    this.savedData = {
-      template: [
-        { type: 'input' },
-        { type: 'input' },
-      ]
-    };
+
+    this.testSavedData().forEach(element => {
+      this.fields.push(
+        {
+          template: [
+            ...this.getTemplateBy(element.type),
+          ],
+          saved_data: { ...element },
+          valid: false,
+        });
+    });
 
   }
 
-  addField(val: string): void {
+  removeField(index: number): void {
+    if (confirm('Are you sure?')) {
+      this.fields.splice(index, 1);
+    }
+  }
 
-    let a!: IFieldConfig<any>[];
+  generatePreview(): void {
 
+    console.log(this.fields.length);
+
+    const cloneFields = [...this.fields];
+
+    const template: any[] = [];
+
+    for (let i = 0; i < cloneFields.length; i++) {
+      console.log(i);
+
+      const a = this.dynamicForms.get(i);
+      if (a && a.formGroup.valid) {
+        console.log('form found');
+
+        this.fields[i].valid = true;
+        template.push(this.fields[i].saved_data);
+      } else {
+        console.log('form not found');
+
+        this.fields[i].valid = false;
+      }
+    }
+    this.previewTemplate = template;
+
+    // const template: any[] = [];
+    // this.fields.forEach(element => {
+    //   template.push(element.saved_data);
+    // });
+    // this.previewTemplate = template;
+    // this.outputFormOnSubmit.emit(template);
+  }
+
+  testSavedData(): any[] {
+
+    const sampleInput = {
+      name: 'fullname',
+      display_text: 'Full name',
+      type: 'input',
+      css_class: 'col-md-12',
+      type_config: {
+        css_class: {
+          group: 'form-group mb-2',
+          input: 'form-control form-control-sm',
+          input_label: 'mb-1'
+        },
+        dataset: [],
+        type: 'text'
+      },
+    };
+
+    const sampleButton = {
+      display_text: 'Submit',
+      name: 'submit',
+      type: 'button',
+      type_config: {
+        css_class: {
+          button: 'btn btn-sm btn-primary',
+          group: '',
+        },
+        type: 'submit',
+      },
+    };
+
+    return [sampleInput, sampleButton];
+
+  }
+
+  formIsValid(index: number): boolean {
+    setTimeout(() => {
+      if (this.dynamicForms) {
+        const a = this.dynamicForms.get(index);
+        if (a) {
+          return a.formGroup.valid;
+        }
+      }
+      return false;
+    }, 1);
+    return false;
+  }
+
+  formOnSubmittingFromPreview(val: any): void {
+    console.log(val);
+  }
+
+  getTemplateBy(val: string): IFieldConfig<any>[] {
+    let typeConfig!: IFieldConfig<any>[];
     switch (val) {
       case EFieldConfigType.Array:
-        a = this.getFieldConfigForArrayTemplate();
+        typeConfig = this.getFieldConfigForArrayTemplate();
         break;
       case EFieldConfigType.Button:
-        a = this.getFieldConfigForButtonTemplate();
+        typeConfig = this.getFieldConfigForButtonTemplate();
         break;
       case EFieldConfigType.Divider:
-        a = this.getFieldConfigForDividerTemplate();
+        typeConfig = this.getFieldConfigForDividerTemplate();
         break;
       case EFieldConfigType.Input:
-        a = this.getFieldConfigForInputTemplate();
+        typeConfig = this.getFieldConfigForInputTemplate();
         break;
       case EFieldConfigType.Object:
-        a = this.getFieldConfigForObjectTemplate();
+        typeConfig = this.getFieldConfigForObjectTemplate();
         break;
       case EFieldConfigType.Select:
-        a = this.getFieldConfigForSelectTemplate();
+        typeConfig = this.getFieldConfigForSelectTemplate();
         break;
       case EFieldConfigType.Textarea:
-        a = this.getFieldConfigForTextareaTemplate();
+        typeConfig = this.getFieldConfigForTextareaTemplate();
         break;
     }
+    return typeConfig;
+  }
 
-
+  addField(val: string): void {
     this.fields.push(
       {
         template: [
-          ...a,
-          this.generateSubmitButton()
+          ...this.getTemplateBy(val),
         ],
         saved_data: { type: val },
+        valid: false,
       });
   }
 
@@ -92,7 +189,7 @@ export class FormDesignareComponent implements OnInit {
     return [
       {
         name: 'name',
-        display_text: 'Field name use as the key field in the database.',
+        display_text: 'DB field name.',
         type: EFieldConfigType.Input,
         validation_fn: getValidators([{ type: EFormValidator.Required }]),
         type_config: {
@@ -102,10 +199,11 @@ export class FormDesignareComponent implements OnInit {
             group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
           },
         },
+        css_class: 'col-lg-3 col-md-6 small',
       },
       {
         name: 'display_text',
-        display_text: 'Display text of the label, so that user know what to input',
+        display_text: 'Label display on screen',
         type: EFieldConfigType.Input,
         type_config: {
           type: EFieldConfigInputType.Text,
@@ -114,10 +212,11 @@ export class FormDesignareComponent implements OnInit {
             group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
           },
         },
+        css_class: 'col-lg-3 col-md-6 small',
       },
       {
         name: 'type',
-        display_text: 'Field type, is fixed upon the selection.',
+        display_text: 'Is fixed!',
         type: EFieldConfigType.Input,
         type_config: {
           readonly: true,
@@ -127,6 +226,20 @@ export class FormDesignareComponent implements OnInit {
             group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
           },
         },
+        css_class: 'col-lg-3 col-md-6 small',
+      },
+      {
+        name: 'css_class',
+        display_text: 'CSS this control.',
+        type: EFieldConfigType.Input,
+        type_config: {
+          type: EFieldConfigInputType.Text,
+          list: false,
+          css_class: {
+            group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+          },
+        },
+        css_class: 'col-lg-3 col-md-6 small',
       }
     ];
   }
@@ -159,6 +272,7 @@ export class FormDesignareComponent implements OnInit {
               name: 'type',
               display_text: 'Type, enter only button or submit',
               type: EFieldConfigType.Input,
+              validation_fn: getValidators([{ type: EFormValidator.Required }]),
               type_config: {
                 type: EFieldConfigInputType.Text,
                 list: false,
@@ -269,7 +383,10 @@ export class FormDesignareComponent implements OnInit {
         { key: 'Week', value: 'week' },
       ],
       controls: [
-        { name: 'type', label: 'Type', key_field: 'key', value_field: 'value', value: '' },
+        {
+          name: 'type', label: 'Type', key_field: 'key', value_field: 'value', value: '',
+          validation_fn: getValidators([{ type: EFormValidator.Required }]),
+        },
       ],
       css_class: { group: 'mb-2', select: 'form-select form-select-sm', select_label: 'mb-1' }
     };
@@ -350,7 +467,7 @@ export class FormDesignareComponent implements OnInit {
                 list: false,
                 single_checkbox_display_text: 'Check if is a list',
                 css_class: {
-                  group: 'form-check mb-2', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label'
+                  group: 'form-check mb-2', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label small'
                 }
               }
             },
@@ -363,7 +480,7 @@ export class FormDesignareComponent implements OnInit {
                 list: false,
                 single_checkbox_display_text: 'Check if is a readonly field',
                 css_class: {
-                  group: 'form-check mb-2', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label'
+                  group: 'form-check mb-2', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label small'
                 }
               }
             },
@@ -419,6 +536,8 @@ export class FormDesignareComponent implements OnInit {
     console.log(`index of ${index}`);
     console.log(val);
 
+    this.fields[index].saved_data = val;
+    this.generatePreview();
 
     // this.outputFormOnSubmit.emit(this.recursiveSort(val));
   }

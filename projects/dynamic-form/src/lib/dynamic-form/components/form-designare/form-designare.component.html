@@ -6,20 +6,59 @@
 <button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('select')">Select</button>
 <button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('textarea')">Textarea</button>
 
+
 <table class="table table-sm table-bordered">
     <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Configuration</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody *ngFor="let field of fields; index as i;">
         <tr>
             <td>{{ i + 1 }}</td>
             <td>
-                <b2all-dynamic-form [inputFormConfigs]="field.template" [inputSavedData]="field.saved_data"
-                    (formOnSubmit)="formOnSubmitting($event, i)"></b2all-dynamic-form>
+                <b2all-dynamic-form #dynamicForms [attr.id]="'dynamic_form_' + i" [inputFormConfigs]="field.template"
+                    [inputSavedData]="field.saved_data" (formOnSubmit)="formOnSubmitting($event, i)">
+                </b2all-dynamic-form>
             </td>
+            <td><button class="btn btn-sm btn-danger" (click)="removeField(i)">Delete</button></td>
+        </tr>
+        <tr>
+            <ng-container *ngIf="field.valid; else formInvalid">
+                <td colspan="3" class="bg-success"></td>
+            </ng-container>
+            <ng-template #formInvalid>
+                <td colspan="3" class="bg-danger"></td>
+            </ng-template>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                <button class="btn btn-sm btn-primary" (click)="generatePreview()">Verify and preview</button>
+            </td>
+        </tr>
+    </tfoot>
 </table>
+
+<div class="my-5">
+    <hr>
+</div>
+
+<div>
+    <h2>Demo</h2>
+
+    <b2all-dynamic-form *ngIf="previewTemplate && previewTemplate.length > 0" [inputFormConfigs]="previewTemplate"
+        [inputSavedData]="{}" (formOnSubmit)="formOnSubmittingFromPreview($event)"></b2all-dynamic-form>
+
+</div>
+
+
+<div class="my-5">
+    <hr>
+</div>
+
+<h2>Ready to save to DB</h2>
+<pre>{{ previewTemplate | json }}</pre>
