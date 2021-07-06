@@ -130,7 +130,7 @@ export class DynamicFormGenerator {
                             if (objectTypeConfig.type === EFieldConfigInputType.Radio) {
                                 throw new Error('There is use cases for single radio button control!');
                             }
-                            if (objectTypeConfig.dataset) {
+                            if (objectTypeConfig.dataset && objectTypeConfig.dataset.length > 0) {
                                 throw new Error(`The ${element.type} - ${objectTypeConfig.type} DO NOT required any dataset!`);
                             }
                         }
