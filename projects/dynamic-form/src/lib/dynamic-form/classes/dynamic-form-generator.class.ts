@@ -69,7 +69,7 @@ export class DynamicFormGenerator {
 
                         const arrayConfigs: any[] = [];
                         // if having saved data?
-                        if (savedDatas[element.name]) {
+                        if (savedDatas && savedDatas[element.name]) {
                             // iterate thru the saved data row
                             savedDatas[element.name].forEach((elementSavedData: { [x: string]: any; }) => {
                                 arrayConfigs.push(this.createFormGroup(fieldConfigs, null, elementSavedData));
@@ -152,10 +152,10 @@ export class DynamicFormGenerator {
                         } else {
                             if (savedDatas) {
                                 group.addControl(element.name, this.createControl2(
-                                    undefined, element.validation_fn, savedDatas[element.name]));
+                                    element.disabled, element.validation_fn, savedDatas[element.name]));
                             } else {
                                 group.addControl(element.name, this.createControl2(
-                                    undefined, element.validation_fn, undefined));
+                                    element.disabled, element.validation_fn, undefined));
                             }
 
                         }
@@ -177,7 +177,7 @@ export class DynamicFormGenerator {
                         const objectTypeConfig = element.type_config as IFieldConfigForObjectConfig<any>;
                         // since it's an object, it should be an object as the property
                         let subGroup;
-                        subGroup = this.createFormGroup(objectTypeConfig.field_configs, null, savedDatas[element.name]);
+                        subGroup = this.createFormGroup(objectTypeConfig.field_configs, null, savedDatas ? savedDatas[element.name] : null);
                         group.addControl(element.name, subGroup);
                         break;
                     }
