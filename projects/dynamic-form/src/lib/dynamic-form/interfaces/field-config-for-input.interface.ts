@@ -2,6 +2,7 @@ import { EFieldConfigInputType } from '../enums/field-config-input-type.enum';
 import { IKeyValueInString } from './key-value.interface';
 
 export interface IFieldConfigForInputConfig {
+    readonly?: boolean;
     type: EFieldConfigInputType;
     list: boolean;
     dataset?: IKeyValueInString[];
