@@ -9,6 +9,7 @@ export * from './lib/dynamic-form/dynamic-form.module';
 export * from './lib/dynamic-form/components/dynamic-form.component';
 export * from './lib/dynamic-form/components/dynamic-section.component';
 export * from './lib/dynamic-form/components/multiselect-dataset/multiselect-dataset.component';
+export * from './lib/dynamic-form/components/form-designare/form-designare.component';
 
 // enums
 export * from './lib/dynamic-form/enums/field-config-input-type.enum';

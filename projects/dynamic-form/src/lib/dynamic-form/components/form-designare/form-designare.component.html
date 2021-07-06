@@ -1,0 +1,25 @@
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('array')">Array</button>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('button')">Button</button>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('divider')">Divider</button>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('input')">Input</button>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('object')">Object</button>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('select')">Select</button>
+<button type="button" class="btn btn-sm btn-outline-primary mb-3 me-2" (click)="addField('textarea')">Textarea</button>
+
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Configuration</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let field of fields; index as i;">
+        <tr>
+            <td>{{ i + 1 }}</td>
+            <td>
+                <b2all-dynamic-form [inputFormConfigs]="field.template" [inputSavedData]="field.saved_data"
+                    (formOnSubmit)="formOnSubmitting($event, i)"></b2all-dynamic-form>
+            </td>
+        </tr>
+    </tbody>
+</table>

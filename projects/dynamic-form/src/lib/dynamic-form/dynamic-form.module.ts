@@ -24,6 +24,7 @@ import { DynamicDivHeadingsComponent } from './components/dynamic-div-headings/d
 import { DynamicDivFormComponent } from './components/dynamic-div-form/dynamic-div-form.component';
 import { ValidatorHintComponent } from './components/validator-hint/validator-hint.component';
 import { MultiselectDatasetComponent } from './components/multiselect-dataset/multiselect-dataset.component';
+import { FormDesignareComponent } from './components/form-designare/form-designare.component';
 
 
 
@@ -45,6 +46,7 @@ import { MultiselectDatasetComponent } from './components/multiselect-dataset/mu
     DynamicDivFormComponent,
     ValidatorHintComponent,
     MultiselectDatasetComponent,
+    FormDesignareComponent,
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,7 @@ import { MultiselectDatasetComponent } from './components/multiselect-dataset/mu
     DynamicFormComponent,
     DynamicSectionComponent,
     MultiselectDatasetComponent,
+    FormDesignareComponent,
   ]
 })
 export class B2allDynamicFormModule { }
