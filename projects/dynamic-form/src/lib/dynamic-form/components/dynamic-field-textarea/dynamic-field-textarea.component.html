@@ -1,5 +1,5 @@
 <div [formGroup]="group">
-    <div [ngClass]="detailConfig.css_class.group">
+    <div [ngClass]="detailConfig.css_class.group ?? ''">
         <label [ngClass]="detailConfig.css_class.input_label" [attr.for]="'textarea_' + config.name">{{
             config.display_text
             }}</label>
