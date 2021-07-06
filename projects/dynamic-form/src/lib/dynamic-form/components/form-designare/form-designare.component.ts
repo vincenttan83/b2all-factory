@@ -533,9 +533,176 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  getFieldConfigForSelectTemplate(): IFieldConfig<IFieldConfigForInputConfig>[] {
+  getFieldConfigForSelectTemplate(): IFieldConfig<
+    IFieldConfigForInputConfig | IFieldConfigForObjectConfig<any>
+  >[] {
+
+    const cssClass: IFieldConfigForObjectConfig<IFieldConfigForInputConfig> = {
+      field_configs: [
+        {
+          name: 'group',
+          display_text: 'Group',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+            css_class: {
+              group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+            },
+          },
+        },
+        {
+          name: 'select_label',
+          display_text: 'Select label',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+            css_class: {
+              group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+            },
+          },
+        },
+        {
+          name: 'select',
+          display_text: 'Select',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+            css_class: {
+              group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+            },
+          },
+        },
+      ],
+      css_class: { group_label: 'h6', content: 'ps-3' },
+    };
+
     return [
       ...this.getFieldConfig(),
+      {
+        name: 'type_config',
+        display_text: 'Select config:',
+        type: EFieldConfigType.Object,
+        type_config: {
+          field_configs: [
+            {
+              name: 'dataset',
+              type: EFieldConfigType.Array,
+              validation_fn: getValidators([{ type: EFormValidator.Required }]),
+              type_config: {
+                table_caption: 'Dataset',
+                table_column_names: ['Key', 'Value'],
+                field_configs: [
+                  {
+                    name: 'key',
+                    type: EFieldConfigType.Input,
+                    validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                  {
+                    name: 'value',
+                    type: EFieldConfigType.Input,
+                    validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                ],
+                css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: '', label: '' }
+              },
+            },
+            {
+              name: 'controls',
+              type: EFieldConfigType.Array,
+              type_config: {
+                table_caption: 'Controls',
+                table_column_names: ['Key', 'Value'],
+                field_configs: [
+                  {
+                    name: 'name',
+                    type: EFieldConfigType.Input,
+                    validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                  {
+                    name: 'label',
+                    type: EFieldConfigType.Input,
+                    validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                  {
+                    name: 'key_field',
+                    type: EFieldConfigType.Input,
+                    validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                  {
+                    name: 'value_field',
+                    type: EFieldConfigType.Input,
+                    validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                  {
+                    name: 'value',
+                    type: EFieldConfigType.Input,
+                    type_config: {
+                      type: EFieldConfigInputType.Text,
+                      list: false,
+                      css_class: {
+                        group: '', group_label: 'form-group', input: 'form-control form-control-sm', input_label: '',
+                      },
+                    },
+                  },
+                ],
+                css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: '', label: '' }
+              },
+            },
+            {
+              name: 'css_class',
+              display_text: 'CSS Class:',
+              type: EFieldConfigType.Object,
+              type_config: cssClass
+            }
+          ],
+          css_class: { group_label: 'h6', content: 'ps-3' }
+        },
+      }
     ];
   }
 
