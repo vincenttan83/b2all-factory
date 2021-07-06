@@ -18,7 +18,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './form-designare.component.html',
   styleUrls: ['./form-designare.component.css']
 })
-export class FormDesignareComponent implements OnInit {
+export class FormDesignareComponent implements OnInit, AfterViewInit {
 
   @Input() inputData!: { [key: string]: any };
   @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
@@ -38,8 +38,13 @@ export class FormDesignareComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.generatePreview();
+    }, 0);
+  }
 
+  ngOnInit(): void {
     // generate the multiselect template based on the level received
     // const theTemplate = this.generateTemplate();
     // push the template into the fields stack
@@ -54,7 +59,18 @@ export class FormDesignareComponent implements OnInit {
           valid: false,
         });
     });
+  }
 
+  moveUp(index: number): void {
+    const temp = this.fields[index];
+    this.fields[index] = this.fields[index - 1];
+    this.fields[index - 1] = temp;
+  }
+
+  moveDown(index: number): void {
+    const temp = this.fields[index];
+    this.fields[index] = this.fields[index + 1];
+    this.fields[index + 1] = temp;
   }
 
   removeField(index: number): void {
@@ -77,6 +93,7 @@ export class FormDesignareComponent implements OnInit {
         } else {
           // console.log('form found & invalid');
           // console.log(a.formGroup.value);
+          this.fields[i].valid = false;
         }
       } else {
         // console.log('form not found');

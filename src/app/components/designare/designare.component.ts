@@ -12,4 +12,8 @@ export class DesignareComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  formOnSubmit(val: any): void {
+    console.log(val);
+  }
+
 }

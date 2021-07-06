@@ -13,26 +13,31 @@
             <th scope="col">#</th>
             <th scope="col">Configuration</th>
             <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody *ngFor="let field of fields; index as i;">
         <tr>
-            <td>{{ i + 1 }}</td>
+            <td [ngClass]="field.valid ? 'bg-success' : 'bg-danger'">{{ i + 1 }}</td>
             <td>
                 <b2all-dynamic-form #dynamicForms [attr.id]="'dynamic_form_' + i" [inputFormConfigs]="field.template"
                     [inputSavedData]="field.saved_data" (formOnSubmit)="formOnSubmitting($event, i)">
                 </b2all-dynamic-form>
             </td>
+            <td><button class="btn btn-sm btn-primary" (click)="moveUp(i)" [disabled]="i === 0">Move up</button></td>
+            <td><button class="btn btn-sm btn-primary" (click)="moveDown(i)" [disabled]="i === (fields.length - 1)">Move
+                    down</button></td>
             <td><button class="btn btn-sm btn-danger" (click)="removeField(i)">Delete</button></td>
         </tr>
-        <tr>
+        <!-- <tr>
             <ng-container *ngIf="field.valid; else formInvalid">
                 <td colspan="3" class="bg-success"></td>
             </ng-container>
             <ng-template #formInvalid>
                 <td colspan="3" class="bg-danger"></td>
             </ng-template>
-        </tr>
+        </tr> -->
     </tbody>
     <tfoot>
         <tr>
