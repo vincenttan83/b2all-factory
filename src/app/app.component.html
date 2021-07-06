@@ -1,29 +1,24 @@
-<div class="container pt-3">
+<div class="container-fluid pt-3">
 
-    <h1>Multi select CRUD</h1>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/', 'home']" [routerLinkActive]="'active'">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/', 'multi-select']" [routerLinkActive]="'active'">Multi select</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/', 'dynamic-form']" [routerLinkActive]="'active'">Dynamic form</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/', 'designare']" [routerLinkActive]="'active'">Designare</a>
+        </li>
+    </ul>
+    <div class="border-start border-end border-bottom p-3 mb-3">
 
-    <b2all-multiselect-dataset [inputHierarchyLevels]="multiselectHierarchyLevels" [inputData]="multiselectData"
-        [inputSubmitButtonTemplate]="multiselectSubmitButtonTemplate" (outputFormOnSubmit)="formOnSubmitMultiselect($event)"></b2all-multiselect-dataset>
+        <router-outlet></router-outlet>
 
-    <h1>Dynamic Sections</h1>
-
-    <b2all-dynamic-section [inputSectionConfigs]="sectionConfigs" (outputFormSubmitEvent)="formOnSubmit($event)"
-        (outputFormChangeEvent)="formOnChange($event)">
-    </b2all-dynamic-section>
-
-
-    <!-- <div class="p-5"></div>
-
-
-    <h1>Dynamic Form</h1>
-
-    <b2all-dynamic-form #dynamicForm="b2allDynamicForm" [inputFormConfigs]="myFormDesign" [inputSavedData]="savedData"
-        (formOnSubmit)="formOnSubmit($event)">
-    </b2all-dynamic-form>
-
-    <pre>{{ returnedValue | json }}</pre> -->
+    </div>
 
 
 </div>
-
-<pre>{{ returnedValue | json }}</pre>

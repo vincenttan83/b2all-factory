@@ -5,6 +5,11 @@ import { ICssClass } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { MultiSelectComponent } from './components/multi-select/multi-select.component';
+import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DesignareComponent } from './components/designare/designare.component';
+import { DemoComponent } from './components/demo/demo.component';
 
 // const cssClass: ICssClass = {
 //   input: {
@@ -33,7 +38,12 @@ import { AppComponent } from './app.component';
 // };
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    MultiSelectComponent,
+    DynamicFormComponent,
+    DesignareComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,
