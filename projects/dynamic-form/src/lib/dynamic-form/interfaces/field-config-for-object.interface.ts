@@ -4,6 +4,7 @@ export interface IFieldConfigForObjectConfig<T> {
     field_configs: IFieldConfig<T>[];
     css_class: {
         group_label: string;
+        content: string;
     };
 }
 
