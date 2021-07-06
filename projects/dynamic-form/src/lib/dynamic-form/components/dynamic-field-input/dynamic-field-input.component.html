@@ -68,7 +68,7 @@
                     [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
                     [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
                     [attr.max]="detailConfig.type==='range' ? 100: null"
-                    [attr.step]="detailConfig.type==='range' ? 5: null">
+                    [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
 
                 <div *ngIf="config.validation_fn && group.controls[config.name].touched">
 
@@ -81,7 +81,7 @@
         </ng-container>
         <ng-template #nonListInputForCheckbox>
 
-            <label [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+            <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
 
             <div [ngClass]="detailConfig.css_class.group ?? ''">
 
