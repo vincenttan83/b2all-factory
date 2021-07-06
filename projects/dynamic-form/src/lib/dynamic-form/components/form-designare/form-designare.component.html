@@ -37,23 +37,12 @@
     <tfoot>
         <tr>
             <td colspan="3">
-                <button class="btn btn-sm btn-primary" (click)="generatePreview()">Verify and preview</button>
+                <button class="btn btn-sm btn-primary" (click)="generatePreview()">Verify and extract</button>
             </td>
         </tr>
+
     </tfoot>
 </table>
-
-<div class="my-5">
-    <hr>
-</div>
-
-<div>
-    <h2>Demo</h2>
-
-    <b2all-dynamic-form *ngIf="previewTemplate && previewTemplate.length > 0" [inputFormConfigs]="previewTemplate"
-        [inputSavedData]="{}" (formOnSubmit)="formOnSubmittingFromPreview($event)"></b2all-dynamic-form>
-
-</div>
 
 
 <div class="my-5">
@@ -62,3 +51,6 @@
 
 <h2>Ready to save to DB</h2>
 <pre>{{ previewTemplate | json }}</pre>
+
+<button *ngIf="previewTemplate && previewTemplate.length > 0" class="btn btn-sm btn-primary"
+    (click)="emit()">Save</button>

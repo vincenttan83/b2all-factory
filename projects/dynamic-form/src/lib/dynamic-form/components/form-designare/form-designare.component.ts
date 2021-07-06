@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Subject } from 'rxjs';
 import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
@@ -12,6 +12,7 @@ import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-s
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { DynamicFormComponent } from '../dynamic-form.component';
 import { takeUntil } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'b2all-form-designare',
   templateUrl: './form-designare.component.html',
@@ -24,7 +25,6 @@ export class FormDesignareComponent implements OnInit {
 
   @ViewChildren('dynamicForms') dynamicForms!: QueryList<DynamicFormComponent>;
 
-  previewTemplate: any[] = [];
   fields: {
     template: IFieldConfig<
       IFieldConfigForInputConfig |
@@ -33,6 +33,8 @@ export class FormDesignareComponent implements OnInit {
     saved_data: { [key: string]: any };
     valid: boolean;
   }[] = [];
+
+  previewTemplate: any;
 
   constructor() { }
 
@@ -62,36 +64,30 @@ export class FormDesignareComponent implements OnInit {
   }
 
   generatePreview(): void {
-
-    console.log(this.fields.length);
-
-    const cloneFields = [...this.fields];
-
-    const template: any[] = [];
-
-    for (let i = 0; i < cloneFields.length; i++) {
-      console.log(i);
-
+    this.previewTemplate = [];
+    for (let i = 0; i < this.fields.length; i++) {
       const a = this.dynamicForms.get(i);
-      if (a && a.formGroup.valid) {
-        console.log('form found');
-
-        this.fields[i].valid = true;
-        template.push(this.fields[i].saved_data);
+      if (a) {
+        if (a.formGroup.valid) {
+          // console.log('form found & valid');
+          // console.log(a.formGroup.value);
+          this.fields[i].saved_data = a.formGroup.value;
+          this.fields[i].valid = true;
+          this.previewTemplate.push(this.fields[i].saved_data);
+        } else {
+          // console.log('form found & invalid');
+          // console.log(a.formGroup.value);
+        }
       } else {
-        console.log('form not found');
-
+        // console.log('form not found');
         this.fields[i].valid = false;
       }
     }
-    this.previewTemplate = template;
 
-    // const template: any[] = [];
-    // this.fields.forEach(element => {
-    //   template.push(element.saved_data);
-    // });
-    // this.previewTemplate = template;
-    // this.outputFormOnSubmit.emit(template);
+  }
+
+  emit(): void {
+    this.outputFormOnSubmit.emit(this.previewTemplate);
   }
 
   testSavedData(): any[] {
@@ -526,9 +522,90 @@ export class FormDesignareComponent implements OnInit {
     ];
   }
 
-  getFieldConfigForTextareaTemplate(): IFieldConfig<IFieldConfigForInputConfig>[] {
+  getFieldConfigForTextareaTemplate(): IFieldConfig<
+    IFieldConfigForInputConfig | IFieldConfigForObjectConfig<any>
+  >[] {
+
+    const cssClass: IFieldConfigForObjectConfig<IFieldConfigForInputConfig> = {
+      field_configs: [
+        {
+          name: 'group',
+          display_text: 'Group',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+            css_class: {
+              group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+            },
+          },
+        },
+        {
+          name: 'input_label',
+          display_text: 'Input label',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+            css_class: {
+              group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+            },
+          },
+        },
+        {
+          name: 'input',
+          display_text: 'Input',
+          type: EFieldConfigType.Input,
+          type_config: {
+            type: EFieldConfigInputType.Text,
+            list: false,
+            css_class: {
+              group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1',
+            },
+          },
+        },
+      ],
+      css_class: { group_label: 'h6', content: 'ps-3' },
+    };
+
+
     return [
       ...this.getFieldConfig(),
+      {
+        name: 'type_config',
+        display_text: 'Textarea config:',
+        type: EFieldConfigType.Object,
+        type_config: {
+          field_configs: [
+            {
+              name: 'row_count',
+              type: EFieldConfigType.Input,
+              validation_fn: getValidators([{ type: EFormValidator.Required }]),
+              type_config: {
+                type: EFieldConfigInputType.Number,
+                list: false,
+                css_class: { group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1', }
+              },
+            },
+            {
+              name: 'col_count',
+              type: EFieldConfigType.Input,
+              type_config: {
+                type: EFieldConfigInputType.Number,
+                list: false,
+                css_class: { group: 'mb-2', group_label: 'form-group', input: 'form-control form-control-sm', input_label: 'mb-1', }
+              },
+            },
+            {
+              name: 'css_class',
+              display_text: 'CSS Class:',
+              type: EFieldConfigType.Object,
+              type_config: cssClass
+            }
+          ],
+          css_class: { group_label: 'h6', content: 'ps-3' }
+        },
+      }
     ];
   }
 
