@@ -17,6 +17,7 @@ export interface IFieldConfigForArrayConfig<T> {
      * Configuration for recursive enabled tempalte
      */
     table_column_names?: string[];
+    table_caption?: string;
 }
 
 export function isFieldConfigForArrayConfig<T>(obj: any): obj is IFieldConfigForArrayConfig<T> {
