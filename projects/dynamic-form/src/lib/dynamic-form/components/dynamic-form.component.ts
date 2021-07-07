@@ -37,6 +37,9 @@ export class DynamicFormComponent implements OnInit {
   wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
 
   get changes(): Observable<any> { return this.formGroup.valueChanges; }
+  get dirty(): boolean { return this.formGroup.dirty; }
+  get valid(): boolean { return this.formGroup.valid; }
+  get value(): any { return this.formGroup.value; }
 
   constructor(
     private privateFormBuilder: FormBuilder
