@@ -1,3 +1,4 @@
 <b2all-dynamic-form #dynamicDivForm="b2allDynamicForm" [inputFormConfigs]="config.content.form_design"
-    [inputSavedData]="config.content.saved_data" (formOnSubmit)="formOnSubmit($event)">
+    [inputFormName]="config.content.form_unique_name" [inputSavedData]="config.content.saved_data"
+    (formOnSubmit)="formOnSubmit($event)">
 </b2all-dynamic-form>

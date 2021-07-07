@@ -13,7 +13,7 @@ import { IFieldConfig } from '../interfaces/field-config.interface';
 
     <div class="row">
       <div *ngFor="let field of inputFormConfigs;" [ngClass]="field.css_class ?? ''">
-        <ng-container b2allDynamicField [config]="field" [group]="formGroup">
+        <ng-container b2allDynamicField [config]="field" [group]="formGroup" [formName]="inputFormName">
         </ng-container>
       </div>
     </div>
@@ -25,11 +25,15 @@ import { IFieldConfig } from '../interfaces/field-config.interface';
 })
 export class DynamicFormComponent implements OnInit {
 
+  // required input
   @Input() inputFormConfigs: IFieldConfig<any>[] = [];
-  @Input() inputAsyncValidatorFn: AsyncValidatorFn[] = [];
+  @Input() inputSavedData: { [key: string]: any } = {};
+  @Input() inputFormName!: string;
+  // input overridable
   @Input() removeButtonField = true;
   @Input() removeUndefinedField = true;
-  @Input() inputSavedData: { [key: string]: any } = {};
+  // future implement
+  @Input() inputAsyncValidatorFn: AsyncValidatorFn[] = []; // yet to implement for the overal form validation!
 
   @Output() formOnSubmit: EventEmitter<any> = new EventEmitter<any>();
 
