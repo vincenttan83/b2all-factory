@@ -10,6 +10,7 @@ import { MultiSelectComponent } from './components/multi-select/multi-select.com
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DesignareComponent } from './components/designare/designare.component';
 import { DemoComponent } from './components/demo/demo.component';
+import { DynamicSectionComponent } from './components/dynamic-section/dynamic-section.component';
 
 // const cssClass: ICssClass = {
 //   input: {
@@ -43,7 +44,8 @@ import { DemoComponent } from './components/demo/demo.component';
     MultiSelectComponent,
     DynamicFormComponent,
     DesignareComponent,
-    DemoComponent
+    DemoComponent,
+    DynamicSectionComponent
   ],
   imports: [
     BrowserModule,
