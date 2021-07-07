@@ -15,7 +15,8 @@ export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigFo
 
   config!: IFieldConfig<IFieldConfigForInputConfig>;
   group!: FormGroup;
-  index!: number;
+  arrayIndex!: number;
+  formName!: string;
 
   detailConfig!: IFieldConfigForInputConfig;
 
@@ -110,6 +111,30 @@ export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigFo
     }
     return false;
 
+  }
+
+  generateId(
+    formName: string,
+    inputType: string,
+    controlName: string,
+    arrayIndex: number,
+  ): string {
+    let name: string;
+    name = '';
+    if (formName) {
+      name = name + formName + '_';
+    }
+    if (inputType) {
+      name = name + inputType + '_';
+    }
+    if (controlName) {
+      name = name + controlName + '_';
+    }
+    if (arrayIndex) {
+      name = name + arrayIndex + '_';
+    }
+
+    return name;
   }
 
 }

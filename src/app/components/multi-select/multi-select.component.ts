@@ -75,4 +75,8 @@ export class MultiSelectComponent implements OnInit {
   formOnSubmitMultiselect(val: any): void {
     console.log(val);
   }
+
+  formOnChangeMultiselect(val: any): void {
+    console.log(val);
+  }
 }

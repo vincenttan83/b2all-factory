@@ -16,6 +16,8 @@ export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
   config!: IFieldConfig<T>;
   group!: FormGroup;
   index!: number;
+  arrayIndex!: number;
+  formName!: string;
 
   detailConfig!: IFieldConfigForArrayConfig<T>;
 

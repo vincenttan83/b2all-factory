@@ -13,7 +13,8 @@ export class DynamicFieldObjectComponent<T> implements OnInit, IField<T> {
 
   config!: IFieldConfig<T>;
   group!: FormGroup;
-  index!: number;
+  arrayIndex!: number;
+  formName!: string;
 
   detailConfig!: IFieldConfigForObjectConfig<T>;
 

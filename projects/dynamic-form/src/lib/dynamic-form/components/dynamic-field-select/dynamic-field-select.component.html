@@ -2,7 +2,7 @@
 
     <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of detailConfig.controls; index as i;">
         <label *ngIf="control.label" [ngClass]="detailConfig.css_class.select_label"
-            [attr.for]="'select_' + control.name + '_' + index">{{
+            [attr.for]="generateId(formName, config.name, arrayIndex) + 'select'">{{
             control.label
             }}</label>
         <select [ngClass]="
@@ -12,7 +12,8 @@
                                     detailConfig.css_class.select ? detailConfig.css_class.select + ' is-valid' : 'is-valid' 
                                 : detailConfig.css_class.select ? detailConfig.css_class.select + ' is-invalid': 'is-invalid' 
                             : detailConfig.css_class.select ?? '' 
-                        : detailConfig.css_class.select ?? ''" [attr.id]="'select_' + control.name + '_' + index"
+                        : detailConfig.css_class.select ?? ''"
+            [attr.id]="generateId(formName, config.name, arrayIndex) + 'select'"
             [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name"
             (change)="onChange($event, i)">
 

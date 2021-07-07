@@ -28,8 +28,9 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField<any> {
 
   @Input() config!: IFieldConfig<any>;
   @Input() group!: FormGroup;
-  @Input() index!: number;
+  @Input() arrayIndex!: number;
   @Input() abstractControl!: AbstractControl;
+  @Input() formName!: string;
 
   component!: ComponentRef<IField<any>>;
 
@@ -54,7 +55,8 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField<any> {
     this.component = this.privateViewContainerRef.createComponent(component);
     this.component.instance.config = this.config;
     this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
-    this.component.instance.index = this.index;
+    this.component.instance.arrayIndex = this.arrayIndex;
+    this.component.instance.formName = this.formName;
 
   }
 
@@ -62,7 +64,8 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField<any> {
     if (this.component) {
       this.component.instance.config = this.config;
       this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
-      this.component.instance.index = this.index;
+      this.component.instance.arrayIndex = this.arrayIndex;
+      this.component.instance.formName = this.formName;
     }
   }
 

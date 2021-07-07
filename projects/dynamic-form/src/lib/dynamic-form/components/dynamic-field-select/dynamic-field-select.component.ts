@@ -18,7 +18,8 @@ export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigF
 
   config!: IFieldConfig<IFieldConfigForSelectConfig>;
   group!: FormGroup;
-  index!: number;
+  arrayIndex!: number;
+  formName!: string;
 
   detailConfig!: IFieldConfigForSelectConfig;
 
@@ -84,6 +85,26 @@ export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigF
   // push a changes to the combo box selection changed.
   onChange(value: any, index: number): void {
     this.privateDynamicFieldSelectService.setValue(value.target.value, index);
+  }
+
+  generateId(
+    formName: string,
+    controlName: string,
+    arrayIndex: number,
+  ): string {
+    let name: string;
+    name = '';
+    if (formName) {
+      name = name + formName + '_';
+    }
+    if (controlName) {
+      name = name + controlName + '_';
+    }
+    if (arrayIndex) {
+      name = name + arrayIndex + '_';
+    }
+
+    return name;
   }
 
 }

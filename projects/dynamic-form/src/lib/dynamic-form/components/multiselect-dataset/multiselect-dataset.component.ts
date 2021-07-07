@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../../enums/field-config-type.enum';
@@ -8,23 +8,33 @@ import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-b
 import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IMultiSelect } from '../../interfaces/multi-select.interface';
+import { DynamicFormComponent } from '../dynamic-form.component';
 
 @Component({
   selector: 'b2all-multiselect-dataset',
   templateUrl: './multiselect-dataset.component.html',
   styleUrls: ['./multiselect-dataset.component.css']
 })
-export class MultiselectDatasetComponent implements OnInit {
+export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   @Input() inputHierarchyLevels!: string[];
   @Input() inputData!: { [key: string]: any };
   @Input() inputSubmitButtonTemplate!: IFieldConfig<IFieldConfigForButtonConfig>;
   @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outputFormOnChange: EventEmitter<any> = new EventEmitter<any>();
 
   multiSelectTemplate: IFieldConfig<any>[] = [];
   formReady = false;
 
   constructor() { }
+
+  ngAfterViewInit(): void {
+    this.dynamicForm.changes.subscribe(resp => {
+      this.outputFormOnChange.emit(resp);
+    });
+  }
 
   ngOnInit(): void {
 

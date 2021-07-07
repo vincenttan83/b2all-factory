@@ -5,12 +5,14 @@
 
         <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group ?? ''">
             <input [ngClass]="detailConfig.css_class.input ?? ''"
-                [attr.id]="detailConfig.type + '_' + config.name + '_' + index + '_' + i"
+                [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i"
                 (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
-                [attr.name]="config.name" [checked]="shouldChecked(choice.value)">
+                [attr.name]="formName ? formName + '_' + config.name : config.name"
+                [checked]="shouldChecked(choice.value)">
 
             <label [ngClass]="detailConfig.css_class.input_label ?? ''"
-                [attr.for]="detailConfig.type + '_' + config.name + '_' + index + '_' + i">{{ choice.key }}</label>
+                [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i">{{
+                choice.key }}</label>
         </div>
 
         <div *ngIf="config.validation_fn">
@@ -25,7 +27,7 @@
             <div [ngClass]="detailConfig.css_class.group ?? ''">
 
                 <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label ?? ''"
-                    [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
+                    [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'">{{
                     config.display_text }}</label>
 
                 <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">
@@ -65,8 +67,9 @@
                         : detailConfig.css_class.input ?? ''" -->
 
                 <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
-                    [attr.id]="detailConfig.type + '_' + config.name + '_' + index" [formControlName]="config.name"
-                    [attr.type]="detailConfig.type" [attr.min]="detailConfig.type==='range' ? 0 : null"
+                    [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
+                    [formControlName]="config.name" [attr.type]="detailConfig.type"
+                    [attr.min]="detailConfig.type==='range' ? 0 : null"
                     [attr.max]="detailConfig.type==='range' ? 100: null"
                     [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
 
@@ -81,16 +84,17 @@
         </ng-container>
         <ng-template #nonListInputForCheckbox>
 
-            <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+            <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{
+                config.display_text }}</label>
 
             <div [ngClass]="detailConfig.css_class.group ?? ''">
 
                 <input [ngClass]="detailConfig.css_class.input ?? ''"
-                    [attr.id]="detailConfig.type + '_' + config.name + '_' + index" (change)="onCheckChange($event)"
-                    [attr.type]="detailConfig.type" [attr.name]="config.name"
+                    [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'"
+                    (change)="onCheckChange($event)" [attr.type]="detailConfig.type" [attr.name]="config.name"
                     [checked]="shouldChecked(group.controls[config.name].value)">
                 <label [ngClass]="detailConfig.css_class.input_label ?? ''"
-                    [attr.for]="detailConfig.type + '_' + config.name + '_' + index">{{
+                    [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'">{{
                     detailConfig.single_checkbox_display_text }}</label>
 
                 <div *ngIf="config.validation_fn">

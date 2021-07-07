@@ -14,7 +14,8 @@ export class DynamicFieldTextareaComponent implements OnInit, IField<IFieldConfi
 
   config!: IFieldConfig<IFieldConfigForTextareaConfig>;
   group!: FormGroup;
-  index!: number;
+  arrayIndex!: number;
+  formName!: string;
 
   detailConfig!: IFieldConfigForTextareaConfig;
 
@@ -28,6 +29,26 @@ export class DynamicFieldTextareaComponent implements OnInit, IField<IFieldConfi
 
   ngOnInit(): void {
     this.detailConfig = (this.config.type_config as IFieldConfigForTextareaConfig);
+  }
+
+  generateId(
+    formName: string,
+    controlName: string,
+    arrayIndex: number,
+  ): string {
+    let name: string;
+    name = '';
+    if (formName) {
+      name = name + formName + '_';
+    }
+    if (controlName) {
+      name = name + controlName + '_';
+    }
+    if (arrayIndex) {
+      name = name + arrayIndex + '_';
+    }
+
+    return name;
   }
 
 }

@@ -1,26 +1,16 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { DynamicSectionComponent as FactoryForm } from '../../../../projects/dynamic-form/src/lib/dynamic-form/components/dynamic-section.component';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dynamic-section',
   templateUrl: './dynamic-section.component.html',
   styleUrls: ['./dynamic-section.component.sass']
 })
-export class DynamicSectionComponent implements OnInit, AfterViewInit {
-
-  @ViewChild(FactoryForm) dynamicDivForm!: FactoryForm;
+export class DynamicSectionComponent implements OnInit {
 
   pageTemplateReady = false;
   forms: any[] = [];
 
   constructor() { }
-
-  ngAfterViewInit(): void {
-    this.dynamicDivForm.outputFormChangeEvent.subscribe(resp => {
-      console.log(resp);
-    });
-
-  }
 
   ngOnInit(): void {
 
@@ -71,7 +61,7 @@ export class DynamicSectionComponent implements OnInit, AfterViewInit {
         form_unique_name: 'form02',
         form_design: [
           {
-            name: 'age_group_02',
+            name: 'age_group',
             display_text: 'Select your age group:',
             type: 'input',
             type_config: {

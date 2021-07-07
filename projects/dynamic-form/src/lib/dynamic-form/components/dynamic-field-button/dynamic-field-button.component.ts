@@ -14,7 +14,8 @@ export class DynamicFieldButtonComponent implements OnInit, IField<IFieldConfigF
 
   config!: IFieldConfig<IFieldConfigForButtonConfig>;
   group!: FormGroup;
-  index!: number;
+  arrayIndex!: number;
+  formName!: string;
 
   detailConfig!: IFieldConfigForButtonConfig;
 
