@@ -252,48 +252,15 @@ export class DynamicFormComponent implements OnInit {
 
 
   async formOnSubmit(formValue: any): Promise<void> {
+    // you may check further on form data
     if (!formValue.form_data.agreement) {
       alert('Do not try to by pass my validation!');
     }
+    console.log(formValue);
   }
 
   async formOnChange(formValue: any): Promise<void> {
-    // // console.log('formOnChange');
-    // // console.log(formValue.form_data.summary);
-
-    // const somethingNew: IDivConfig<IDivConfigForHeadings> = {
-    //   content: {
-    //     text: formValue.form_data.summary,
-    //     class: 'h3'
-    //   },
-    //   type: EDivConfigType.Headings,
-    // };
-
-    // let newFormRender = this.theFormRender;
-    // newFormRender = {
-    //   ...newFormRender,
-    //   content: {
-    //     ...newFormRender.content,
-    //     saved_data: {
-    //       ...newFormRender.content.saved_data,
-    //       accepted_agreement: !formValue.form_data.accepted_agreement,
-    //       summary: formValue.form_data.summary,
-    //     }
-    //   },
-    // };
-
-
-
-    // newFormRender = {}
-
-    // newFormRender.content.saved_data.accepted_agreement: !formValue.form_data.accepted_agreement
-
-    // console.log(newFormRender);
-
-
-    // this.myNewSectionDesign[0] = somethingNew;
-    // this.myNewSectionDesign[1] = newFormRender;
-    // this.mySectionDesign.push(somethingNew);
+    console.log(formValue);
   }
 
 
