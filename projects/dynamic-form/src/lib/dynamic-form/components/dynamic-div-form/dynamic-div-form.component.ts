@@ -25,7 +25,14 @@ export class DynamicDivFormComponent implements IDiv<IDivConfigForForm<any>>, Af
 
   ngAfterViewInit(): void {
     this.dynamicDivForm.changes.subscribe(resp => {
-      this.formChangeEvent.emit({ form_name: this.config.content.form_unique_name, form_index: this.index, form_data: resp });
+      this.formChangeEvent.emit({
+        form_name: this.config.content.form_unique_name,
+        form_index: this.index,
+        form_data: resp,
+        form_valid: this.dynamicDivForm.valid,
+        form_dirty: this.dynamicDivForm.dirty,
+        form_value: this.dynamicDivForm.value,
+      });
     });
   }
 
