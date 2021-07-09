@@ -14,6 +14,7 @@ export interface IFieldConfigForSelectConfig {
         value_field: string;
         value: string | '';
         validation_fn?: ValidatorFn[];
+        disabled?: boolean;
     }[];
     css_class: {
         group: string;

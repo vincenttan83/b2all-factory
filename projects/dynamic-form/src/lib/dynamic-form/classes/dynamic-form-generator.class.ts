@@ -198,7 +198,7 @@ export class DynamicFormGenerator {
                         const selectTypeConfig = this.prepForSelect(element, savedDatas);
                         selectTypeConfig.controls.forEach(elementControl => {
                             group.addControl(elementControl.name,
-                                this.createControl2(undefined, elementControl.validation_fn, elementControl.value));
+                                this.createControl2(elementControl.disabled, elementControl.validation_fn, elementControl.value));
                         });
                         break;
                     }
