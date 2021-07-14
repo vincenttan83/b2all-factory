@@ -58,9 +58,9 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   formOnSubmitting(val: any): void {
     let newVal: any = { ...val };
-    const theMultiSelectData = this.recursiveSort(val);
+    const theMultiSelectData: IMultiSelect = this.recursiveSort(val);
     delete newVal.children;
-    newVal = { ...newVal, multi_select: theMultiSelectData };
+    newVal = { ...newVal, multiselect_dataset: theMultiSelectData.children };
 
     this.outputFormOnSubmit.emit(newVal);
   }
