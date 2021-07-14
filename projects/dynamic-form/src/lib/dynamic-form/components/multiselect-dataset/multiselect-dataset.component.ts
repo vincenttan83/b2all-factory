@@ -60,7 +60,7 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
     let newVal: any = { ...val };
     const theMultiSelectData: IMultiSelect = this.recursiveSort(val);
     delete newVal.children;
-    newVal = { ...newVal, multiselect_dataset: theMultiSelectData.children };
+    newVal = { ...newVal, children: theMultiSelectData.children };
 
     this.outputFormOnSubmit.emit(newVal);
   }
