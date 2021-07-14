@@ -1,5 +1,6 @@
 <h1>Multi select CRUD</h1>
 
 <b2all-multiselect-dataset [inputHierarchyLevels]="multiselectHierarchyLevels" [inputData]="multiselectData"
-    [inputSubmitButtonTemplate]="multiselectSubmitButtonTemplate" (outputFormOnSubmit)="formOnSubmitMultiselect($event)"
-    (outputFormOnChange)="formOnChangeMultiselect($event)"></b2all-multiselect-dataset>
+  [inputPreTemplate]="preTemplate" [inputPostTemplate]="postTemplate"
+  [inputSubmitButtonTemplate]="multiselectSubmitButtonTemplate" (outputFormOnSubmit)="formOnSubmitMultiselect($event)"
+  (outputFormOnChange)="formOnChangeMultiselect($event)"></b2all-multiselect-dataset>

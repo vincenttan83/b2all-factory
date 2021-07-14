@@ -21,6 +21,8 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   @Input() inputHierarchyLevels!: string[];
   @Input() inputData!: { [key: string]: any };
+  @Input() inputPreTemplate!: IFieldConfig<any>[];
+  @Input() inputPostTemplate!: IFieldConfig<any>[];
   @Input() inputSubmitButtonTemplate!: IFieldConfig<IFieldConfigForButtonConfig>;
   @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputFormOnChange: EventEmitter<any> = new EventEmitter<any>();
@@ -41,7 +43,13 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
     // generate the multiselect template based on the level received
     const theTemplate = this.generateTemplate(this.inputHierarchyLevels);
     // push the template into the fields stack
+    if (this.inputPreTemplate) {
+      this.multiSelectTemplate.push(...this.inputPreTemplate);
+    }
     this.multiSelectTemplate.push(theTemplate);
+    if (this.inputPostTemplate) {
+      this.multiSelectTemplate.push(...this.inputPostTemplate);
+    }
     this.multiSelectTemplate.push(this.inputSubmitButtonTemplate);
     // set the form state to ready so the dynamic form will start rendering
     this.formReady = true;
@@ -49,7 +57,12 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
   }
 
   formOnSubmitting(val: any): void {
-    this.outputFormOnSubmit.emit(this.recursiveSort(val));
+    let newVal: any = { ...val };
+    const theMultiSelectData = this.recursiveSort(val);
+    delete newVal.children;
+    newVal = { ...newVal, multi_select: theMultiSelectData };
+
+    this.outputFormOnSubmit.emit(newVal);
   }
 
   generateTemplate(values: string[]): any {

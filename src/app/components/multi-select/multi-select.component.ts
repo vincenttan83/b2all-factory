@@ -67,6 +67,56 @@ export class MultiSelectComponent implements OnInit {
     css_class: 'col-12'
   };
 
+  preTemplate: any[] = [
+    {
+      name: 'full_name',
+      display_text: 'Full name: ',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: 'text',
+        list: false,
+        css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' },
+      },
+      css_class: 'col-12'
+    },
+    {
+      name: 'country_name',
+      display_text: 'Country name: ',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: 'text',
+        list: false,
+        css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' },
+      },
+      css_class: 'col-12'
+    },
+  ];
+
+  postTemplate: any[] = [
+    {
+      name: 'purpose',
+      display_text: 'Purpose: ',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: 'text',
+        list: false,
+        css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' },
+      },
+      css_class: 'col-12'
+    },
+    {
+      name: 'remark',
+      display_text: 'Remark: ',
+      type: EFieldConfigType.Input,
+      type_config: {
+        type: 'text',
+        list: false,
+        css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' },
+      },
+      css_class: 'col-12'
+    },
+  ];
+
   constructor() { }
 
   ngOnInit(): void {
