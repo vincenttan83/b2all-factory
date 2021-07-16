@@ -1,39 +1,38 @@
 <div [formGroup]="group">
 
-    <ng-container *ngIf="detailConfig.list; else nonListInput">
-        <label [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+  <ng-container *ngIf="detailConfig.list; else nonListInput">
+    <label [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+    <br>
+    <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group ?? ''">
+      <input [ngClass]="detailConfig.css_class.input ?? ''"
+        [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i"
+        (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
+        [attr.name]="formName ? formName + '_' + config.name : config.name" [checked]="shouldChecked(choice.value)">
 
-        <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group ?? ''">
-            <input [ngClass]="detailConfig.css_class.input ?? ''"
-                [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i"
-                (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
-                [attr.name]="formName ? formName + '_' + config.name : config.name"
-                [checked]="shouldChecked(choice.value)">
-
-            <label [ngClass]="detailConfig.css_class.input_label ?? ''"
-                [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i">{{
+      <label [ngClass]="detailConfig.css_class.input_label ?? ''"
+        [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i">{{
                 choice.key }}</label>
-        </div>
+    </div>
 
-        <div *ngIf="config.validation_fn">
-            <b2all-validator-hint *ngIf="group.controls[config.name].errors"
-                [validation]="group.controls[config.name].errors"></b2all-validator-hint>
+    <div *ngIf="config.validation_fn">
+      <b2all-validator-hint *ngIf="group.controls[config.name].errors"
+        [validation]="group.controls[config.name].errors"></b2all-validator-hint>
 
-        </div>
-    </ng-container>
+    </div>
+  </ng-container>
 
-    <ng-template #nonListInput>
-        <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
-            <div [ngClass]="detailConfig.css_class.group ?? ''">
+  <ng-template #nonListInput>
+    <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
+      <div [ngClass]="detailConfig.css_class.group ?? ''">
 
-                <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label ?? ''"
-                    [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'">{{
+        <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label ?? ''"
+          [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'">{{
                     config.display_text }}</label>
 
-                <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">
-                    {{ group.value[config.name] }}</span>
+        <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">
+          {{ group.value[config.name] }}</span>
 
-                <!-- validation logic:
+        <!-- validation logic:
                     if the validation required?
                         yes:
                             if the control is "touched"?
@@ -56,7 +55,7 @@
                                 yes: apply empty string
                                 no: apply template css
                  -->
-                <!-- 
+        <!-- 
                  [ngClass]="
                         config.validation_fn ? 
                             group.controls[config.name].touched ? 
@@ -66,48 +65,47 @@
                             : detailConfig.css_class.input ?? '' 
                         : detailConfig.css_class.input ?? ''" -->
 
-                <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
-                    [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
-                    [formControlName]="config.name" [attr.type]="detailConfig.type"
-                    [attr.min]="detailConfig.type==='range' ? 0 : null"
-                    [attr.max]="detailConfig.type==='range' ? 100: null"
-                    [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
+        <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
+          [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
+          [formControlName]="config.name" [attr.type]="detailConfig.type"
+          [attr.min]="detailConfig.type==='range' ? 0 : null" [attr.max]="detailConfig.type==='range' ? 100: null"
+          [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
 
-                <div *ngIf="config.validation_fn && group.controls[config.name].touched">
+        <div *ngIf="config.validation_fn && group.controls[config.name].touched">
 
-                    <b2all-validator-hint *ngIf="group.controls[config.name].errors"
-                        [validation]="group.controls[config.name].errors"></b2all-validator-hint>
+          <b2all-validator-hint *ngIf="group.controls[config.name].errors"
+            [validation]="group.controls[config.name].errors"></b2all-validator-hint>
 
-                </div>
-            </div>
+        </div>
+      </div>
 
-        </ng-container>
-        <ng-template #nonListInputForCheckbox>
+    </ng-container>
+    <ng-template #nonListInputForCheckbox>
 
-            <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{
+      <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{
                 config.display_text }}</label>
 
-            <div [ngClass]="detailConfig.css_class.group ?? ''">
+      <div [ngClass]="detailConfig.css_class.group ?? ''">
 
-                <input [ngClass]="detailConfig.css_class.input ?? ''"
-                    [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'"
-                    (change)="onCheckChange($event)" [attr.type]="detailConfig.type" [attr.name]="config.name"
-                    [checked]="shouldChecked(group.controls[config.name].value)">
-                <label [ngClass]="detailConfig.css_class.input_label ?? ''"
-                    [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'">{{
+        <input [ngClass]="detailConfig.css_class.input ?? ''"
+          [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'"
+          (change)="onCheckChange($event)" [attr.type]="detailConfig.type" [attr.name]="config.name"
+          [checked]="shouldChecked(group.controls[config.name].value)">
+        <label [ngClass]="detailConfig.css_class.input_label ?? ''"
+          [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'">{{
                     detailConfig.single_checkbox_display_text }}</label>
 
-                <div *ngIf="config.validation_fn">
+        <div *ngIf="config.validation_fn">
 
-                    <b2all-validator-hint *ngIf="group.controls[config.name].errors"
-                        [validation]="group.controls[config.name].errors"></b2all-validator-hint>
+          <b2all-validator-hint *ngIf="group.controls[config.name].errors"
+            [validation]="group.controls[config.name].errors"></b2all-validator-hint>
 
-                </div>
+        </div>
 
-            </div>
-
-        </ng-template>
+      </div>
 
     </ng-template>
+
+  </ng-template>
 
 </div>
