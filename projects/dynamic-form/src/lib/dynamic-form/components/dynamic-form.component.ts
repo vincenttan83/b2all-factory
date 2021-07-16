@@ -104,8 +104,12 @@ export class DynamicFormComponent implements OnInit {
           const cleanArray: any[] = [];
           // iterate then clean
           oldArray.forEach(objectWithValueArrayItem => {
-            const newFormValueCleanForUndefinedArray: { [keys: string]: any } = {};
-            cleanArray.push(this.removedUndefined(objectWithValueArrayItem, newFormValueCleanForUndefinedArray));
+            if (typeof objectWithValueArrayItem === 'object') {
+              const newFormValueCleanForUndefinedArray: { [keys: string]: any } = {};
+              cleanArray.push(this.removedUndefined(objectWithValueArrayItem, newFormValueCleanForUndefinedArray));
+            } else {
+              cleanArray.push(objectWithValueArrayItem);
+            }
           });
 
           newFormValueCleanForUndefined = {
