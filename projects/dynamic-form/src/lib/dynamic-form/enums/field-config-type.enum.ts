@@ -6,6 +6,7 @@ export const enum EFieldConfigType {
     Object = 'object', // reconfirm required as this is the nested object / map
     Select = 'select', // might rename, as all type should support more than 1
     Textarea = 'textarea',
+    RadioButtonDefault = 'radiobuttondefault',
     // InputButton = 'INPUT_BUTTON' // is boostrap input with button in same row, deprecated
     // Listing = 'LISTING', // drop as initially target to chheck box list
     // Editor = 'EDITOR', // drop & introduce an 3rd party add on

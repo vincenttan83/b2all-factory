@@ -1,4 +1,5 @@
 import { IFieldConfig } from './field-config.interface';
+import { IKeyValueInString } from './key-value.interface';
 
 export interface IFieldConfigForArrayConfig<T> {
     hierarchy_level?: {
@@ -18,6 +19,10 @@ export interface IFieldConfigForArrayConfig<T> {
      */
     table_column_names?: string[];
     table_caption?: string;
+    /**
+     * to have a trailing column as radio button for "default" as option from the array list
+     */
+    enable_default_options?: IKeyValueInString[];
 }
 
 export function isFieldConfigForArrayConfig<T>(obj: any): obj is IFieldConfigForArrayConfig<T> {

@@ -1,5 +1,6 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { EFieldConfigType } from 'projects/dynamic-form/src/public-api';
 import { DynamicFieldArrayComponent } from '../components/dynamic-field-array/dynamic-field-array.component';
 import { DynamicFieldButtonComponent } from '../components/dynamic-field-button/dynamic-field-button.component';
 import { DynamicFieldDividerComponent } from '../components/dynamic-field-divider/dynamic-field-divider.component';
@@ -44,19 +45,23 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField<any> {
 
   ngOnInit(): void {
 
-    if (!components[this.config.type]) {
-      const supportedTypes = Object.keys(components).join(', ');
-      throw new Error(
-        `Trying to use an unsupported type (${this.config.type}).
-        Supported types: ${supportedTypes}`
-      );
+    if (this.config.type !== EFieldConfigType.RadioButtonDefault) {
+
+      if (!components[this.config.type]) {
+        const supportedTypes = Object.keys(components).join(', ');
+        throw new Error(
+          `Trying to use an unsupported type (${this.config.type}).
+          Supported types: ${supportedTypes}`
+        );
+      }
+      const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField<any>>(components[this.config.type]);
+      this.component = this.privateViewContainerRef.createComponent(component);
+      this.component.instance.config = this.config;
+      this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
+      this.component.instance.arrayIndex = this.arrayIndex;
+      this.component.instance.formName = this.formName;
     }
-    const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField<any>>(components[this.config.type]);
-    this.component = this.privateViewContainerRef.createComponent(component);
-    this.component.instance.config = this.config;
-    this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
-    this.component.instance.arrayIndex = this.arrayIndex;
-    this.component.instance.formName = this.formName;
+
 
   }
 

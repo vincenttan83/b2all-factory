@@ -52,6 +52,15 @@ export class DynamicFormGenerator {
 
                 switch (element.type) {
                     // array can is to render a form in repeative manner
+                    case EFieldConfigType.RadioButtonDefault: {
+
+                        if (savedDatas && savedDatas[element.name]) {
+                            group.addControl(element.name, this.createControl2(undefined, undefined, true, undefined));
+                        } else {
+                            group.addControl(element.name, this.createControl2(undefined, undefined, false, undefined));
+                        }
+                        break;
+                    }
                     case EFieldConfigType.Array: {
                         // basically it create an empty array group and attach into the main group.
                         // later on on the html implementation, it will then apply the rendering in the
@@ -70,6 +79,21 @@ export class DynamicFormGenerator {
                         // if saved data is provided, we have to merge the template with the save datasets
                         // if no saved data is provided, we render the init row only, else
                         // we render the merge row
+
+                        if (element.type_config.enable_default_options) {
+                            element.type_config.enable_default_options.forEach(elementDefault => {
+
+                                const defaultField: IFieldConfig<any> = {
+                                    name: elementDefault.value,
+                                    type: EFieldConfigType.RadioButtonDefault,
+                                    type_config: {},
+                                };
+
+                                fieldConfigs.push(defaultField);
+
+
+                            });
+                        }
 
 
                         const arrayConfigs: any[] = [];

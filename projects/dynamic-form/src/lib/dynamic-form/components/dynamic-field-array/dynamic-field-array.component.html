@@ -1,50 +1,62 @@
 <div [formGroup]="group" [ngClass]="firstHierachyLevel() ? 'table-responsive-md': ''">
 
-    <table class="table table-sm table-bordered table-hover" [ngClass]="{'caption-top': detailConfig.table_caption}">
-        <caption *ngIf="detailConfig.table_caption">{{ detailConfig.table_caption }}</caption>
-        <thead>
-            <tr *ngIf="config.display_text">
-                <th [attr.colspan]="detailConfig.field_configs.length + (lastHierachyLevel() ? 2 : 1)">{{
+  <table class="table table-sm table-bordered table-hover" [ngClass]="{'caption-top': detailConfig.table_caption}">
+    <caption *ngIf="detailConfig.table_caption">{{ detailConfig.table_caption }}</caption>
+    <thead>
+      <tr *ngIf="config.display_text">
+        <th
+          [attr.colspan]="detailConfig.field_configs.length + (lastHierachyLevel() ? 2 : 1) + (detailConfig.enable_default_options !== undefined ? detailConfig.enable_default_options.length : 0)">{{
                     config.display_text }}</th>
-            </tr>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col" *ngFor="let name of detailConfig.table_column_names">{{ name }}</th>
-                <th scope="col" *ngIf="lastHierachyLevel()"></th>
-            </tr>
-        </thead>
-        <tbody *ngFor="let control of theArrays.controls; index as i;">
-            <tr>
-                <th scope="row">{{ (i + 1) }}</th>
-                <td *ngFor="let field of detailConfig.field_configs">
-                    <ng-container b2allDynamicField [config]="field" [abstractControl]="control" [arrayIndex]="i"
-                        [formName]="formName">
-                    </ng-container>
-                </td>
-                <td *ngIf="lastHierachyLevel()">
-                    <button [ngClass]="detailConfig.css_class.del_button" type="button"
-                        (click)="removeRow(i)">-</button>
-                </td>
-            </tr>
-            <tr *ngIf="!lastHierachyLevel()">
-                <td></td>
-                <td [attr.colspan]="detailConfig.field_configs.length + 1">
-                    <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">- {{
-                        control.value.key }}</button>
-                </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td [attr.colspan]="detailConfig.field_configs.length + (lastHierachyLevel() ? 2 : 1)">
-                    <button [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+ {{
-                        config.display_text }}</button>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+      </tr>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col" *ngFor="let name of detailConfig.table_column_names">{{ name }}</th>
+        <th scope="col" *ngFor="let default of detailConfig.enable_default_options">{{ default.key }}</th>
+        <th scope="col" *ngIf="lastHierachyLevel()"></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let control of theArrays.controls; index as i;">
+      <tr>
+        <th scope="row">{{ (i + 1) }}</th>
+        <td *ngFor="let field of detailConfig.field_configs">
+          <ng-container *ngIf="field.type !== 'radiobuttondefault'" b2allDynamicField [config]="field"
+            [abstractControl]="control" [arrayIndex]="i" [formName]="formName">
+          </ng-container>
 
-    <!-- </div> -->
+          <div class="text-center" *ngIf="field.type === 'radiobuttondefault'">
+            <input class="form-check-input" type="radio" [attr.name]="field.name" [attr.id]="field.name + '_' + i"
+              (change)="selectChange(i, field.name)" [checked]="shouldChecked(i, field.name)">
+          </div>
+        </td>
+        <!-- <td *ngFor="let default of detailConfig.enable_default_options" class="text-center">
+          <div class="text-center">
+            <input class="form-check-input" type="radio" [attr.name]="default.value" [attr.id]="default.value + '_' + i" (change)="selectChange(i, default.value)">
+          </div>
+        </td> -->
+        <td *ngIf="lastHierachyLevel()">
+          <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">-</button>
+        </td>
+      </tr>
+      <tr *ngIf="!lastHierachyLevel()">
+        <td></td>
+        <td [attr.colspan]="detailConfig.field_configs.length + 1">
+          <button [ngClass]="detailConfig.css_class.del_button" type="button" (click)="removeRow(i)">- {{
+                        control.value.key }}</button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td
+          [attr.colspan]="detailConfig.field_configs.length + (lastHierachyLevel() ? 2 : 1) + (detailConfig.enable_default_options !== undefined ? detailConfig.enable_default_options.length : 0)">
+          <button [ngClass]="detailConfig.css_class.add_button" type="button" (click)="addNew()">+ {{
+                        config.display_text }}</button>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!-- </div> -->
 
 
 
