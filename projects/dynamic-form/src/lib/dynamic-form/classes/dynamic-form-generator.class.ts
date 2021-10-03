@@ -1,4 +1,4 @@
-import { ValidatorFn, FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ValidatorFn, FormGroup, FormBuilder, FormControl, AsyncValidatorFn } from '@angular/forms';
 import { EFieldConfigInputType } from '../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
 import { isFieldConfigForArrayConfig, IFieldConfigForArrayConfig } from '../interfaces/field-config-for-array.interface';
@@ -35,8 +35,13 @@ export class DynamicFormGenerator {
         return templateSelectTypeConfigWithData;
     }
 
-    createControl2(disabled: boolean | undefined, validationFn: ValidatorFn[] | undefined, value: any): FormControl {
-        return this.privateFormBuilder.control({ disabled, value }, validationFn);
+    createControl2(
+        disabled: boolean | undefined,
+        validationFn: ValidatorFn[] | undefined,
+        value: any,
+        asyncValidationFn: AsyncValidatorFn[] | undefined
+    ): FormControl {
+        return this.privateFormBuilder.control({ disabled, value }, validationFn, asyncValidationFn);
     }
 
     createFormGroup(formConfigs: IFieldConfig<any>[], validatorFn: ValidatorFn[] | null, savedDatas: { [key: string]: any }): FormGroup {
@@ -47,6 +52,15 @@ export class DynamicFormGenerator {
 
                 switch (element.type) {
                     // array can is to render a form in repeative manner
+                    case EFieldConfigType.RadioButtonDefault: {
+
+                        if (savedDatas && savedDatas[element.name]) {
+                            group.addControl(element.name, this.createControl2(undefined, undefined, true, undefined));
+                        } else {
+                            group.addControl(element.name, this.createControl2(undefined, undefined, false, undefined));
+                        }
+                        break;
+                    }
                     case EFieldConfigType.Array: {
                         // basically it create an empty array group and attach into the main group.
                         // later on on the html implementation, it will then apply the rendering in the
@@ -65,6 +79,21 @@ export class DynamicFormGenerator {
                         // if saved data is provided, we have to merge the template with the save datasets
                         // if no saved data is provided, we render the init row only, else
                         // we render the merge row
+
+                        if (element.type_config.enable_default_options) {
+                            element.type_config.enable_default_options.forEach(elementDefault => {
+
+                                const defaultField: IFieldConfig<any> = {
+                                    name: elementDefault.value,
+                                    type: EFieldConfigType.RadioButtonDefault,
+                                    type_config: {},
+                                };
+
+                                fieldConfigs.push(defaultField);
+
+
+                            });
+                        }
 
 
                         const arrayConfigs: any[] = [];
@@ -148,14 +177,15 @@ export class DynamicFormGenerator {
                                     listofArraySavedItems.push(elementSaveItem);
                                 });
                             }
-                            group.addControl(element.name, this.privateFormBuilder.array(listofArraySavedItems, element.validation_fn));
+                            group.addControl(element.name, this.privateFormBuilder.array(
+                                listofArraySavedItems, element.validation_fn, element.async_validation_fn));
                         } else {
                             if (savedDatas) {
                                 group.addControl(element.name, this.createControl2(
-                                    element.disabled, element.validation_fn, savedDatas[element.name]));
+                                    element.disabled, element.validation_fn, savedDatas[element.name], element.async_validation_fn));
                             } else {
                                 group.addControl(element.name, this.createControl2(
-                                    element.disabled, element.validation_fn, undefined));
+                                    element.disabled, element.validation_fn, undefined, element.async_validation_fn));
                             }
 
                         }
@@ -166,7 +196,9 @@ export class DynamicFormGenerator {
                         if (!isFieldConfigForTextareaConfig(element.type_config)) {
                             throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
                         }
-                        group.addControl(element.name, this.createControl2(undefined, element.validation_fn, savedDatas[element.name]));
+                        group.addControl(
+                            element.name, this.createControl2(
+                                undefined, element.validation_fn, savedDatas[element.name], element.async_validation_fn));
                         break;
                     }
                     // object render, need to iterate the giving field configs
@@ -198,7 +230,11 @@ export class DynamicFormGenerator {
                         const selectTypeConfig = this.prepForSelect(element, savedDatas);
                         selectTypeConfig.controls.forEach(elementControl => {
                             group.addControl(elementControl.name,
-                                this.createControl2(elementControl.disabled, elementControl.validation_fn, elementControl.value));
+                                this.createControl2(
+                                    elementControl.disabled,
+                                    elementControl.validation_fn,
+                                    elementControl.value,
+                                    element.async_validation_fn));
                         });
                         break;
                     }

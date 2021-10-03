@@ -7,6 +7,7 @@ import { DynamicFieldInputComponent } from '../components/dynamic-field-input/dy
 import { DynamicFieldObjectComponent } from '../components/dynamic-field-object/dynamic-field-object.component';
 import { DynamicFieldSelectComponent } from '../components/dynamic-field-select/dynamic-field-select.component';
 import { DynamicFieldTextareaComponent } from '../components/dynamic-field-textarea/dynamic-field-textarea.component';
+import { EFieldConfigType } from '../enums/field-config-type.enum';
 import { IComponent } from '../interfaces/component.interface';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 import { IField } from '../interfaces/field.interface';
@@ -44,19 +45,23 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField<any> {
 
   ngOnInit(): void {
 
-    if (!components[this.config.type]) {
-      const supportedTypes = Object.keys(components).join(', ');
-      throw new Error(
-        `Trying to use an unsupported type (${this.config.type}).
-        Supported types: ${supportedTypes}`
-      );
+    if (this.config.type !== EFieldConfigType.RadioButtonDefault) {
+
+      if (!components[this.config.type]) {
+        const supportedTypes = Object.keys(components).join(', ');
+        throw new Error(
+          `Trying to use an unsupported type (${this.config.type}).
+          Supported types: ${supportedTypes}`
+        );
+      }
+      const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField<any>>(components[this.config.type]);
+      this.component = this.privateViewContainerRef.createComponent(component);
+      this.component.instance.config = this.config;
+      this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
+      this.component.instance.arrayIndex = this.arrayIndex;
+      this.component.instance.formName = this.formName;
     }
-    const component = this.privateComponentFactoryResolver.resolveComponentFactory<IField<any>>(components[this.config.type]);
-    this.component = this.privateViewContainerRef.createComponent(component);
-    this.component.instance.config = this.config;
-    this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
-    this.component.instance.arrayIndex = this.arrayIndex;
-    this.component.instance.formName = this.formName;
+
 
   }
 

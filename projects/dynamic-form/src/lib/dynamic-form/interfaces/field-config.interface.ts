@@ -1,4 +1,4 @@
-import { ValidatorFn } from '@angular/forms';
+import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
 
 export interface IFieldConfig<T> {
@@ -16,6 +16,10 @@ export interface IFieldConfig<T> {
      * Validation for this control
      */
     validation_fn?: ValidatorFn[];
+    /**
+     * Validation for this control for async
+     */
+    async_validation_fn?: AsyncValidatorFn[];
     /**
      * The field type to be render on the form
      * such as button, input, array of input or objects,

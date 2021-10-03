@@ -36,3 +36,6 @@
     &gt;= {{validation?.min?.min}}.</small>
 <small *ngIf="validation?.max" class="text-danger ms-1">
     &lt;= {{validation?.max?.max}}.</small>
+
+<small *ngIf="validation?.customError" class="text-danger ms-1">
+    {{ validation?.customError }}</small>

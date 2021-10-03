@@ -64,4 +64,24 @@ export class DynamicFieldArrayComponent<T> implements OnInit, IField<T> {
     return (this.detailConfig.hierarchy_level?.cur_level === 0);
   }
 
+  selectChange(index: number, propertyName: string): void {
+    let i = 0;
+    this.theArrays.controls.forEach(element => {
+      const theControl = (element as FormGroup).controls[propertyName];
+
+      if (i === index) {
+        theControl.setValue(true);
+      } else {
+        theControl.setValue(false);
+      }
+      i++;
+    });
+  }
+
+  shouldChecked(index: number, propertyName: string): boolean {
+    const theControl = (this.theArrays.controls[index] as FormGroup).controls[propertyName];
+    return theControl.value;
+
+  }
+
 }

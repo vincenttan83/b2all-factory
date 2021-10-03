@@ -1,3 +1,4 @@
+// tslint:disable: max-line-length
 import { Component, OnInit } from '@angular/core';
 import { getValidators } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
 import { EDivConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/div-config-type.enum';
@@ -36,7 +37,11 @@ export class DynamicFormComponent implements OnInit {
     };
 
     this.sectionConfigs[1] = this.myTemplateWithData({
-
+      about_yourself: 'hello world',
+      students: [
+        { student_first_name: 'vincent', student_last_name: 'tan', student_gender: 'male', is_focal_point_primary: false, is_focal_point_secondary: true },
+        { student_first_name: 'leon', student_last_name: 'loke', student_gender: 'female', is_focal_point_primary: true, is_focal_point_secondary: false },
+      ],
     });
 
 
@@ -124,6 +129,10 @@ export class DynamicFormComponent implements OnInit {
             type: EFieldConfigType.Array,
             type_config: {
               table_column_names: ['First name', 'Last name', 'Gender'],
+              enable_default_options: [
+                { key: 'Is primary focal point', value: 'is_focal_point_primary' },
+                { key: 'Is secondary focal point', value: 'is_focal_point_secondary' },
+              ],
               field_configs: [
                 {
                   name: 'student_first_name',
