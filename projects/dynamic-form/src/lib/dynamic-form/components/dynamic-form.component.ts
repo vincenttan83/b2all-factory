@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { DynamicFormGenerator } from '../classes/dynamic-form-generator.class';
@@ -23,7 +23,7 @@ import { IFieldConfig } from '../interfaces/field-config.interface';
   styles: [
   ]
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnChanges {
 
   // required input
   @Input() inputFormConfigs: IFieldConfig<any>[] = [];
@@ -45,13 +45,18 @@ export class DynamicFormComponent implements OnInit {
   get valid(): boolean { return this.formGroup.valid; }
   get value(): any { return this.formGroup.value; }
 
+  dfg!: DynamicFormGenerator;
+
   constructor(
     private privateFormBuilder: FormBuilder
-  ) { }
+  ) {
+    this.dfg = new DynamicFormGenerator(this.privateFormBuilder);
+  }
 
-  ngOnInit(): void {
-    const dfg: DynamicFormGenerator = new DynamicFormGenerator(this.privateFormBuilder);
-    this.formGroup = dfg.createFormGroup(this.inputFormConfigs, null, this.inputSavedData);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes && changes.inputSavedData) {
+      this.formGroup = this.dfg.createFormGroup(this.inputFormConfigs, null, this.inputSavedData);
+    }
   }
 
   formOnSubmitting(): void {
