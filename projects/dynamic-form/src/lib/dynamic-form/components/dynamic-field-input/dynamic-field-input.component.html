@@ -1,8 +1,8 @@
 <div [formGroup]="group">
 
   <ng-container *ngIf="detailConfig.list; else nonListInput">
-    <label [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
-    <br>
+    <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+    <br *ngIf="config.display_text">
     <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group ?? ''">
       <input [ngClass]="detailConfig.css_class.input ?? ''"
         [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i"
