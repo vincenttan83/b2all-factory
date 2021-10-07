@@ -196,9 +196,15 @@ export class DynamicFormGenerator {
                         if (!isFieldConfigForTextareaConfig(element.type_config)) {
                             throw new Error(`${element.name} ${this.wrongInterfaceErrorMessage}`);
                         }
-                        group.addControl(
-                            element.name, this.createControl2(
-                                undefined, element.validation_fn, savedDatas[element.name], element.async_validation_fn));
+                        if (savedDatas) {
+                            group.addControl(
+                                element.name, this.createControl2(
+                                    undefined, element.validation_fn, savedDatas[element.name], element.async_validation_fn));
+                        } else {
+                            group.addControl(
+                                element.name, this.createControl2(
+                                    undefined, element.validation_fn, undefined, element.async_validation_fn));
+                        }
                         break;
                     }
                     // object render, need to iterate the giving field configs
