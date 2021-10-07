@@ -163,14 +163,14 @@ export class DynamicSectionComponent implements OnInit {
                       },
                       {
                         name: 'remark',
-                        display_text: `Remark:`,
-                        type: EFieldConfigType.Input,
-                        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                        display_text: 'Remark',
+                        type: EFieldConfigType.Textarea,
+                        // validation_fn: getValidators([{ type: EFormValidator.Required }, { type: EFormValidator.MinCount, param: 10 }]),
                         type_config: {
-                          type: EFieldConfigInputType.Text,
-                          list: false,
-                          css_class: { group: 'form-group mb-1', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' }
+                          row_count: 5,
+                          css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
                         },
+                        css_class: 'col-12'
                       },
                     ],
                     css_class: { group_label: '', content: '' }
