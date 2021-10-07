@@ -135,6 +135,7 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
           cur_level: curIndex, max_level: maxIndex,
         },
         table_column_names: columnNames,
+        hideRemoveRowItemButton: true,
         field_configs: [
           {
             name: 'key',

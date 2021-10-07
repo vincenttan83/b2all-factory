@@ -18,11 +18,14 @@ export interface IFieldConfigForArrayConfig<T> {
      * Configuration for recursive enabled tempalte
      */
     table_column_names?: string[];
+    table_column_width?: string[];
     table_caption?: string;
     /**
      * to have a trailing column as radio button for "default" as option from the array list
      */
     enable_default_options?: IKeyValueInString[];
+    hideAddButton?: boolean;
+    hideRemoveRowItemButton?: boolean;
 }
 
 export function isFieldConfigForArrayConfig<T>(obj: any): obj is IFieldConfigForArrayConfig<T> {
