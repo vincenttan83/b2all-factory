@@ -7,7 +7,7 @@
       <input [ngClass]="detailConfig.css_class.input ?? ''"
         [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i"
         (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
-        [attr.name]="formName ? formName + '_' + config.name : config.name" [checked]="shouldChecked(choice.value)">
+        [attr.name]="formName ? formName + '_' + config.name + '_' + arrayIndex : config.name" [checked]="shouldChecked(choice.value)">
 
       <label [ngClass]="detailConfig.css_class.input_label ?? ''"
         [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i">{{
