@@ -43,6 +43,7 @@ export class DynamicFormComponent implements OnInit {
           student_first_name: 'vincent',
           student_last_name: 'tan',
           student_gender: 'male',
+          result: '1',
           is_focal_point_primary: false,
           is_focal_point_secondary: true,
         },
@@ -240,10 +241,10 @@ export class DynamicFormComponent implements OnInit {
                     type: 'radio',
                     list: true,
                     dataset: [
-                      { key: '3 Months of 5k KM', value: 0.25 },
-                      { key: '6 Months of 5k KM', value: 0.5 },
-                      { key: '9 Months of 5k KM', value: 0.75 },
-                      { key: '12 Months of 5k KM', value: 1 },
+                      { key: '3 Months of 5k KM', value: '0.25' },
+                      { key: '6 Months of 5k KM', value: '0.5' },
+                      { key: '9 Months of 5k KM', value: '0.75' },
+                      { key: '12 Months of 5k KM', value: '1' },
                     ],
                     css_class: {
                       group: 'form-check form-check-inline',
