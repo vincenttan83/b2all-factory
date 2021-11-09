@@ -1,4 +1,13 @@
-import { ComponentFactoryResolver, ComponentRef, Directive, EventEmitter, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
+import {
+  ComponentFactoryResolver,
+  ComponentRef,
+  Directive,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewContainerRef,
+} from '@angular/core';
 import { DynamicDivButtonComponent } from '../../dynamic-form/components/dynamic-div-button/dynamic-div-button.component';
 import { DynamicDivFormComponent } from '../../dynamic-form/components/dynamic-div-form/dynamic-div-form.component';
 import { DynamicDivHeadingsComponent } from '../../dynamic-form/components/dynamic-div-headings/dynamic-div-headings.component';
@@ -12,24 +21,23 @@ const components: { [key: string]: any } = {
 };
 
 @Directive({
-  selector: '[b2allDynamicDiv]'
+  selector: '[b2allDynamicDiv]',
 })
 export class DynamicDivDirective implements OnInit, OnChanges, IDiv<any> {
-
   @Input() config!: IDivConfig<any>;
   @Input() index!: number;
   @Input() formSubmitEvent?: EventEmitter<any>;
   @Input() formChangeEvent?: EventEmitter<any>;
+  @Input() buttonSubmitEvent?: EventEmitter<any>;
 
   component!: ComponentRef<IDiv<any>>;
 
   constructor(
     private privateComponentFactoryResolver: ComponentFactoryResolver,
     private privateViewContainerRef: ViewContainerRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(
@@ -37,12 +45,16 @@ export class DynamicDivDirective implements OnInit, OnChanges, IDiv<any> {
         Supported types: ${supportedTypes}`
       );
     }
-    const component = this.privateComponentFactoryResolver.resolveComponentFactory<IDiv<any>>(components[this.config.type]);
+    const component =
+      this.privateComponentFactoryResolver.resolveComponentFactory<IDiv<any>>(
+        components[this.config.type]
+      );
     this.component = this.privateViewContainerRef.createComponent(component);
     this.component.instance.config = this.config;
     this.component.instance.index = this.index;
     this.component.instance.formSubmitEvent = this.formSubmitEvent;
     this.component.instance.formChangeEvent = this.formChangeEvent;
+    this.component.instance.buttonSubmitEvent = this.buttonSubmitEvent;
   }
 
   ngOnChanges(): void {
@@ -51,5 +63,4 @@ export class DynamicDivDirective implements OnInit, OnChanges, IDiv<any> {
       this.component.instance.index = this.index;
     }
   }
-
 }
