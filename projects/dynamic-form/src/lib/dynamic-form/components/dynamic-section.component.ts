@@ -16,6 +16,7 @@ import { IDivConfig } from '../interfaces/div-config.interface';
             [index]="i"
             [formSubmitEvent]="div.type==='form' ? outputFormSubmitEvent : undefined"
             [formChangeEvent]="div.type==='form' ? outputFormChangeEvent : undefined"
+            [buttonSubmitEvent]="div.type==='button' ? outputButtonSubmitEvent : undefined"
           >
           </ng-container>
         </div>
@@ -28,6 +29,7 @@ export class DynamicSectionComponent implements OnInit, OnChanges {
   @Input() inputSectionConfigs: IDivConfig<any>[] = [];
   @Output() outputFormSubmitEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputFormChangeEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outputButtonSubmitEvent: EventEmitter<any> = new EventEmitter<any>();
 
   ngOnInit(): void {
     // error handling data checking

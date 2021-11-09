@@ -1,2 +1,26 @@
-<button [ngClass]="config.content.class" type="button" (click)="config.content.onclick_fn()">
-    {{ config.content.text }}</button>
+<ng-template #onclickFunction let-content="content">
+  <button
+    [ngClass]="content.class"
+    type="button"
+    (click)="content.onclick_fn()"
+  >
+    {{ content.text }}
+  </button>
+</ng-template>
+
+<ng-template #onclick let-content="content">
+  <button
+    *ngIf="content.onclick"
+    [ngClass]="content.class"
+    type="button"
+    (click)="ontrigger(content)"
+  >
+    {{ content.text }}
+  </button>
+</ng-template>
+
+
+<ng-container *ngFor="let content of config.content">
+  <ng-container *ngIf="!content.onclick" [ngTemplateOutlet]="onclickFunction" [ngTemplateOutletContext]="{ content: content }"></ng-container>
+  <ng-container *ngIf="content.onclick" [ngTemplateOutlet]="onclick" [ngTemplateOutletContext]="{ content: content }"></ng-container>
+</ng-container>
