@@ -7,21 +7,39 @@ import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums
 @Component({
   selector: 'app-dynamic-section',
   templateUrl: './dynamic-section.component.html',
-  styleUrls: ['./dynamic-section.component.sass']
+  styleUrls: ['./dynamic-section.component.sass'],
 })
 export class DynamicSectionComponent implements OnInit {
-
   pageTemplateReady = false;
   forms: any[] = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+    this.forms.push({
+      content: [
+        {
+          class: 'btn btn-primary me-3',
+          disabled: false,
+          text: 'Print Quote',
+          onclick: 'print_quote',
+          onclick_fn: () => null,
+        },
+        {
+          class: 'btn btn-primary',
+          disabled: false,
+          text: 'Print Billing',
+          onclick: 'print_billing',
+          onclick_fn: () => null,
+        },
+      ],
+      type: 'button',
+    });
 
     this.forms.push({
       content: {
         text: 'why',
-        class: 'h4'
+        class: 'h4',
       },
       type: 'headings',
     });
@@ -41,10 +59,15 @@ export class DynamicSectionComponent implements OnInit {
                 { key: '3 ~ 16', value: 'children' },
                 { key: '17 ~ 30', value: 'young_adults' },
                 { key: '31 ~ 45', value: 'middle_aged_adults' },
-                { key: 'Above 45', value: 'old_adults' }
+                { key: 'Above 45', value: 'old_adults' },
               ],
-              css_class: { group: 'form-check', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label' },
-            }
+              css_class: {
+                group: 'form-check',
+                group_label: 'mb-1',
+                input: 'form-check-input',
+                input_label: 'form-check-label',
+              },
+            },
           },
           {
             name: 'button_submit',
@@ -52,8 +75,11 @@ export class DynamicSectionComponent implements OnInit {
             type: 'button',
             type_config: {
               type: 'submit',
-              css_class: { group: 'd-grid gap-2 d-md-flex justify-content-md-end my-3', button: 'btn btn-primary' }
-            }
+              css_class: {
+                group: 'd-grid gap-2 d-md-flex justify-content-md-end my-3',
+                button: 'btn btn-primary',
+              },
+            },
           },
         ],
         saved_data: {},
@@ -76,10 +102,15 @@ export class DynamicSectionComponent implements OnInit {
                 { key: '3 ~ 16', value: 'children' },
                 { key: '17 ~ 30', value: 'young_adults' },
                 { key: '31 ~ 45', value: 'middle_aged_adults' },
-                { key: 'Above 45', value: 'old_adults' }
+                { key: 'Above 45', value: 'old_adults' },
               ],
-              css_class: { group: 'form-check', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label' },
-            }
+              css_class: {
+                group: 'form-check',
+                group_label: 'mb-1',
+                input: 'form-check-input',
+                input_label: 'form-check-label',
+              },
+            },
           },
           {
             name: 'button_submit',
@@ -87,8 +118,11 @@ export class DynamicSectionComponent implements OnInit {
             type: 'button',
             type_config: {
               type: 'submit',
-              css_class: { group: 'd-grid gap-2 d-md-flex justify-content-md-end my-3', button: 'btn btn-primary' }
-            }
+              css_class: {
+                group: 'd-grid gap-2 d-md-flex justify-content-md-end my-3',
+                button: 'btn btn-primary',
+              },
+            },
           },
         ],
         saved_data: {},
@@ -105,7 +139,8 @@ export class DynamicSectionComponent implements OnInit {
             type: EFieldConfigType.Array,
             type_config: {
               hierarchy_level: {
-                cur_level: 0, max_level: 0,
+                cur_level: 0,
+                max_level: 0,
               },
               table_column_names: ['Job order', 'Job order details'],
               table_column_width: ['256px', '1024px'],
@@ -125,7 +160,12 @@ export class DynamicSectionComponent implements OnInit {
                           readonly: true,
                           type: EFieldConfigInputType.Text,
                           list: false,
-                          css_class: { group: 'form-group mb-1', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+                          css_class: {
+                            group: 'form-group mb-1',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                       {
@@ -136,29 +176,48 @@ export class DynamicSectionComponent implements OnInit {
                           readonly: true,
                           type: EFieldConfigInputType.Text,
                           list: false,
-                          css_class: { group: 'form-group mb-1', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+                          css_class: {
+                            group: 'form-group mb-1',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                       {
                         name: 'name',
                         display_text: `Job:`,
                         type: EFieldConfigType.Input,
-                        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                        validation_fn: getValidators([
+                          { type: EFormValidator.Required },
+                        ]),
                         type_config: {
                           type: EFieldConfigInputType.Text,
                           list: false,
-                          css_class: { group: 'form-group mb-1', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+                          css_class: {
+                            group: 'form-group mb-1',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                       {
                         name: 'mechanic',
                         display_text: `Mechanic:`,
                         type: EFieldConfigType.Input,
-                        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                        validation_fn: getValidators([
+                          { type: EFormValidator.Required },
+                        ]),
                         type_config: {
                           type: EFieldConfigInputType.Text,
                           list: false,
-                          css_class: { group: 'form-group mb-1', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' }
+                          css_class: {
+                            group: 'form-group mb-1',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                       {
@@ -168,12 +227,17 @@ export class DynamicSectionComponent implements OnInit {
                         // validation_fn: getValidators([{ type: EFormValidator.Required }, { type: EFormValidator.MinCount, param: 10 }]),
                         type_config: {
                           row_count: 5,
-                          css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control', input_label: 'mb-1' }
+                          css_class: {
+                            group: 'form-group mb-3',
+                            group_label: '',
+                            input: 'form-control',
+                            input_label: 'mb-1',
+                          },
                         },
-                        css_class: 'col-12'
+                        css_class: 'col-12',
                       },
                     ],
-                    css_class: { group_label: '', content: '' }
+                    css_class: { group_label: '', content: '' },
                   },
                 },
 
@@ -182,7 +246,11 @@ export class DynamicSectionComponent implements OnInit {
                   display_text: 'List of job details',
                   type: EFieldConfigType.Array,
                   type_config: {
-                    table_column_names: ['Task / Item', 'Estimated amount', 'Expected qty'],
+                    table_column_names: [
+                      'Task / Item',
+                      'Estimated amount',
+                      'Expected qty',
+                    ],
                     table_column_width: ['800px', '174px', '50px'],
                     // hideAddButton: true,
                     // hideRemoveRowItemButton: true,
@@ -190,40 +258,73 @@ export class DynamicSectionComponent implements OnInit {
                       {
                         name: 'name',
                         type: EFieldConfigType.Input,
-                        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                        validation_fn: getValidators([
+                          { type: EFormValidator.Required },
+                        ]),
                         type_config: {
                           type: EFieldConfigInputType.Text,
                           list: false,
-                          css_class: { group: 'form-group', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+                          css_class: {
+                            group: 'form-group',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                       {
                         name: 'estimated_amount',
                         type: EFieldConfigType.Input,
-                        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                        validation_fn: getValidators([
+                          { type: EFormValidator.Required },
+                        ]),
                         type_config: {
                           type: EFieldConfigInputType.Number,
                           list: false,
-                          css_class: { group: 'form-group', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' }
+                          css_class: {
+                            group: 'form-group',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                       {
                         name: 'expected_quantity',
                         type: EFieldConfigType.Input,
-                        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+                        validation_fn: getValidators([
+                          { type: EFormValidator.Required },
+                        ]),
                         type_config: {
                           type: EFieldConfigInputType.Number,
                           list: false,
-                          css_class: { group: 'form-group', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' }
+                          css_class: {
+                            group: 'form-group',
+                            group_label: '',
+                            input: 'form-control form-control-sm',
+                            input_label: 'mb-1 small',
+                          },
                         },
                       },
                     ],
                     // tslint:disable-next-line: max-line-length
-                    css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: 'h4', label: '' }
+                    css_class: {
+                      add_button: 'btn btn-sm btn-primary',
+                      del_button: 'btn btn-sm btn-danger',
+                      group: '',
+                      group_label: 'h4',
+                      label: '',
+                    },
                   },
                 },
               ],
-              css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: 'h4', label: '' }
+              css_class: {
+                add_button: 'btn btn-sm btn-primary',
+                del_button: 'btn btn-sm btn-danger',
+                group: '',
+                group_label: 'h4',
+                label: '',
+              },
             },
           },
           {
@@ -238,10 +339,15 @@ export class DynamicSectionComponent implements OnInit {
                 { key: '3 ~ 16', value: 'children' },
                 { key: '17 ~ 30', value: 'young_adults' },
                 { key: '31 ~ 45', value: 'middle_aged_adults' },
-                { key: 'Above 45', value: 'old_adults' }
+                { key: 'Above 45', value: 'old_adults' },
               ],
-              css_class: { group: 'form-check', group_label: 'mb-1', input: 'form-check-input', input_label: 'form-check-label' },
-            }
+              css_class: {
+                group: 'form-check',
+                group_label: 'mb-1',
+                input: 'form-check-input',
+                input_label: 'form-check-label',
+              },
+            },
           },
           {
             name: 'button_submit',
@@ -249,8 +355,11 @@ export class DynamicSectionComponent implements OnInit {
             type: 'button',
             type_config: {
               type: 'submit',
-              css_class: { group: 'd-grid gap-2 d-md-flex justify-content-md-end my-3', button: 'btn btn-primary' }
-            }
+              css_class: {
+                group: 'd-grid gap-2 d-md-flex justify-content-md-end my-3',
+                button: 'btn btn-primary',
+              },
+            },
           },
         ],
         saved_data: {},
@@ -259,7 +368,6 @@ export class DynamicSectionComponent implements OnInit {
     });
 
     this.pageTemplateReady = true;
-
   }
 
   formOnSubmit(val: any): void {
@@ -270,4 +378,14 @@ export class DynamicSectionComponent implements OnInit {
     console.log(val);
   }
 
+  buttonOnSubmit(val: any): void {
+    switch (val.button_name) {
+      case 'print_quote':
+        console.log('Print Quote!');
+        break;
+      case 'print_billing':
+        console.log('Print Billing');
+        break;
+    }
+  }
 }
