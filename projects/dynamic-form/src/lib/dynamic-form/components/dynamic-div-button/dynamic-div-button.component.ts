@@ -22,9 +22,9 @@ export class DynamicDivButtonComponent
 
   ontrigger(button: IDivConfigForButton): void {
     this.buttonSubmitEvent.emit({
-      button_name: button.onclick,
+      button_onclick: button.onclick,
       button_index: this.index,
-      button_event: event,
+      custom_option: button.custom_option
     });
   }
 }
