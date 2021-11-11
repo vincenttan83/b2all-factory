@@ -9,18 +9,20 @@
 </ng-template>
 
 <ng-template #onclick let-content="content">
-  <button
-    *ngIf="content.onclick"
-    [ngClass]="content.class"
-    type="button"
-    (click)="ontrigger(content)"
-  >
+  <button [ngClass]="content.class" type="button" (click)="ontrigger(content)">
     {{ content.text }}
   </button>
 </ng-template>
 
-
 <ng-container *ngFor="let content of config.content">
-  <ng-container *ngIf="!content.onclick" [ngTemplateOutlet]="onclickFunction" [ngTemplateOutletContext]="{ content: content }"></ng-container>
-  <ng-container *ngIf="content.onclick" [ngTemplateOutlet]="onclick" [ngTemplateOutletContext]="{ content: content }"></ng-container>
+  <ng-container
+    *ngIf="!content.onclick"
+    [ngTemplateOutlet]="onclickFunction"
+    [ngTemplateOutletContext]="{ content: content }"
+  ></ng-container>
+  <ng-container
+    *ngIf="content.onclick"
+    [ngTemplateOutlet]="onclick"
+    [ngTemplateOutletContext]="{ content: content }"
+  ></ng-container>
 </ng-container>

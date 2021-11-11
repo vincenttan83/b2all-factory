@@ -4,5 +4,5 @@ export interface IDivConfigForButton {
   onclick?: string;
   class: string;
   disabled: boolean;
-  option: { [key: string]: any };
+  custom_option: { [key: string]: any };
 }

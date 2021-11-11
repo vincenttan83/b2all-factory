@@ -24,7 +24,7 @@ export class DynamicSectionComponent implements OnInit {
           text: 'Print Quote',
           onclick: 'print_quote',
           onclick_fn: () => null,
-          option: {
+          custom_option: {
             hello: 'this is quote',
           },
         },
@@ -34,7 +34,7 @@ export class DynamicSectionComponent implements OnInit {
           text: 'Print Billing',
           onclick: 'print_billing',
           onclick_fn: () => null,
-          option: {
+          custom_option: {
             hello: 'this is billing',
           },
         },
@@ -385,6 +385,6 @@ export class DynamicSectionComponent implements OnInit {
   }
 
   buttonOnSubmit(val: any): void {
-    console.log(val.button_option);
+    console.log(val.custom_option);
   }
 }
