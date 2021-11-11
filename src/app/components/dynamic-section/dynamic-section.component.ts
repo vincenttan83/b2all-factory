@@ -24,9 +24,9 @@ export class DynamicSectionComponent implements OnInit {
           text: 'Print Quote',
           onclick: 'print_quote',
           onclick_fn: () => null,
-          data: {
-            hello: 'this is quote'
-          }
+          option: {
+            hello: 'this is quote',
+          },
         },
         {
           class: 'btn btn-primary',
@@ -34,9 +34,9 @@ export class DynamicSectionComponent implements OnInit {
           text: 'Print Billing',
           onclick: 'print_billing',
           onclick_fn: () => null,
-          data: {
-            hello: 'this is billing'
-          }
+          option: {
+            hello: 'this is billing',
+          },
         },
       ],
       type: 'button',
@@ -385,13 +385,6 @@ export class DynamicSectionComponent implements OnInit {
   }
 
   buttonOnSubmit(val: any): void {
-    switch (val.button_onclick) {
-      case 'print_quote':
-        console.log(val.button_data);
-        break;
-      case 'print_billing':
-        console.log(val.button_data);
-        break;
-    }
+    console.log(val.button_option);
   }
 }

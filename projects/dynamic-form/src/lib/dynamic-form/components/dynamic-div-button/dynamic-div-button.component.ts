@@ -24,8 +24,7 @@ export class DynamicDivButtonComponent
     this.buttonSubmitEvent.emit({
       button_onclick: button.onclick,
       button_index: this.index,
-      button_event: event,
-      button_data: button.data
+      button_option: button.option
     });
   }
 }
