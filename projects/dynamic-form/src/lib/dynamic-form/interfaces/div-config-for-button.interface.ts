@@ -4,4 +4,5 @@ export interface IDivConfigForButton {
     onclick?: string;
     class: string;
     disabled: boolean;
+    data: any;
 }
