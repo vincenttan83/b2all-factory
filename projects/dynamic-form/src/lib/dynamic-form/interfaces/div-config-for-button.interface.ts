@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 export interface IDivConfigForButton {
   text: string;
   onclick_fn: () => Promise<void> | null;
@@ -5,4 +7,5 @@ export interface IDivConfigForButton {
   class: string;
   disabled: boolean;
   custom_option: { [key: string]: any };
+  subscription?: Subject<boolean>;
 }
