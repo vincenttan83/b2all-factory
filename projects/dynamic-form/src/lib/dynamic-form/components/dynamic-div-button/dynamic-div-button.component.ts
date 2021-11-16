@@ -13,18 +13,27 @@ export class DynamicDivButtonComponent
 {
   config!: IDivConfig<IDivConfigForButton[]>;
   index!: number;
+  isLoading: boolean[] = [];
 
   buttonSubmitEvent!: EventEmitter<any>;
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.config.content.forEach((element, i) => {
+      this.isLoading[i] = false;
+      element.subscription?.subscribe((resp) => {
+        this.isLoading[i] = resp;
+      });
+    });
+  }
 
   ontrigger(button: IDivConfigForButton): void {
+    this.index = this.config.content.findIndex((pressed) => pressed === button);
     this.buttonSubmitEvent.emit({
       button_onclick: button.onclick,
       button_index: this.index,
-      custom_option: button.custom_option
+      custom_option: button.custom_option,
     });
   }
 }

@@ -1,28 +1,40 @@
-<ng-template #onclickFunction let-content="content">
+<ng-template #onclickFunction let-content="content" let-isLoading="isLoading">
   <button
     [ngClass]="content.class"
     type="button"
     (click)="content.onclick_fn()"
+    [disabled]="content.disabled || isLoading"
   >
     {{ content.text }}
   </button>
 </ng-template>
 
-<ng-template #onclick let-content="content">
-  <button [ngClass]="content.class" type="button" (click)="ontrigger(content)">
+<ng-template #onclick let-content="content" let-isLoading="isLoading">
+  <button
+    [ngClass]="content.class"
+    type="button"
+    (click)="ontrigger(content)"
+    [disabled]="content.disabled || isLoading"
+  >
     {{ content.text }}
   </button>
 </ng-template>
 
-<ng-container *ngFor="let content of config.content">
+<ng-container *ngFor="let content of config.content; let i = index">
   <ng-container
     *ngIf="!content.onclick"
     [ngTemplateOutlet]="onclickFunction"
-    [ngTemplateOutletContext]="{ content: content }"
+    [ngTemplateOutletContext]="{
+      content: content,
+      isLoading: this.isLoading[i]
+    }"
   ></ng-container>
   <ng-container
     *ngIf="content.onclick"
     [ngTemplateOutlet]="onclick"
-    [ngTemplateOutletContext]="{ content: content }"
+    [ngTemplateOutletContext]="{
+      content: content,
+      isLoading: this.isLoading[i]
+    }"
   ></ng-container>
 </ng-container>

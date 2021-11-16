@@ -3,6 +3,14 @@ import { getValidators } from 'projects/dynamic-form/src/lib/dynamic-form/classe
 import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-input-type.enum';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
 import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums/form-validator.enum';
+import { IDivConfigForButton } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-button.interface';
+import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
+import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-headings.interface';
+import {
+  EDivConfigType,
+  IDivConfig,
+} from 'projects/dynamic-form/src/public-api';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-section',
@@ -11,8 +19,11 @@ import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums
 })
 export class DynamicSectionComponent implements OnInit {
   pageTemplateReady = false;
-  forms: any[] = [];
+  forms: IDivConfig<
+    IDivConfigForButton[] | IDivConfigForForm<any> | IDivConfigForHeadings
+  >[] = [];
 
+  protected isLoadingSubjects: Subject<boolean>[] = [];
   constructor() {}
 
   ngOnInit(): void {
@@ -27,6 +38,10 @@ export class DynamicSectionComponent implements OnInit {
           custom_option: {
             hello: 'this is quote',
           },
+          subscription:
+            this.isLoadingSubjects[
+              this.isLoadingSubjects.push(new Subject()) - 1
+            ],
         },
         {
           class: 'btn btn-primary',
@@ -37,9 +52,13 @@ export class DynamicSectionComponent implements OnInit {
           custom_option: {
             hello: 'this is billing',
           },
+          subscription:
+            this.isLoadingSubjects[
+              this.isLoadingSubjects.push(new Subject()) - 1
+            ],
         },
       ],
-      type: 'button',
+      type: EDivConfigType.Button,
     });
 
     this.forms.push({
@@ -47,7 +66,7 @@ export class DynamicSectionComponent implements OnInit {
         text: 'why',
         class: 'h4',
       },
-      type: 'headings',
+      type: EDivConfigType.Headings,
     });
     this.forms.push({
       content: {
@@ -56,7 +75,7 @@ export class DynamicSectionComponent implements OnInit {
           {
             name: 'age_group',
             display_text: 'Select your age group:',
-            type: 'input',
+            type: EFieldConfigType.Input,
             type_config: {
               type: 'radio',
               list: true,
@@ -78,7 +97,7 @@ export class DynamicSectionComponent implements OnInit {
           {
             name: 'button_submit',
             display_text: 'Submit button',
-            type: 'button',
+            type: EFieldConfigType.Button,
             type_config: {
               type: 'submit',
               css_class: {
@@ -90,7 +109,7 @@ export class DynamicSectionComponent implements OnInit {
         ],
         saved_data: {},
       },
-      type: 'form',
+      type: EDivConfigType.Form,
     });
     this.forms.push({
       content: {
@@ -99,7 +118,7 @@ export class DynamicSectionComponent implements OnInit {
           {
             name: 'age_group',
             display_text: 'Select your age group:',
-            type: 'input',
+            type: EFieldConfigType.Input,
             type_config: {
               type: 'radio',
               list: true,
@@ -121,7 +140,7 @@ export class DynamicSectionComponent implements OnInit {
           {
             name: 'button_submit',
             display_text: 'Submit button',
-            type: 'button',
+            type: EFieldConfigType.Button,
             type_config: {
               type: 'submit',
               css_class: {
@@ -133,7 +152,7 @@ export class DynamicSectionComponent implements OnInit {
         ],
         saved_data: {},
       },
-      type: 'form',
+      type: EDivConfigType.Form,
     });
     this.forms.push({
       content: {
@@ -336,7 +355,7 @@ export class DynamicSectionComponent implements OnInit {
           {
             name: 'age_group',
             display_text: 'Select your age group:',
-            type: 'input',
+            type: EFieldConfigType.Input,
             type_config: {
               type: 'radio',
               list: true,
@@ -358,7 +377,7 @@ export class DynamicSectionComponent implements OnInit {
           {
             name: 'button_submit',
             display_text: 'Submit button',
-            type: 'button',
+            type: EFieldConfigType.Button,
             type_config: {
               type: 'submit',
               css_class: {
@@ -370,7 +389,7 @@ export class DynamicSectionComponent implements OnInit {
         ],
         saved_data: {},
       },
-      type: 'form',
+      type: EDivConfigType.Form,
     });
 
     this.pageTemplateReady = true;
@@ -384,7 +403,13 @@ export class DynamicSectionComponent implements OnInit {
     console.log(val);
   }
 
-  buttonOnSubmit(val: any): void {
-    console.log(val.custom_option);
+  async buttonOnSubmit(val: any): Promise<void> {
+    this.isLoadingSubjects[val.button_index].next(true);
+    await this.sleep(2000);
+    this.isLoadingSubjects[val.button_index].next(false);
+  }
+
+  async sleep(time: number) {
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
 }
