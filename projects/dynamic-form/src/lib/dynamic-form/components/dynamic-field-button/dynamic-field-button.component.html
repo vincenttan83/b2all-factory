@@ -1,7 +1,8 @@
 <div [formGroup]="group">
-    <div [ngClass]="detailConfig.css_class.group">
-        <button [ngClass]="detailConfig.css_class.button" [attr.type]="detailConfig.type"
-            (click)="detailConfig.onclick_fn ? detailConfig.onclick_fn() : null" [disabled]="group.invalid">{{
-            config.display_text }}</button>
-    </div>
+  <div [ngClass]="detailConfig.css_class.group">
+    <button [ngClass]="detailConfig.css_class.button" [attr.type]="detailConfig.type" (click)="startLoader()"
+      [disabled]="group.invalid || show">
+      {{ show ? 'Please wait...' : config.display_text }}
+    </button>
+  </div>
 </div>
