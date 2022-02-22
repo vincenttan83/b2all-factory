@@ -31,3 +31,6 @@ export * from './lib/dynamic-form/directives/dynamic-div.directive';
 
 // functions
 export * from './lib/dynamic-form/classes/custom-validator.class';
+
+// services
+export * from './lib/dynamic-form/components/dynamic-field-button/progress-spinner.service';
