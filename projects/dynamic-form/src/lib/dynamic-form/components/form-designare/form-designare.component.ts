@@ -1,18 +1,13 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../../enums/field-config-type.enum';
 import { EFormValidator } from '../../enums/form-validator.enum';
-import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
-import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
-import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
-import { IFieldConfigForObjectConfig } from '../../interfaces/field-config-for-object.interface';
-import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
+import { IArrayConfig } from '../../interfaces/field-config-for-array.interface';
+import { IObjectConfig } from '../../interfaces/field-config-for-object.interface';
+import { ISelectConfig } from '../../interfaces/field-config-for-select.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { DynamicFormComponent } from '../dynamic-form.component';
-import { takeUntil } from 'rxjs/operators';
-import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'b2all-form-designare',
   templateUrl: './form-designare.component.html',
@@ -26,10 +21,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
   @ViewChildren('dynamicForms') dynamicForms!: QueryList<DynamicFormComponent>;
 
   fields: {
-    template: IFieldConfig<
-      IFieldConfigForInputConfig |
-      IFieldConfigForButtonConfig
-    >[];
+    template: IFieldConfig[];
     saved_data: { [key: string]: any };
     valid: boolean;
   }[] = [];
@@ -159,8 +151,8 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     console.log(val);
   }
 
-  getTemplateBy(val: string): IFieldConfig<any>[] {
-    let typeConfig!: IFieldConfig<any>[];
+  getTemplateBy(val: string): IFieldConfig[] {
+    let typeConfig!: IFieldConfig[];
     switch (val) {
       case EFieldConfigType.Array:
         typeConfig = this.getFieldConfigForArrayTemplate();
@@ -198,7 +190,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getFieldConfig(): IFieldConfig<IFieldConfigForInputConfig>[] {
+  getFieldConfig(): IFieldConfig[] {
     return [
       {
         name: 'name',
@@ -257,17 +249,13 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  getFieldConfigForArrayTemplate(): IFieldConfig<IFieldConfigForInputConfig>[] {
+  getFieldConfigForArrayTemplate(): IFieldConfig[] {
     return [
       ...this.getFieldConfig(),
     ];
   }
 
-  getFieldConfigForButtonTemplate(): IFieldConfig<
-    IFieldConfigForInputConfig |
-    IFieldConfigForObjectConfig<any> |
-    any
-  >[] {
+  getFieldConfigForButtonTemplate(): IFieldConfig[] {
     return [
       ...this.getFieldConfig(),
       {
@@ -335,18 +323,15 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  getFieldConfigForDividerTemplate(): IFieldConfig<IFieldConfigForInputConfig>[] {
+  getFieldConfigForDividerTemplate(): IFieldConfig[] {
     return [
       ...this.getFieldConfig(),
     ];
   }
 
-  getFieldConfigForInputTemplate(): IFieldConfig<
-    IFieldConfigForInputConfig |
-    IFieldConfigForObjectConfig<any>
-  >[] {
+  getFieldConfigForInputTemplate(): IFieldConfig[] {
 
-    const dataSetConfig: IFieldConfigForArrayConfig<any> = {
+    const dataSetConfig: IArrayConfig = {
       table_caption: 'Dataset',
       table_column_names: ['Key', 'Value'],
       field_configs: [
@@ -378,7 +363,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
       css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: '', label: '' }
     };
 
-    const typeSelectionConfig: IFieldConfigForSelectConfig = {
+    const typeSelectionConfig: ISelectConfig = {
       dataset: [
         { key: 'CheckBox', value: 'checkbox' },
         { key: 'Color', value: 'color' },
@@ -404,7 +389,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
       css_class: { group: 'mb-2', select: 'form-select form-select-sm', select_label: 'mb-1' }
     };
 
-    const cssClass: IFieldConfigForObjectConfig<IFieldConfigForInputConfig> = {
+    const cssClass: IObjectConfig = {
       field_configs: [
         {
           name: 'group_label',
@@ -527,17 +512,15 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  getFieldConfigForObjectTemplate(): IFieldConfig<IFieldConfigForInputConfig>[] {
+  getFieldConfigForObjectTemplate(): IFieldConfig[] {
     return [
       ...this.getFieldConfig(),
     ];
   }
 
-  getFieldConfigForSelectTemplate(): IFieldConfig<
-    IFieldConfigForInputConfig | IFieldConfigForObjectConfig<any>
-  >[] {
+  getFieldConfigForSelectTemplate(): IFieldConfig[] {
 
-    const cssClass: IFieldConfigForObjectConfig<IFieldConfigForInputConfig> = {
+    const cssClass: IObjectConfig = {
       field_configs: [
         {
           name: 'group',
@@ -706,11 +689,9 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     ];
   }
 
-  getFieldConfigForTextareaTemplate(): IFieldConfig<
-    IFieldConfigForInputConfig | IFieldConfigForObjectConfig<any>
-  >[] {
+  getFieldConfigForTextareaTemplate(): IFieldConfig[] {
 
-    const cssClass: IFieldConfigForObjectConfig<IFieldConfigForInputConfig> = {
+    const cssClass: IObjectConfig = {
       field_configs: [
         {
           name: 'group',
@@ -803,7 +784,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     // this.outputFormOnSubmit.emit(this.recursiveSort(val));
   }
 
-  generateSubmitButton(): IFieldConfig<IFieldConfigForButtonConfig> {
+  generateSubmitButton(): IFieldConfig {
     return {
       name: 'submit',
       display_text: 'Submit',
@@ -817,16 +798,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
     };
   }
 
-  generateTemplate(): IFieldConfig<
-    IFieldConfigForArrayConfig<
-      IFieldConfigForInputConfig |
-      IFieldConfigForSelectConfig |
-      IFieldConfigForObjectConfig<
-        IFieldConfigForInputConfig |
-        IFieldConfigForSelectConfig
-      >
-    >
-  > {
+  generateTemplate(): IFieldConfig {
 
     return {
       name: 'template',

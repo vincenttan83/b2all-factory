@@ -9,9 +9,9 @@ import { DynamicFormComponent } from '../dynamic-form.component';
   templateUrl: './dynamic-div-form.component.html',
   styleUrls: ['./dynamic-div-form.component.css']
 })
-export class DynamicDivFormComponent implements IDiv<IDivConfigForForm<any>>, AfterViewInit {
+export class DynamicDivFormComponent implements IDiv<IDivConfigForForm>, AfterViewInit {
 
-  config!: IDivConfig<IDivConfigForForm<any>>;
+  config!: IDivConfig<IDivConfigForForm>;
   index!: number;
 
   @ViewChild(DynamicFormComponent) dynamicDivForm!: DynamicFormComponent;

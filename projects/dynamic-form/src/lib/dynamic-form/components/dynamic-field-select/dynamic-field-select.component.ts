@@ -1,9 +1,7 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ICssClass } from '../../interfaces/css-class.interface';
-import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
-import { IFieldConfig } from '../../interfaces/field-config.interface';
+import { IFieldConfigForSelectConfig, ISelectConfig } from '../../interfaces/field-config-for-select.interface';
 import { IField } from '../../interfaces/field.interface';
 import { IMultiSelect } from '../../interfaces/multi-select.interface';
 import { DynamicFieldSelectService } from './dynamic-field-select.service';
@@ -14,14 +12,14 @@ import { DynamicFieldSelectService } from './dynamic-field-select.service';
   styleUrls: ['./dynamic-field-select.component.css'],
   providers: [DynamicFieldSelectService]
 })
-export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigForSelectConfig>, OnDestroy {
+export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
 
-  config!: IFieldConfig<IFieldConfigForSelectConfig>;
+  config!: IFieldConfigForSelectConfig;
   group!: FormGroup;
   arrayIndex!: number;
   formName!: string;
 
-  detailConfig!: IFieldConfigForSelectConfig;
+  detailConfig!: ISelectConfig;
 
   // cssClass!: ICssClass;
 
@@ -39,7 +37,7 @@ export class DynamicFieldSelectComponent implements OnInit, IField<IFieldConfigF
   }
 
   ngOnInit(): void {
-    this.detailConfig = (this.config.type_config as IFieldConfigForSelectConfig);
+    this.detailConfig = this.config.type_config;
 
     const savedSelectedValue: string[] = [];
     this.detailConfig.controls.forEach(element => {

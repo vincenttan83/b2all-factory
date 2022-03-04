@@ -1,7 +1,14 @@
 import { EFieldConfigInputType } from '../enums/field-config-input-type.enum';
+import { EFieldConfigType } from '../enums/field-config-type.enum';
+import { IFieldConfigBased } from './field-config.interface';
 import { IKeyValueInString } from './key-value.interface';
 
-export interface IFieldConfigForInputConfig {
+export interface IFieldConfigForInputConfig extends IFieldConfigBased {
+    type: EFieldConfigType.Input;
+    type_config: IInputConfig;
+}
+
+export interface IInputConfig {
     readonly?: boolean;
     type: EFieldConfigInputType;
     list?: boolean;
