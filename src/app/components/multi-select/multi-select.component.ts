@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
-import { IFieldConfigForButtonConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-button.interface';
-import { IFieldConfigForInputConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-input.interface';
-import { IFieldConfigForSelectConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-select.interface';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
 import {
   EFieldConfigInputType,
@@ -75,7 +72,7 @@ export class MultiSelectComponent implements OnInit {
       },
     ],
   };
-  multiselectSubmitButtonTemplate: IFieldConfig<IFieldConfigForButtonConfig> = {
+  multiselectSubmitButtonTemplate: IFieldConfig = {
     name: 'submit_button',
     display_text: 'Submit',
     type: EFieldConfigType.Button,
@@ -89,7 +86,7 @@ export class MultiSelectComponent implements OnInit {
     css_class: 'col-12',
   };
 
-  preTemplate: IFieldConfig<IFieldConfigForInputConfig | IFieldConfigForSelectConfig>[] = [
+  preTemplate: IFieldConfig[] = [
     {
       name: 'full_name',
       display_text: 'Full name: ',
@@ -146,7 +143,7 @@ export class MultiSelectComponent implements OnInit {
     },
   ];
 
-  postTemplate: IFieldConfig<IFieldConfigForInputConfig>[] = [
+  postTemplate: IFieldConfig[] = [
     {
       name: 'purpose',
       display_text: 'Purpose: ',

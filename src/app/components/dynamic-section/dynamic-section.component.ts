@@ -20,11 +20,11 @@ import { Subject } from 'rxjs';
 export class DynamicSectionComponent implements OnInit {
   pageTemplateReady = false;
   forms: IDivConfig<
-    IDivConfigForButton[] | IDivConfigForForm<any> | IDivConfigForHeadings
+    IDivConfigForButton[] | IDivConfigForForm | IDivConfigForHeadings
   >[] = [];
 
   protected isLoadingSubjects: Subject<boolean>[] = [];
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.forms.push({
@@ -40,7 +40,7 @@ export class DynamicSectionComponent implements OnInit {
           },
           subscription:
             this.isLoadingSubjects[
-              this.isLoadingSubjects.push(new Subject()) - 1
+            this.isLoadingSubjects.push(new Subject()) - 1
             ],
         },
         {
@@ -54,7 +54,7 @@ export class DynamicSectionComponent implements OnInit {
           },
           subscription:
             this.isLoadingSubjects[
-              this.isLoadingSubjects.push(new Subject()) - 1
+            this.isLoadingSubjects.push(new Subject()) - 1
             ],
         },
       ],
@@ -77,7 +77,7 @@ export class DynamicSectionComponent implements OnInit {
             display_text: 'Select your age group:',
             type: EFieldConfigType.Input,
             type_config: {
-              type: 'radio',
+              type: EFieldConfigInputType.Radio,
               list: true,
               dataset: [
                 { key: 'Below 3', value: 'babies' },
@@ -120,7 +120,7 @@ export class DynamicSectionComponent implements OnInit {
             display_text: 'Select your age group:',
             type: EFieldConfigType.Input,
             type_config: {
-              type: 'radio',
+              type: EFieldConfigInputType.Radio,
               list: true,
               dataset: [
                 { key: 'Below 3', value: 'babies' },
@@ -254,7 +254,6 @@ export class DynamicSectionComponent implements OnInit {
                           row_count: 5,
                           css_class: {
                             group: 'form-group mb-3',
-                            group_label: '',
                             input: 'form-control',
                             input_label: 'mb-1',
                           },
@@ -357,7 +356,7 @@ export class DynamicSectionComponent implements OnInit {
             display_text: 'Select your age group:',
             type: EFieldConfigType.Input,
             type_config: {
-              type: 'radio',
+              type: EFieldConfigInputType.Radio,
               list: true,
               dataset: [
                 { key: 'Below 3', value: 'babies' },

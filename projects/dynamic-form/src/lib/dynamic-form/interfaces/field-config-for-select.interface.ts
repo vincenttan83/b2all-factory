@@ -1,11 +1,18 @@
 import { ValidatorFn } from '@angular/forms';
+import { EFieldConfigType } from '../enums/field-config-type.enum';
+import { IFieldConfigBased } from './field-config.interface';
 import { IMultiSelect } from './multi-select.interface';
 
-export interface IFieldConfigForSelectConfig {
+export interface IFieldConfigForSelectConfig extends IFieldConfigBased {
+    type: EFieldConfigType.Select;
+    type_config: ISelectConfig;
+}
+
+export interface ISelectConfig {
     /**
-     * Only accept dataset in the outer join manner for
-     * dependant combo box
-     */
+    * Only accept dataset in the outer join manner for
+    * dependant combo box
+    */
     dataset: IMultiSelect[];
     controls: {
         name: string;

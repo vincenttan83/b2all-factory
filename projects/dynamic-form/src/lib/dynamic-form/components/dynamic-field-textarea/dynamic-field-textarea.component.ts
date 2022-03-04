@@ -1,8 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ICssClass } from '../../interfaces/css-class.interface';
-import { IFieldConfigForTextareaConfig } from '../../interfaces/field-config-for-textarea.interface';
-import { IFieldConfig } from '../../interfaces/field-config.interface';
+import { IFieldConfigForTextareaConfig, ITextareaConfig } from '../../interfaces/field-config-for-textarea.interface';
 import { IField } from '../../interfaces/field.interface';
 
 @Component({
@@ -10,14 +8,14 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-textarea.component.html',
   styleUrls: ['./dynamic-field-textarea.component.css']
 })
-export class DynamicFieldTextareaComponent implements OnInit, IField<IFieldConfigForTextareaConfig> {
+export class DynamicFieldTextareaComponent implements OnInit, IField {
 
-  config!: IFieldConfig<IFieldConfigForTextareaConfig>;
+  config!: IFieldConfigForTextareaConfig;
   group!: FormGroup;
   arrayIndex!: number;
   formName!: string;
 
-  detailConfig!: IFieldConfigForTextareaConfig;
+  detailConfig!: ITextareaConfig;
 
   // cssClass!: ICssClass;
 
@@ -28,7 +26,7 @@ export class DynamicFieldTextareaComponent implements OnInit, IField<IFieldConfi
   }
 
   ngOnInit(): void {
-    this.detailConfig = (this.config.type_config as IFieldConfigForTextareaConfig);
+    this.detailConfig = this.config.type_config;
   }
 
   generateId(

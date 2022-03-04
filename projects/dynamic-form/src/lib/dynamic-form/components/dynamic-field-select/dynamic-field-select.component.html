@@ -11,8 +11,8 @@
                                 group.controls[control.name].valid ? 
                                     detailConfig.css_class.select ? detailConfig.css_class.select + ' is-valid' : 'is-valid' 
                                 : detailConfig.css_class.select ? detailConfig.css_class.select + ' is-invalid': 'is-invalid' 
-                            : detailConfig.css_class.select ?? '' 
-                        : detailConfig.css_class.select ?? ''"
+                            : detailConfig.css_class.select 
+                        : detailConfig.css_class.select"
             [attr.id]="generateId(formName, config.name, arrayIndex) + 'select'"
             [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name"
             (change)="onChange($event, i)">

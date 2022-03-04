@@ -1,12 +1,18 @@
-import { IFieldConfig } from './field-config.interface';
-import { IKeyValueInString } from './key-value.interface';
+import { EFieldConfigType } from "../enums/field-config-type.enum";
+import { IFieldConfig, IFieldConfigBased } from "./field-config.interface";
+import { IKeyValueInString } from "./key-value.interface";
 
-export interface IFieldConfigForArrayConfig<T> {
+export interface IFieldConfigForArrayConfig extends IFieldConfigBased {
+    type: EFieldConfigType.Array;
+    type_config: IArrayConfig;
+}
+
+export interface IArrayConfig {
     hierarchy_level?: {
         cur_level: number;
         max_level: number;
     };
-    field_configs: IFieldConfig<T>[];
+    field_configs: IFieldConfig[];
     css_class: {
         add_button: string;
         del_button: string;
@@ -28,7 +34,7 @@ export interface IFieldConfigForArrayConfig<T> {
     hideRemoveRowItemButton?: boolean;
 }
 
-export function isFieldConfigForArrayConfig<T>(obj: any): obj is IFieldConfigForArrayConfig<T> {
+export function isFieldConfigForArrayConfig(obj: any): obj is IFieldConfigForArrayConfig {
     return (
         obj !== null &&
         obj.field_configs !== null &&

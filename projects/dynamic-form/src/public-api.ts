@@ -23,6 +23,7 @@ export * from './lib/dynamic-form/interfaces/field-config-for-button.interface';
 export * from './lib/dynamic-form/interfaces/multi-select.interface';
 export * from './lib/dynamic-form/interfaces/css-class.interface';
 export * from './lib/dynamic-form/interfaces/div-config.interface';
+export * from './lib/dynamic-form/interfaces/key-value.interface';
 
 // directives
 export * from './lib/dynamic-form/directives/dynamic-field.directive';
@@ -30,3 +31,6 @@ export * from './lib/dynamic-form/directives/dynamic-div.directive';
 
 // functions
 export * from './lib/dynamic-form/classes/custom-validator.class';
+
+// services
+export * from './lib/dynamic-form/components/dynamic-field-button/progress-spinner.service';

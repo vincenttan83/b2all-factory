@@ -1,8 +1,8 @@
 import { FormGroup } from '@angular/forms';
 import { IFieldConfig } from './field-config.interface';
 
-export interface IField<T> {
-    config: IFieldConfig<T>;
+export interface IField {
+    config: IFieldConfig;
     group: FormGroup;
     arrayIndex: number;
     formName: string;

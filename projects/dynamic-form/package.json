@@ -1,6 +1,6 @@
 {
   "name": "@b2allsolution/factory",
-  "version": "0.0.43",
+  "version": "0.0.50",
   "peerDependencies": {
     "@angular/common": "^11.2.14",
     "@angular/core": "^11.2.14"

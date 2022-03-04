@@ -11,12 +11,6 @@ import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../../enums/field-config-type.enum';
 import { EFormValidator } from '../../enums/form-validator.enum';
-import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
-import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
-import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
-import { IFieldConfigForObjectConfig } from '../../interfaces/field-config-for-object.interface';
-import { IFieldConfigForSelectConfig } from '../../interfaces/field-config-for-select.interface';
-import { IFieldConfigForTextareaConfig } from '../../interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IMultiSelect } from '../../interfaces/multi-select.interface';
 import { DynamicFormComponent } from '../dynamic-form.component';
@@ -31,22 +25,13 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   @Input() inputHierarchyLevels!: string[];
   @Input() inputData!: { [key: string]: any };
-  @Input() inputPreTemplate!: IFieldConfig<
-    | IFieldConfigForInputConfig
-    | IFieldConfigForSelectConfig
-    | IFieldConfigForTextareaConfig
-  >[];
-  @Input() inputPostTemplate!: IFieldConfig<
-    | IFieldConfigForInputConfig
-    | IFieldConfigForSelectConfig
-    | IFieldConfigForTextareaConfig
-  >[];
-  @Input()
-  inputSubmitButtonTemplate!: IFieldConfig<IFieldConfigForButtonConfig>;
+  @Input() inputPreTemplate!: IFieldConfig[];
+  @Input() inputPostTemplate!: IFieldConfig[];
+  @Input() inputSubmitButtonTemplate!: IFieldConfig;
   @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputFormOnChange: EventEmitter<any> = new EventEmitter<any>();
 
-  multiSelectTemplate: IFieldConfig<any>[] = [];
+  multiSelectTemplate: IFieldConfig[] = [];
   formReady = false;
 
   constructor() {}
@@ -84,7 +69,7 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   generateTemplate(
     values: string[]
-  ): IFieldConfig<IFieldConfigForArrayConfig<IFieldConfigForInputConfig>> {
+  ): IFieldConfig {
     let lvlTemplate: any;
     for (let i = values.length - 1; i >= 0; i--) {
       if (i === values.length - 1) {
@@ -112,7 +97,7 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
     maxIndex: number,
     curIndex: number,
     columnNames: string[]
-  ): IFieldConfig<IFieldConfigForArrayConfig<IFieldConfigForInputConfig>> {
+  ): IFieldConfig {
     return {
       name: 'children',
       display_text: displayText,
@@ -170,11 +155,11 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   generateTemplateForLevelHasChildren(
     displayText: string,
-    theNextLevelTemplate: IFieldConfig<IFieldConfigForInputConfig>,
+    theNextLevelTemplate: IFieldConfig,
     maxIndex: number,
     curIndex: number,
     columnNames: string[]
-  ): IFieldConfig<IFieldConfigForArrayConfig<IFieldConfigForInputConfig>> {
+  ): IFieldConfig {
     return {
       name: 'children',
       display_text: displayText,

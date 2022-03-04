@@ -1,4 +1,12 @@
-export interface IFieldConfigForTextareaConfig {
+import { EFieldConfigType } from "../enums/field-config-type.enum";
+import { IFieldConfigBased } from "./field-config.interface";
+
+export interface IFieldConfigForTextareaConfig extends IFieldConfigBased {
+    type: EFieldConfigType.Textarea;
+    type_config: ITextareaConfig;
+}
+
+export interface ITextareaConfig {
     row_count: number;
     col_count?: number;
     css_class: {
