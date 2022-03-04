@@ -1,7 +1,24 @@
 import { AsyncValidatorFn, ValidatorFn } from '@angular/forms';
-import { EFieldConfigType } from '../enums/field-config-type.enum';
+import { IFieldConfigForArrayConfig } from './field-config-for-array.interface';
+import { IFieldConfigForButtonConfig } from './field-config-for-button.interface';
+import { IFieldConfigForDividerConfig } from './field-config-for-divider.interface';
+import { IFieldConfigForInputConfig } from './field-config-for-input.interface';
+import { IFieldConfigForObjectConfig } from './field-config-for-object.interface';
+import { IFieldConfigForRadioButtonDefaultConfig } from './field-config-for-radiobuttondefault.interface';
+import { IFieldConfigForSelectConfig } from './field-config-for-select.interface';
+import { IFieldConfigForTextareaConfig } from './field-config-for-textarea.interface';
 
-export interface IFieldConfig<T> {
+export type IFieldConfig =
+    | IFieldConfigForArrayConfig
+    | IFieldConfigForButtonConfig
+    | IFieldConfigForDividerConfig
+    | IFieldConfigForInputConfig
+    | IFieldConfigForObjectConfig
+    | IFieldConfigForRadioButtonDefaultConfig
+    | IFieldConfigForSelectConfig
+    | IFieldConfigForTextareaConfig
+
+export interface IFieldConfigBased {
     /**
      * Name of the field to be store into database as the field name
      */
@@ -20,13 +37,6 @@ export interface IFieldConfig<T> {
      * Validation for this control for async
      */
     async_validation_fn?: AsyncValidatorFn[];
-    /**
-     * The field type to be render on the form
-     * such as button, input, array of input or objects,
-     * or field of objects
-     */
-    type: EFieldConfigType;
-    type_config: T;
     /**
      * Disabled field
      */

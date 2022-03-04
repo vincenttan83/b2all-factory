@@ -1,45 +1,26 @@
-import {
-  ValidatorFn,
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  AsyncValidatorFn,
-} from '@angular/forms';
+import { ValidatorFn, FormGroup, FormBuilder, FormControl, AsyncValidatorFn } from '@angular/forms';
 import { EFieldConfigInputType } from '../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
-import {
-  isFieldConfigForArrayConfig,
-  IFieldConfigForArrayConfig,
-} from '../interfaces/field-config-for-array.interface';
+import { isFieldConfigForArrayConfig, IArrayConfig } from '../interfaces/field-config-for-array.interface';
 import { isFieldConfigForButtonConfig } from '../interfaces/field-config-for-button.interface';
-import {
-  isFieldConfigForInputConfig,
-  IFieldConfigForInputConfig,
-} from '../interfaces/field-config-for-input.interface';
-import {
-  isFieldConfigForObjectConfig,
-  IFieldConfigForObjectConfig,
-} from '../interfaces/field-config-for-object.interface';
-import {
-  IFieldConfigForSelectConfig,
-  isFieldConfigForSelectConfig,
-} from '../interfaces/field-config-for-select.interface';
+import { IInputConfig } from '../interfaces/field-config-for-input.interface';
+import { isFieldConfigForObjectConfig, IObjectConfig } from '../interfaces/field-config-for-object.interface';
+import { ISelectConfig, isFieldConfigForSelectConfig } from '../interfaces/field-config-for-select.interface';
 import { isFieldConfigForTextareaConfig } from '../interfaces/field-config-for-textarea.interface';
 import { IFieldConfig } from '../interfaces/field-config.interface';
 
 export class DynamicFormGenerator {
   wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
 
-  constructor(private privateFormBuilder: FormBuilder) {}
+  constructor(private privateFormBuilder: FormBuilder) { }
 
   // data and template merging
   private prepForSelect(
-    initFieldConfig: IFieldConfig<any>,
+    initFieldConfig: IFieldConfig,
     elementSavedData: { [x: string]: any }
-  ): IFieldConfigForSelectConfig {
-    const templateSelectTypeConfig =
-      initFieldConfig.type_config as IFieldConfigForSelectConfig;
-    const templateSelectTypeConfigWithData: IFieldConfigForSelectConfig = {
+  ): ISelectConfig {
+    const templateSelectTypeConfig: ISelectConfig = initFieldConfig.type_config;
+    const templateSelectTypeConfigWithData: ISelectConfig = {
       ...templateSelectTypeConfig,
     };
     // // iterate thru the controls
@@ -71,7 +52,7 @@ export class DynamicFormGenerator {
   }
 
   createFormGroup(
-    formConfigs: IFieldConfig<any>[],
+    formConfigs: IFieldConfig[],
     validatorFn: ValidatorFn[] | null,
     savedDatas: { [key: string]: any },
     runtimeCounter: number = 0
@@ -109,8 +90,7 @@ export class DynamicFormGenerator {
             }
 
             // get the array config
-            const arrayConfig =
-              element.type_config as IFieldConfigForArrayConfig<any>;
+            const arrayConfig: IArrayConfig = element.type_config;
             const fieldConfigs = arrayConfig.field_configs;
 
             // we have to render an init row with default value for add row usage
@@ -123,7 +103,7 @@ export class DynamicFormGenerator {
               if (element.type_config.enable_default_options) {
                 element.type_config.enable_default_options.forEach(
                   (elementDefault) => {
-                    const defaultField: IFieldConfig<any> = {
+                    const defaultField: IFieldConfig = {
                       name: elementDefault.value,
                       type: EFieldConfigType.RadioButtonDefault,
                       type_config: {},
@@ -177,15 +157,16 @@ export class DynamicFormGenerator {
             break;
           }
           case EFieldConfigType.Input: {
+
             // to make sure the type_config is for input
-            if (!isFieldConfigForInputConfig(element.type_config)) {
-              throw new Error(
-                `${element.name} ${this.wrongInterfaceErrorMessage}`
-              );
-            }
-            // to check further if type_config using wronlgy...
-            const objectTypeConfig =
-              element.type_config as IFieldConfigForInputConfig;
+            // if (!isFieldConfigForInputConfig(element.type_config)) {
+            //   throw new Error(
+            //     `${element.name} ${this.wrongInterfaceErrorMessage}`
+            //   );
+            // }
+
+            // to check further if type_config using wrongly...
+            const objectTypeConfig: IInputConfig = element.type_config;
             if (
               objectTypeConfig.type !== EFieldConfigInputType.Radio &&
               objectTypeConfig.type !== EFieldConfigInputType.CheckBox
@@ -317,7 +298,7 @@ export class DynamicFormGenerator {
               );
             }
             const objectTypeConfig =
-              element.type_config as IFieldConfigForObjectConfig<any>;
+              element.type_config as IObjectConfig;
             // since it's an object, it should be an object as the property
             let subGroup;
             subGroup = this.createFormGroup(

@@ -8,11 +8,6 @@ import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums
 import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
 import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-headings.interface';
 import { IDivConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config.interface';
-import { IFieldConfigForArrayConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-array.interface';
-import { IFieldConfigForButtonConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-button.interface';
-import { IFieldConfigForInputConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-input.interface';
-import { IFieldConfigForSelectConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-select.interface';
-import { IFieldConfigForTextareaConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-textarea.interface';
 import { cs } from 'src/app/country-state';
 
 @Component({
@@ -22,10 +17,10 @@ import { cs } from 'src/app/country-state';
 })
 export class DynamicFormComponent implements OnInit {
   sectionConfigs = new Array<
-    IDivConfig<IDivConfigForHeadings | IDivConfigForForm<any>>
+    IDivConfig<IDivConfigForHeadings | IDivConfigForForm>
   >(2);
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.sectionConfigs[0] = {
@@ -60,15 +55,7 @@ export class DynamicFormComponent implements OnInit {
 
   myTemplateWithData(
     data: any
-  ): IDivConfig<
-    IDivConfigForForm<
-      | IFieldConfigForInputConfig
-      | IFieldConfigForSelectConfig
-      | IFieldConfigForButtonConfig
-      | IFieldConfigForTextareaConfig
-      | IFieldConfigForArrayConfig<any>
-    >
-  > {
+  ): IDivConfig<IDivConfigForForm> {
     return {
       content: {
         form_unique_name: 'form01',
@@ -238,7 +225,7 @@ export class DynamicFormComponent implements OnInit {
                   // display_text: 'Select your age group:',
                   type: EFieldConfigType.Input,
                   type_config: {
-                    type: 'radio',
+                    type: EFieldConfigInputType.Radio,
                     list: true,
                     dataset: [
                       { key: '3 Months of 5k KM', value: '0.25' },
@@ -269,7 +256,7 @@ export class DynamicFormComponent implements OnInit {
                         label: '',
                         key_field: 'key',
                         value_field: 'value',
-                        value: null,
+                        value: '',
                       },
                     ],
                     css_class: {
@@ -302,7 +289,6 @@ export class DynamicFormComponent implements OnInit {
               row_count: 10,
               css_class: {
                 group: 'form-group mb-3',
-                group_label: '',
                 input: 'form-control',
                 input_label: 'mb-1',
               },

@@ -1,17 +1,20 @@
 <div [formGroup]="group">
 
   <ng-container *ngIf="detailConfig.list; else nonListInput">
-    <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{ config.display_text }}</label>
+    <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label">{{
+      config.display_text
+      }}</label>
     <br *ngIf="config.display_text">
-    <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group ?? ''">
-      <input [ngClass]="detailConfig.css_class.input ?? ''"
+    <div *ngFor="let choice of detailConfig.dataset; index as i;" [ngClass]="detailConfig.css_class.group">
+      <input [ngClass]="detailConfig.css_class.input"
         [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i"
         (change)="onCheckChange($event)" [value]="choice.value" [attr.type]="detailConfig.type"
-        [attr.name]="formName ? formName + '_' + config.name + '_' + arrayIndex : config.name" [checked]="shouldChecked(choice.value)">
+        [attr.name]="formName ? formName + '_' + config.name + '_' + arrayIndex : config.name"
+        [checked]="shouldChecked(choice.value)">
 
-      <label [ngClass]="detailConfig.css_class.input_label ?? ''"
+      <label [ngClass]="detailConfig.css_class.input_label"
         [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + i">{{
-                choice.key }}</label>
+        choice.key }}</label>
     </div>
 
     <div *ngIf="config.validation_fn">
@@ -23,11 +26,11 @@
 
   <ng-template #nonListInput>
     <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
-      <div [ngClass]="detailConfig.css_class.group ?? ''">
+      <div [ngClass]="detailConfig.css_class.group">
 
-        <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label ?? ''"
+        <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label"
           [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'">{{
-                    config.display_text }}</label>
+          config.display_text }}</label>
 
         <span *ngIf="detailConfig.type==='range' || detailConfig.type==='color'">
           {{ group.value[config.name] }}</span>
@@ -82,18 +85,18 @@
     </ng-container>
     <ng-template #nonListInputForCheckbox>
 
-      <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label ?? ''">{{
-                config.display_text }}</label>
+      <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label">{{
+        config.display_text }}</label>
 
-      <div [ngClass]="detailConfig.css_class.group ?? ''">
+      <div [ngClass]="detailConfig.css_class.group">
 
-        <input [ngClass]="detailConfig.css_class.input ?? ''"
+        <input [ngClass]="detailConfig.css_class.input"
           [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'"
           (change)="onCheckChange($event)" [attr.type]="detailConfig.type" [attr.name]="config.name"
           [checked]="shouldChecked(group.controls[config.name].value)">
-        <label [ngClass]="detailConfig.css_class.input_label ?? ''"
+        <label [ngClass]="detailConfig.css_class.input_label"
           [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'checkbox'">{{
-                    detailConfig.single_checkbox_display_text }}</label>
+          detailConfig.single_checkbox_display_text }}</label>
 
         <div *ngIf="config.validation_fn">
 

@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
-import { IFieldConfig } from '../../interfaces/field-config.interface';
+import { IButtonConfig, IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
 import { IField } from '../../interfaces/field.interface';
 import { ProgressSpinnerService } from './progress-spinner.service';
 
@@ -11,14 +10,14 @@ import { ProgressSpinnerService } from './progress-spinner.service';
   templateUrl: './dynamic-field-button.component.html',
   styleUrls: ['./dynamic-field-button.component.css']
 })
-export class DynamicFieldButtonComponent implements OnInit, IField<IFieldConfigForButtonConfig>, OnDestroy {
+export class DynamicFieldButtonComponent implements OnInit, IField, OnDestroy {
 
-  config!: IFieldConfig<IFieldConfigForButtonConfig>;
+  config!: IFieldConfigForButtonConfig;
   group!: FormGroup;
   arrayIndex!: number;
   formName!: string;
 
-  detailConfig!: IFieldConfigForButtonConfig;
+  detailConfig!: IButtonConfig;
 
   // cssClass!: ICssClass;
 
@@ -34,7 +33,7 @@ export class DynamicFieldButtonComponent implements OnInit, IField<IFieldConfigF
   }
 
   ngOnInit(): void {
-    this.detailConfig = (this.config.type_config as IFieldConfigForButtonConfig);
+    this.detailConfig = this.config.type_config;
   }
 
   async proceedCallBackFunction(): Promise<void> {

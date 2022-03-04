@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
-import { IFieldConfigForButtonConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config-for-button.interface';
 import { IFieldConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/field-config.interface';
 
 @Component({
@@ -56,7 +55,7 @@ export class MultiSelectComponent implements OnInit {
       },
     ]
   };
-  multiselectSubmitButtonTemplate: IFieldConfig<IFieldConfigForButtonConfig> = {
+  multiselectSubmitButtonTemplate: IFieldConfig = {
     name: 'submit_button',
     display_text: 'Submit',
     type: EFieldConfigType.Button,

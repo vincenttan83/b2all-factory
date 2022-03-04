@@ -11,6 +11,7 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { DesignareComponent } from './components/designare/designare.component';
 import { DemoComponent } from './components/demo/demo.component';
 import { DynamicSectionComponent } from './components/dynamic-section/dynamic-section.component';
+import { ProgressSpinnerService } from 'projects/dynamic-form/src/public-api';
 
 // const cssClass: ICssClass = {
 //   input: {
@@ -52,7 +53,9 @@ import { DynamicSectionComponent } from './components/dynamic-section/dynamic-se
     AppRoutingModule,
     B2allDynamicFormModule,
   ],
-  providers: [],
+  providers: [
+    ProgressSpinnerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

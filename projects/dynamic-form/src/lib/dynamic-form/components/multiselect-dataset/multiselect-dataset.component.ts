@@ -3,9 +3,6 @@ import { getValidators } from '../../classes/custom-validator.class';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../../enums/field-config-type.enum';
 import { EFormValidator } from '../../enums/form-validator.enum';
-import { IFieldConfigForArrayConfig } from '../../interfaces/field-config-for-array.interface';
-import { IFieldConfigForButtonConfig } from '../../interfaces/field-config-for-button.interface';
-import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
 import { IFieldConfig } from '../../interfaces/field-config.interface';
 import { IMultiSelect } from '../../interfaces/multi-select.interface';
 import { DynamicFormComponent } from '../dynamic-form.component';
@@ -21,13 +18,13 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   @Input() inputHierarchyLevels!: string[];
   @Input() inputData!: { [key: string]: any };
-  @Input() inputPreTemplate!: IFieldConfig<any>[];
-  @Input() inputPostTemplate!: IFieldConfig<any>[];
-  @Input() inputSubmitButtonTemplate!: IFieldConfig<IFieldConfigForButtonConfig>;
+  @Input() inputPreTemplate!: IFieldConfig[];
+  @Input() inputPostTemplate!: IFieldConfig[];
+  @Input() inputSubmitButtonTemplate!: IFieldConfig;
   @Output() outputFormOnSubmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() outputFormOnChange: EventEmitter<any> = new EventEmitter<any>();
 
-  multiSelectTemplate: IFieldConfig<any>[] = [];
+  multiSelectTemplate: IFieldConfig[] = [];
   formReady = false;
 
   constructor() { }

@@ -1,5 +1,5 @@
 <div [formGroup]="group">
-    <div [ngClass]="detailConfig.css_class.group ?? ''">
+    <div [ngClass]="detailConfig.css_class.group">
         <label [ngClass]="detailConfig.css_class.input_label"
             [attr.for]="generateId(formName, config.name, arrayIndex) + 'textarea'">{{
             config.display_text
@@ -11,8 +11,8 @@
                                 group.controls[config.name].valid ? 
                                     detailConfig.css_class.input ? detailConfig.css_class.input + ' is-valid' : 'is-valid' 
                                 : detailConfig.css_class.input ? detailConfig.css_class.input + ' is-invalid': 'is-invalid' 
-                            : detailConfig.css_class.input ?? '' 
-                        : detailConfig.css_class.input ?? ''"
+                            : detailConfig.css_class.input 
+                        : detailConfig.css_class.input"
             [attr.id]="generateId(formName, config.name, arrayIndex) + 'textarea'" [formControlName]="config.name"
             [attr.rows]="detailConfig.row_count" [attr.cols]="detailConfig.col_count">
         </textarea>

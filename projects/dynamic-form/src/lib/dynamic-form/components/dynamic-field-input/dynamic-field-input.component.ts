@@ -1,9 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { EFieldConfigInputType } from '../../enums/field-config-input-type.enum';
-import { ICssClass } from '../../interfaces/css-class.interface';
-import { IFieldConfigForInputConfig } from '../../interfaces/field-config-for-input.interface';
-import { IFieldConfig } from '../../interfaces/field-config.interface';
+import { IFieldConfigForInputConfig, IInputConfig } from '../../interfaces/field-config-for-input.interface';
 import { IField } from '../../interfaces/field.interface';
 
 @Component({
@@ -11,14 +9,14 @@ import { IField } from '../../interfaces/field.interface';
   templateUrl: './dynamic-field-input.component.html',
   styleUrls: ['./dynamic-field-input.component.css']
 })
-export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigForInputConfig> {
+export class DynamicFieldInputComponent implements OnInit, IField {
 
-  config!: IFieldConfig<IFieldConfigForInputConfig>;
+  config!: IFieldConfigForInputConfig;
   group!: FormGroup;
   arrayIndex!: number;
   formName!: string;
 
-  detailConfig!: IFieldConfigForInputConfig;
+  detailConfig!: IInputConfig;
 
   // cssClass!: ICssClass;
 
@@ -29,7 +27,7 @@ export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigFo
   }
 
   ngOnInit(): void {
-    this.detailConfig = (this.config.type_config as IFieldConfigForInputConfig);
+    this.detailConfig = this.config.type_config;
   }
 
   getCssClasses(touched: boolean, valid: boolean): string {
@@ -57,11 +55,11 @@ export class DynamicFieldInputComponent implements OnInit, IField<IFieldConfigFo
   }
 
   getSpecialCss(): string {
-    return this.config.css_class ? ` ${this.config.css_class}` : '';
+    return this.config.type_config.css_class ? ` ${this.config.type_config.css_class}` : '';
   }
 
   onCheckChange(event: any): void {
-    if (this.detailConfig.type === 'checkbox') {
+    if (this.detailConfig.type === EFieldConfigInputType.CheckBox) {
       if (this.detailConfig.list) {
         const fa: FormArray = this.group.get(this.config.name) as FormArray;
 
