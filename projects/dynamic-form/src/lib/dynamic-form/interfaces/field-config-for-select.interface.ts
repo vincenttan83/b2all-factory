@@ -19,7 +19,7 @@ export interface ISelectConfig {
         label: string;
         key_field: string;
         value_field: string;
-        value: string | '';
+        value: string | null;
         validation_fn?: ValidatorFn[];
         disabled?: boolean;
     }[];
