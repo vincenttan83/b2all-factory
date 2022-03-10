@@ -67,12 +67,24 @@
                                 : detailConfig.css_class.input ? detailConfig.css_class.input + ' is-invalid': 'is-invalid' 
                             : detailConfig.css_class.input ?? '' 
                         : detailConfig.css_class.input ?? ''" -->
+        <ng-template #input>
+          <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
+            [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
+            [formControlName]="config.name" [attr.type]="detailConfig.type"
+            [attr.value]="detailConfig.type === 'number' ? 0 : ''" [attr.min]="detailConfig.type==='range' ? 0 : null"
+            [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null"
+            [attr.readonly]="detailConfig.readonly">
+        </ng-template>
 
-        <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
-          [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
-          [formControlName]="config.name" [attr.type]="detailConfig.type"
-          [attr.min]="detailConfig.type==='range' ? 0 : null" [attr.max]="detailConfig.type==='range' ? 100: null"
-          [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
+        <ng-template #inputForNumber>
+          <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
+            [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
+            [formControlName]="config.name" type="number" [attr.value]="detailConfig.type === 'number' ? 0 : ''"
+            [attr.min]="detailConfig.type==='range' ? 0 : null" [attr.max]="detailConfig.type==='range' ? 100: null"
+            [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
+        </ng-template>
+
+        <ng-container [ngTemplateOutlet]="detailConfig.type === 'number' ?  inputForNumber : input"></ng-container>
 
         <div *ngIf="config.validation_fn && group.controls[config.name].touched">
 
