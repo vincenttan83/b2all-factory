@@ -144,4 +144,8 @@ export class DynamicFormComponent implements OnChanges {
     this.formGroup.markAsUntouched();
   }
 
+  formReset(): void {
+    this.formGroup.reset();
+  }
+
 }
