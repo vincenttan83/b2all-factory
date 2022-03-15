@@ -1,13 +1,9 @@
 // tslint:disable: max-line-length
-import { AfterViewInit, Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { getValidators } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
-import { EDivConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/div-config-type.enum';
 import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-input-type.enum';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
 import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums/form-validator.enum';
-import { IDivConfigForForm } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-form.interface';
-import { IDivConfigForHeadings } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config-for-headings.interface';
-import { IDivConfig } from 'projects/dynamic-form/src/lib/dynamic-form/interfaces/div-config.interface';
 import { DynamicFormComponent as dfComponent, DynamicSectionComponent, IFieldConfig } from 'projects/dynamic-form/src/public-api';
 import { cs } from 'src/app/country-state';
 
@@ -17,11 +13,6 @@ import { cs } from 'src/app/country-state';
   styleUrls: ['./dynamic-form.component.sass'],
 })
 export class DynamicFormComponent implements OnInit {
-  sectionConfigs = new Array<
-    IDivConfig<IDivConfigForHeadings | IDivConfigForForm>
-  >(2);
-
-  @ViewChild('dynamicSection') dynamicSection!: DynamicSectionComponent;
   @ViewChild('dynamicForm') dfComponent!: dfComponent;
 
   formDesign: IFieldConfig[] = [];
@@ -56,14 +47,6 @@ export class DynamicFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.sectionConfigs[0] = {
-      content: {
-        text: 'Profile info',
-        class: 'h3',
-      },
-      type: EDivConfigType.Headings,
-    };
-
     this.formDesign = [
       {
         name: 'full_name',
@@ -386,22 +369,6 @@ export class DynamicFormComponent implements OnInit {
         css_class: 'col-12',
       },
     ];
-
-    this.sectionConfigs[1] = this.myTemplateWithData(this.savedData);
-  }
-
-
-  myTemplateWithData(
-    data: any
-  ): IDivConfig<IDivConfigForForm> {
-    return {
-      content: {
-        form_unique_name: 'form01',
-        form_design: this.formDesign,
-        saved_data: data,
-      },
-      type: EDivConfigType.Form,
-    };
   }
 
   async formOnSubmit(formValue: any): Promise<void> {
@@ -418,7 +385,6 @@ export class DynamicFormComponent implements OnInit {
 
   async dynamicFormOnSubmit(formValue: any): Promise<void> {
     console.log(formValue);
-
   }
 
   reset(): void {

@@ -408,7 +408,7 @@ export class DynamicSectionComponent implements OnInit {
     this.isLoadingSubjects[val.button_index].next(false);
   }
 
-  async sleep(time: number) {
+  async sleep(time: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
 }
