@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AsyncValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 import { DynamicFormGenerator } from '../classes/dynamic-form-generator.class';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
 import { IFieldConfig } from '../interfaces/field-config.interface';
