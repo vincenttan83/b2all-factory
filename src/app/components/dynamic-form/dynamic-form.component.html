@@ -1,5 +1,11 @@
 <h1>Dynamic Sections</h1>
 
-<b2all-dynamic-section [inputSectionConfigs]="sectionConfigs" (outputFormSubmitEvent)="formOnSubmit($event)"
-    (outputFormChangeEvent)="formOnChange($event)">
+<b2all-dynamic-section #dynamicSection [inputSectionConfigs]="sectionConfigs"
+    (outputFormSubmitEvent)="formOnSubmit($event)" (outputFormChangeEvent)="formOnChange($event)">
 </b2all-dynamic-section>
+
+<h1>Dynamic Form</h1>
+<b2all-dynamic-form #dynamicForm [inputFormConfigs]="formDesign" [inputFormName]="'form_name'"
+    [inputSavedData]="savedData" (formOnSubmit)="dynamicFormOnSubmit($event)">
+</b2all-dynamic-form>
+<button class="btn btn-sm btn-primary" (click)="reset()">Mark pristine</button>
