@@ -2,7 +2,10 @@
   <div [ngClass]="detailConfig.css_class.group">
     <button [ngClass]="detailConfig.css_class.button" [attr.type]="detailConfig.type" (click)="startLoader()"
       [disabled]="group.invalid || show">
-      {{ show ? 'Please wait...' : config.display_text }}
+      <div *ngIf="show" [ngClass]="detailConfig.css_class.spinner ?? 'spinner-border spinner-border-sm text-white'"
+        role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>{{ show ? detailConfig.loading_text ?? 'Please wait...' : config.display_text }}
     </button>
   </div>
 </div>

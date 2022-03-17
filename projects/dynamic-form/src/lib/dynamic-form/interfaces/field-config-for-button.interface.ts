@@ -9,9 +9,11 @@ export interface IFieldConfigForButtonConfig extends IFieldConfigBased {
 export interface IButtonConfig {
     type: 'button' | 'submit'; // reset should be just refresh the page
     onclick_fn?: () => Promise<void>;
+    loading_text?: string;
     css_class: {
         group: string;
         button: string;
+        spinner?: string;
     };
 }
 
