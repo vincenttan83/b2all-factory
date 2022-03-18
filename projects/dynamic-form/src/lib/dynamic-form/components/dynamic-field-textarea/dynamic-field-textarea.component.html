@@ -1,6 +1,6 @@
 <div [formGroup]="group">
     <div [ngClass]="detailConfig.css_class.group">
-        <label [ngClass]="detailConfig.css_class.input_label"
+        <label *ngIf="!detailConfig.placeholder" [ngClass]="detailConfig.css_class.input_label"
             [attr.for]="generateId(formName, config.name, arrayIndex) + 'textarea'">{{
             config.display_text
             }}</label>
@@ -14,7 +14,8 @@
                             : detailConfig.css_class.input 
                         : detailConfig.css_class.input"
             [attr.id]="generateId(formName, config.name, arrayIndex) + 'textarea'" [formControlName]="config.name"
-            [attr.rows]="detailConfig.row_count" [attr.cols]="detailConfig.col_count">
+            [attr.rows]="detailConfig.row_count" [attr.cols]="detailConfig.col_count"
+            [placeholder]="detailConfig.placeholder ?? ''">
         </textarea>
         <div *ngIf="config.validation_fn && group.controls[config.name].touched">
 
