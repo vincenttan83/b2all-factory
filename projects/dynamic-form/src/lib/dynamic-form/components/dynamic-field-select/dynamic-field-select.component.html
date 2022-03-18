@@ -1,7 +1,7 @@
 <div class="row" [formGroup]="group">
 
     <div [ngClass]="detailConfig.css_class.group" *ngFor="let control of detailConfig.controls; index as i;">
-        <label *ngIf="control.label" [ngClass]="detailConfig.css_class.select_label"
+        <label *ngIf="control.label && !control.placeholder" [ngClass]="detailConfig.css_class.select_label"
             [attr.for]="generateId(formName, config.name, arrayIndex) + 'select'">{{
             control.label
             }}</label>
@@ -14,10 +14,10 @@
                             : detailConfig.css_class.select 
                         : detailConfig.css_class.select"
             [attr.id]="generateId(formName, config.name, arrayIndex) + 'select'"
-            [attr.aria-label]="'Select ' + control.label" [formControlName]="control.name"
+            [attr.aria-label]="'Select ' + (control.placeholder ? control.placeholder : control.label)" [formControlName]="control.name"
             (change)="onChange($event, i)">
 
-            <option [value]="''">Select {{ control.label.toLowerCase() }}</option>
+            <option [value]="''">Select {{ control.placeholder ? control.placeholder : control.label }}</option>
 
             <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]">
                 {{ choice[control.key_field] }}
