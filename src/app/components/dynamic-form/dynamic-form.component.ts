@@ -221,6 +221,7 @@ export class DynamicFormComponent implements OnInit {
                   { key: '9 Months of 5k KM', value: '0.75' },
                   { key: '12 Months of 5k KM', value: '1' },
                 ],
+                // placeholder: 'Select',
                 css_class: {
                   group: 'form-check form-check-inline',
                   group_label: '',
@@ -280,6 +281,7 @@ export class DynamicFormComponent implements OnInit {
             input: 'form-control',
             input_label: 'mb-1',
           },
+          placeholder: 'About yourself',
         },
         css_class: 'col-12',
       },
@@ -368,6 +370,40 @@ export class DynamicFormComponent implements OnInit {
         },
         css_class: 'col-12',
       },
+      {
+        name: 'addresses',
+        display_text: 'Address list',
+        type: EFieldConfigType.Array,
+        type_config: {
+          table_column_names: ['Address'],
+          enable_default_options: [
+            {
+              key: 'Billing and invoice address',
+              value: 'is_billing_and_invoice_address',
+            },
+            { key: 'Delivery address', value: 'is_delivery_address' },
+          ],
+          field_configs: [
+            {
+              name: 'address',
+              type: EFieldConfigType.Object,
+              type_config: {
+                field_configs: [
+                  ...templateAddress(undefined, [], 6, 8),
+                ],
+                css_class: { group_label: '', content: '' },
+              },
+            },
+          ],
+          css_class: {
+            add_button: 'btn btn-sm btn-primary',
+            del_button: 'btn btn-sm btn-danger',
+            group: '',
+            group_label: 'h4',
+            label: '',
+          },
+        },
+      }
     ];
   }
 
@@ -392,4 +428,102 @@ export class DynamicFormComponent implements OnInit {
     this.dfComponent.markAsPristine();
     this.dfComponent.markAsUntouched();
   }
+}
+
+export function templateAddress(readOnly: boolean | undefined, dataset: any, comboBoxSize: number = 6, sectionSize: number = 12): IFieldConfig[] {
+  return [
+    ...templateStreet(readOnly),
+    templateCountryState(readOnly, dataset, comboBoxSize, sectionSize),
+    templatePostcode(readOnly),
+    templateCity(readOnly),
+  ];
+}
+
+export function templateStreet(readOnly: boolean | undefined): IFieldConfig[] {
+  return [
+    {
+      name: 'address1',
+      display_text: `Address 1:`,
+      type: EFieldConfigType.Input,
+      // validation_fn: getValidators([{ type: EFormValidator.Required }]),
+      disabled: readOnly,
+      type_config: {
+        readonly: readOnly,
+        type: EFieldConfigInputType.Text,
+        list: false,
+        css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+        placeholder: 'Address 1',
+      },
+      css_class: 'col-md-12'
+    },
+    {
+      name: 'address2',
+      display_text: `Address 2:`,
+      type: EFieldConfigType.Input,
+      disabled: readOnly,
+      type_config: {
+        readonly: readOnly,
+        type: EFieldConfigInputType.Text,
+        list: false,
+        css_class: { group: 'form-group mb-3', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+        placeholder: 'Address 2',
+      },
+      css_class: 'col-md-12'
+    },
+  ];
+};
+
+export function templatePostcode(readOnly: boolean | undefined): IFieldConfig {
+  return {
+    name: 'postcode',
+    display_text: `Post code:`,
+    type: EFieldConfigType.Input,
+    // validation_fn: getValidators([{ type: EFormValidator.Required }]),
+    disabled: readOnly,
+    type_config: {
+      readonly: readOnly,
+      type: EFieldConfigInputType.Number,
+      list: false,
+      css_class: { group: 'form-group', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+      // placeholder: 'Post code',
+    },
+    css_class: 'col-md-6'
+  };
+}
+
+export function templateCity(readOnly: boolean | undefined): IFieldConfig {
+  return {
+    name: 'city',
+    display_text: `City:`,
+    type: EFieldConfigType.Input,
+    // validation_fn: getValidators([{ type: EFormValidator.Required }]),
+    disabled: readOnly,
+    type_config: {
+      readonly: readOnly,
+      type: EFieldConfigInputType.Text,
+      list: false,
+      css_class: { group: 'form-group', group_label: '', input: 'form-control form-control-sm', input_label: 'mb-1 small' },
+      // placeholder: 'City',
+    },
+    css_class: 'col-md-6'
+  };
+}
+
+
+export function templateCountryState(readOnly: boolean | undefined, dataset: any, comboBoxSize: number = 6, sectionSize: number = 12): IFieldConfig {
+  return {
+    name: 'country_selection',
+    type: EFieldConfigType.Select,
+    type_config: {
+      dataset,
+      controls: [
+        {
+          name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: '', placeholder: 'Country', validation_fn: getValidators([{ type: EFormValidator.Required }]), disabled: readOnly,
+        },
+        { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: '',  placeholder: 'State', disabled: readOnly, },
+      ],
+      css_class: { group: `col-md-6 mb-3`, select: 'form-select form-select-sm', select_label: 'mb-1 small' }
+    },
+    css_class: `col-md-12`
+  };
 }

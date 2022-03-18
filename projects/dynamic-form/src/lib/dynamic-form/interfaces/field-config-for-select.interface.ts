@@ -16,12 +16,13 @@ export interface ISelectConfig {
     dataset: IMultiSelect[];
     controls: {
         name: string;
-        label: string;
+        label?: string;
         key_field: string;
         value_field: string;
         value: string | null;
         validation_fn?: ValidatorFn[];
         disabled?: boolean;
+        placeholder?: string;
     }[];
     css_class: {
         group: string;

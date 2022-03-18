@@ -14,6 +14,7 @@ export interface ITextareaConfig {
         input_label: string;
         input: string;
     };
+    placeholder?: string;
 }
 
 export function isFieldConfigForTextareaConfig(obj: any): obj is IFieldConfigForTextareaConfig {

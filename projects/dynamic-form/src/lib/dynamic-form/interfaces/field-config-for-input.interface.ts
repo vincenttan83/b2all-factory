@@ -21,6 +21,7 @@ export interface IInputConfig {
         input_label: string;
         input: string;
     };
+    placeholder?: string;
 }
 
 export function isFieldConfigForInputConfig(obj: any): obj is IFieldConfigForInputConfig {

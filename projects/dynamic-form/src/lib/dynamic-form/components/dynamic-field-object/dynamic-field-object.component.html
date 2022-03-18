@@ -1,8 +1,10 @@
 <div [formGroup]="group">
     <p *ngIf="config.display_text" [ngClass]="detailConfig.css_class.group_label">{{ config.display_text }}</p>
 
-    <div *ngFor="let field of detailConfig.field_configs" [ngClass]="detailConfig.css_class.content">
-        <ng-container b2allDynamicField [config]="field" [group]="theSubGroup" [formName]="formName">
-        </ng-container>
+    <div class="row">
+        <div *ngFor="let field of detailConfig.field_configs" [ngClass]="field.css_class ?? ''">
+            <ng-container b2allDynamicField [config]="field" [group]="theSubGroup" [formName]="formName">
+            </ng-container>
+        </div>
     </div>
 </div>
