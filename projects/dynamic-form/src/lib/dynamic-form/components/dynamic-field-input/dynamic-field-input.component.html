@@ -28,7 +28,7 @@
     <ng-container *ngIf="detailConfig.type !== 'checkbox'; else nonListInputForCheckbox">
       <div [ngClass]="detailConfig.css_class.group">
 
-        <label *ngIf="config.display_text" [ngClass]="detailConfig.css_class.input_label"
+        <label *ngIf="config.display_text && !detailConfig.placeholder" [ngClass]="detailConfig.css_class.input_label"
           [attr.for]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'">{{
           config.display_text }}</label>
 
@@ -73,7 +73,7 @@
             [formControlName]="config.name" [attr.type]="detailConfig.type"
             [attr.value]="detailConfig.type === 'number' ? 0 : ''" [attr.min]="detailConfig.type==='range' ? 0 : null"
             [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null"
-            [attr.readonly]="detailConfig.readonly">
+            [attr.readonly]="detailConfig.readonly" [placeholder]="detailConfig.placeholder ?? ''">
         </ng-template>
 
         <ng-template #inputForNumber>
@@ -81,7 +81,8 @@
             [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
             [formControlName]="config.name" type="number" [attr.value]="detailConfig.type === 'number' ? 0 : ''"
             [attr.min]="detailConfig.type==='range' ? 0 : null" [attr.max]="detailConfig.type==='range' ? 100: null"
-            [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly">
+            [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly"
+            [placeholder]="detailConfig.placeholder ?? ''">
         </ng-template>
 
         <ng-container [ngTemplateOutlet]="detailConfig.type === 'number' ?  inputForNumber : input"></ng-container>
