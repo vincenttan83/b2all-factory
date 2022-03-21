@@ -275,6 +275,7 @@ export class DynamicFormComponent implements OnInit {
           { type: EFormValidator.MinCount, param: 10 },
         ]),
         type_config: {
+          readonly: true,
           row_count: 10,
           css_class: {
             group: 'form-group mb-3',
