@@ -15,7 +15,8 @@
                         : detailConfig.css_class.input"
             [attr.id]="generateId(formName, config.name, arrayIndex) + 'textarea'" [formControlName]="config.name"
             [attr.rows]="detailConfig.row_count" [attr.cols]="detailConfig.col_count"
-            [placeholder]="detailConfig.placeholder ?? ''">
+            [placeholder]="detailConfig.placeholder ?? ''"
+            [attr.disabled]="config.disabled" [readonly]="detailConfig.readonly">
         </textarea>
         <div *ngIf="config.validation_fn && group.controls[config.name].touched">
 
