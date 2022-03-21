@@ -9,6 +9,7 @@ export interface IFieldConfigForTextareaConfig extends IFieldConfigBased {
 export interface ITextareaConfig {
     row_count: number;
     col_count?: number;
+    readonly?: boolean;
     css_class: {
         group: string;
         input_label: string;
