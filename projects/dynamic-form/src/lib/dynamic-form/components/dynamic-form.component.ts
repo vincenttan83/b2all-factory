@@ -157,7 +157,7 @@ export class DynamicFormComponent implements OnChanges {
           fa.clear();
           // create the from group again, this will return 
           // a form group with form array and each item in the array is a form group (3 level down!)
-          const fg = this.dfg.createFormGroup([element], null, this.inputSavedData, 1);
+          const fg = this.dfg.createFormGroup([element], null, value, 1);
           (fg.controls[element.name] as FormArray).controls.forEach(newFg => {
             // catch the lowest level array item (the form group) and push to the form array
             fa.push(newFg);
