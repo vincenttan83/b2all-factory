@@ -425,9 +425,9 @@ export class DynamicFormComponent implements OnInit {
   }
 
   reset(): void {
-    this.dfComponent.formReset();
-    this.dfComponent.markAsPristine();
-    this.dfComponent.markAsUntouched();
+    this.dfComponent.formReset(this.savedData);
+    // this.dfComponent.markAsPristine();
+    // this.dfComponent.markAsUntouched();
   }
 }
 
