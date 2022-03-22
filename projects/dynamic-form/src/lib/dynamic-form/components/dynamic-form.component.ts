@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AsyncValidatorFn, FormBuilder, FormGroup } from '@angular/forms';
+import { AsyncValidatorFn, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DynamicFormGenerator } from '../classes/dynamic-form-generator.class';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
@@ -144,8 +144,27 @@ export class DynamicFormComponent implements OnChanges {
     this.formGroup.markAsUntouched();
   }
 
-  formReset(): void {
-    this.formGroup.reset();
+  formReset(value?: any): void {
+    if (value) {
+      // generally reset once first
+      this.formGroup.reset(value);
+      // iterate the configuration of fields to check if there is any array field type array
+      this.inputFormConfigs.forEach(element => {
+        if (element.type === EFieldConfigType.Array) {
+          // snap as a variable for control later
+          const fa = (this.formGroup.controls[element.name] as FormArray);
+          // do a clean up, this will remove all rows
+          fa.clear();
+          // create the from group again, this will return 
+          // a form group with form array and each item in the array is a form group (3 level down!)
+          const fg = this.dfg.createFormGroup([element], null, this.inputSavedData, 1);
+          (fg.controls[element.name] as FormArray).controls.forEach(newFg => {
+            // catch the lowest level array item (the form group) and push to the form array
+            fa.push(newFg);
+          });
+        }
+      });
+    }
   }
 
 }

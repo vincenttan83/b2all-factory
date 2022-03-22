@@ -1,4 +1,4 @@
-import { ValidatorFn, FormGroup, FormBuilder, FormControl, AsyncValidatorFn } from '@angular/forms';
+import { ValidatorFn, FormGroup, FormBuilder, FormControl, AsyncValidatorFn, FormArray } from '@angular/forms';
 import { EFieldConfigInputType } from '../enums/field-config-input-type.enum';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
 import { isFieldConfigForArrayConfig, IArrayConfig } from '../interfaces/field-config-for-array.interface';
@@ -115,7 +115,7 @@ export class DynamicFormGenerator {
               }
             }
 
-            const arrayConfigs: any[] = [];
+            const arrayConfigs: FormGroup[] = [];
             // if having saved data?
             if (savedDatas && savedDatas[element.name]) {
               // iterate thru the saved data row
@@ -132,11 +132,7 @@ export class DynamicFormGenerator {
             }
 
             // since it's an array, it should be an object as the property
-            let subGroup;
-            subGroup = this.privateFormBuilder.array(
-              arrayConfigs,
-              element.validation_fn
-            );
+            const subGroup: FormArray = new FormArray(arrayConfigs, element.validation_fn);
             group.addControl(element.name, subGroup);
             break;
           }
