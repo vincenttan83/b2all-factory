@@ -42,6 +42,16 @@ export class DynamicFormComponent implements OnInit {
     favorite_food: ['apples', 'damson_plum', 'bananas'],
     age_group: 'young_adults',
     agreement: true,
+    addresses: [
+      {
+        address: {
+          country: 'malaysia',
+          state: 'selangor'
+        },
+        is_billing_and_invoice_address: false,
+        is_delivery_address: false
+      }
+    ]
   };
 
   constructor() { }
@@ -390,7 +400,7 @@ export class DynamicFormComponent implements OnInit {
               type: EFieldConfigType.Object,
               type_config: {
                 field_configs: [
-                  ...templateAddress(undefined, [], 6, 8),
+                  ...templateAddress(undefined, cs, 6, 8),
                 ],
                 css_class: { group_label: '', content: '' },
               },
@@ -422,6 +432,7 @@ export class DynamicFormComponent implements OnInit {
 
   async dynamicFormOnSubmit(formValue: any): Promise<void> {
     console.log(formValue);
+    this.reset()
   }
 
   reset(): void {
@@ -521,7 +532,7 @@ export function templateCountryState(readOnly: boolean | undefined, dataset: any
         {
           name: 'country', label: 'Country', key_field: 'key', value_field: 'value', value: '', placeholder: 'Country', validation_fn: getValidators([{ type: EFormValidator.Required }]), disabled: readOnly,
         },
-        { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: '',  placeholder: 'State', disabled: readOnly, },
+        { name: 'state', label: 'State', key_field: 'key', value_field: 'value', value: '', placeholder: 'State', disabled: readOnly, },
       ],
       css_class: { group: `col-md-6 mb-3`, select: 'form-select form-select-sm', select_label: 'mb-1 small' }
     },

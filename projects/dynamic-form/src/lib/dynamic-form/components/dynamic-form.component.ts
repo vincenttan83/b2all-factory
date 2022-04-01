@@ -125,7 +125,7 @@ export class DynamicFormComponent implements OnChanges {
           const newFormValueCleanForUndefinedObject: { [keys: string]: any } = {};
           newFormValueCleanForUndefined = {
             ...newFormValueCleanForUndefined,
-            [fieldName]: this.removedUndefined(objectWithValue[fieldName], newFormValueCleanForUndefinedObject)
+            [fieldName]: this.removedUndefined(objectWithValue[fieldName] ?? {}, newFormValueCleanForUndefinedObject)
           };
         }
 
