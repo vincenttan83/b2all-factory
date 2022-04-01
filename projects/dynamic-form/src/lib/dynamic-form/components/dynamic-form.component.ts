@@ -149,8 +149,8 @@ export class DynamicFormComponent implements OnChanges {
       // generally reset once first
       this.formGroup.reset(value);
       // iterate the configuration of fields to check if there is any array field type array
-      Object.keys(value).forEach(key => {
-        if (Array.isArray(value[key])) {
+      Object.keys(this.formGroup.value).forEach(key => {
+        if (Array.isArray(this.formGroup.value[key])) {
           // snap as a variable for control later
           const fa = (this.formGroup.controls[key] as FormArray);
           // do a clean up, this will remove all rows
