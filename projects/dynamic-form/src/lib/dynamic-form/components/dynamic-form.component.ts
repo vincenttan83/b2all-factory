@@ -149,21 +149,36 @@ export class DynamicFormComponent implements OnChanges {
       // generally reset once first
       this.formGroup.reset(value);
       // iterate the configuration of fields to check if there is any array field type array
-      this.inputFormConfigs.forEach(element => {
-        if (element.type === EFieldConfigType.Array) {
+      Object.keys(value).forEach(key => {
+        if (Array.isArray(value[key])) {
           // snap as a variable for control later
-          const fa = (this.formGroup.controls[element.name] as FormArray);
+          const fa = (this.formGroup.controls[key] as FormArray);
           // do a clean up, this will remove all rows
           fa.clear();
           // create the from group again, this will return 
           // a form group with form array and each item in the array is a form group (3 level down!)
-          const fg = this.dfg.createFormGroup([element], null, value, 1);
-          (fg.controls[element.name] as FormArray).controls.forEach(newFg => {
+          const fg = this.dfg.createFormGroup(this.inputFormConfigs.filter(i => i.name === key) ?? [], null, value, 1);
+          (fg.controls[key] as FormArray).controls.forEach(newFg => {
             // catch the lowest level array item (the form group) and push to the form array
             fa.push(newFg);
           });
         }
       });
+      // this.inputFormConfigs.forEach(element => {
+      //   if (element.type === EFieldConfigType.Array) {
+      //     // snap as a variable for control later
+      //     const fa = (this.formGroup.controls[element.name] as FormArray);
+      //     // do a clean up, this will remove all rows
+      //     fa.clear();
+      //     // create the from group again, this will return 
+      //     // a form group with form array and each item in the array is a form group (3 level down!)
+      //     const fg = this.dfg.createFormGroup([element], null, value, 1);
+      //     (fg.controls[element.name] as FormArray).controls.forEach(newFg => {
+      //       // catch the lowest level array item (the form group) and push to the form array
+      //       fa.push(newFg);
+      //     });
+      //   }
+      // });
     }
   }
 
