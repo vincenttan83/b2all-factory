@@ -17,9 +17,11 @@
             [attr.aria-label]="'Select ' + (control.placeholder ? control.placeholder : control.label)" [formControlName]="control.name"
             (change)="onChange($event, i)">
 
-            <option [value]="''">Select {{ control.placeholder ? control.placeholder : control.label }}</option>
+            <option [value]="''" [disabled]="control.disabled ?? false">Select {{ control.placeholder ?
+                control.placeholder : control.label }}</option>
 
-            <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]">
+            <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]"
+                [disabled]="group.controls[control.name].value !== choice[control.value_field] ? control.disabled ?? false : false">
                 {{ choice[control.key_field] }}
             </option>
 

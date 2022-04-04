@@ -256,6 +256,7 @@ export class DynamicFormComponent implements OnInit {
                     key_field: 'key',
                     value_field: 'value',
                     value: '',
+                    disabled: true,
                   },
                 ],
                 css_class: {
