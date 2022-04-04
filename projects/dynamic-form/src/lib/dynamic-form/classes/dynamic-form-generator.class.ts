@@ -325,7 +325,7 @@ export class DynamicFormGenerator {
               group.addControl(
                 elementControl.name,
                 this.createControl2(
-                  elementControl.disabled,
+                  false,
                   elementControl.validation_fn,
                   elementControl.value,
                   element.async_validation_fn
