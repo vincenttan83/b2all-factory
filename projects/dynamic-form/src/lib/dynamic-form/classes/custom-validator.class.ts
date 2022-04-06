@@ -1,13 +1,14 @@
 import { AbstractControl, FormArray, ValidatorFn, Validators } from '@angular/forms';
 import { EFormValidator } from '../enums/form-validator.enum';
 import { ICustomFormConfigValidator } from '../interfaces/custom-form-config-validator.interface';
+import { IMultiSelect } from '../interfaces/multi-select.interface';
 
-export function requireCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
+export function requireMinCheckboxesToBeCheckedValidator(minRequired = 1): ValidatorFn {
     return (control: AbstractControl) => {
         const checked = (control as FormArray).length;
 
         if (checked < minRequired) {
-            return { minChecked: { requiredLength: minRequired, checkedLenght: checked } };
+            return { message: `At least ${minRequired} checked required. ${(minRequired - checked)} more to go.` };
         }
 
         return null;
@@ -19,19 +20,19 @@ export function requireMaxCheckboxesToBeCheckedValidator(maxRequired = 1): Valid
         const checked = (control as FormArray).length;
 
         if (checked > maxRequired) {
-            return { maxChecked: { requiredLength: maxRequired, checkedLenght: checked } };
+            return { message: `Max support ${maxRequired} checked. Over ${(checked - maxRequired)} checked detected.` };
         }
 
         return null;
     };
 }
 
-export function requiredWordCountValidator(minRequired = 1): ValidatorFn {
+export function requiredMinWordCountValidator(minRequired = 1): ValidatorFn {
     return (control: AbstractControl) => {
         if (control.value) {
             const count = (control.value as string).split(' ').length;
             if (count < minRequired) {
-                return { minCount: { requiredCount: minRequired, checkedCount: count } };
+                return { message: `At least ${minRequired} words required. ${(minRequired - count)} more word(s) to go.` };
             }
         }
         return null;
@@ -43,12 +44,41 @@ export function requiredMaxWordCountValidator(maxRequired = 1): ValidatorFn {
         if (control.value) {
             const count = (control.value as string).split(' ').length;
             if (count > maxRequired) {
-                return { maxCount: { requiredCount: maxRequired, checkedCount: count } };
+                return { message: `Max support ${maxRequired} words. Over ${(count - maxRequired)} word(s) detected.` };
             }
         }
         return null;
     };
 }
+
+export const valueExistValidator = (keys: string[], datasets: IMultiSelect[]): ValidatorFn => {
+    return (control: AbstractControl) => {
+        if (control.value) {
+            if (keys.length > 0) {
+                const a = recursiveMultiselectFind(control.value, keys, datasets, 0);
+                return a;
+            }
+        }
+        return null;
+    };
+};
+
+const recursiveMultiselectFind =
+    (controlValue: { [s: string]: any }, keys: string[], datasets: IMultiSelect[], index: number)
+        : { [s: string]: any } | null => {
+        const found = datasets?.find(data => {
+            return data.value === controlValue[keys[index]];
+        });
+        if (!found) {
+            return { message: `Invalid ${keys[index]}`, field_name: keys[index] };
+        }
+        if (keys.length - 1 === index) {
+            return null;
+        } else {
+            // tslint:disable-next-line: no-non-null-assertion
+            return recursiveMultiselectFind(controlValue, keys.slice(0), found.children!, index + 1);
+        }
+    };
 
 function getValidatorConfigErrorMessage(whatToValidate: string): string {
     return `${whatToValidate} validator required a number param value to be validated!`;
@@ -104,7 +134,7 @@ export function getValidators(choice: ICustomFormConfigValidator[]): ValidatorFn
             }
             case EFormValidator.MinChecked: {
                 if (element.param) {
-                    validatorFunctions.push(requireCheckboxesToBeCheckedValidator(element.param));
+                    validatorFunctions.push(requireMinCheckboxesToBeCheckedValidator(element.param));
                     break;
                 } else {
                     throw new Error(getValidatorConfigErrorMessage('Min checked'));
@@ -120,7 +150,7 @@ export function getValidators(choice: ICustomFormConfigValidator[]): ValidatorFn
             }
             case EFormValidator.MinCount: {
                 if (element.param) {
-                    validatorFunctions.push(requiredWordCountValidator(element.param));
+                    validatorFunctions.push(requiredMinWordCountValidator(element.param));
                     break;
                 } else {
                     throw new Error(getValidatorConfigErrorMessage('Min count'));
@@ -132,6 +162,14 @@ export function getValidators(choice: ICustomFormConfigValidator[]): ValidatorFn
                     break;
                 } else {
                     throw new Error(getValidatorConfigErrorMessage('Max count'));
+                }
+            }
+            case EFormValidator.ValueExist: {
+                if (element) {
+                    validatorFunctions.push(valueExistValidator(element.param.keys, element.param.datasets));
+                    break;
+                } else {
+                    throw new Error(`Validator Error`);
                 }
             }
         }

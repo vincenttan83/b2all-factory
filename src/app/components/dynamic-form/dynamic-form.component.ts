@@ -111,6 +111,9 @@ export class DynamicFormComponent implements OnInit {
       {
         name: 'country_selection',
         type: EFieldConfigType.Select,
+        validation_fn: getValidators([
+          { type: EFormValidator.ValueExist, param: { keys: ['country', 'state', 'city'], datasets: cs } },
+        ]),
         type_config: {
           dataset: cs,
           controls: [
@@ -120,6 +123,7 @@ export class DynamicFormComponent implements OnInit {
               key_field: 'key',
               value_field: 'value',
               value: '',
+              type: 'datalist',
               validation_fn: getValidators([
                 { type: EFormValidator.Required },
               ]),
@@ -130,6 +134,7 @@ export class DynamicFormComponent implements OnInit {
               key_field: 'key',
               value_field: 'value',
               value: '',
+              type: 'datalist',
             },
             {
               name: 'city',
@@ -137,11 +142,12 @@ export class DynamicFormComponent implements OnInit {
               key_field: 'key',
               value_field: 'value',
               value: '',
+              type: 'datalist',
             },
           ],
           css_class: {
             group: 'col-12 col-lg-4 mb-3',
-            select: 'form-select',
+            select: 'form-control',
             select_label: 'mb-1',
           },
         },

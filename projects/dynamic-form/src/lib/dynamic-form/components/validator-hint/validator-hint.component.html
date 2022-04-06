@@ -12,7 +12,18 @@
     length.</small>
 
 
-<small *ngIf="validation?.minChecked" class="text-danger ms-1">
+<small *ngIf="validation?.min" class="text-danger ms-1">
+    &gt;= {{validation?.min?.min}}.</small>
+<small *ngIf="validation?.max" class="text-danger ms-1">
+    &lt;= {{validation?.max?.max}}.</small>
+
+<!-- Custom Validator -->
+<small *ngIf="validation?.message" class="text-danger ms-1">
+    {{validation?.message}}
+</small>
+
+
+<!-- <small *ngIf="validation?.minChecked" class="text-danger ms-1">
     At least {{validation?.minChecked?.requiredLength}} checked required. {{ (validation?.minChecked?.requiredLength -
     validation?.minChecked?.checkedLenght) }} more to go.
 </small>
@@ -29,13 +40,9 @@
 <small *ngIf="validation?.maxCount" class="text-danger ms-1">
     Max support {{validation?.maxCount?.requiredCount}} words. Over {{ (validation?.maxCount?.checkedCount -
     validation?.maxCount?.requiredCount) }} word(s) detected.
-</small>
+</small> -->
 
 
-<small *ngIf="validation?.min" class="text-danger ms-1">
-    &gt;= {{validation?.min?.min}}.</small>
-<small *ngIf="validation?.max" class="text-danger ms-1">
-    &lt;= {{validation?.max?.max}}.</small>
 
-<small *ngIf="validation?.customError" class="text-danger ms-1">
-    {{ validation?.customError }}</small>
+<!-- <small *ngIf="validation?.customError" class="text-danger ms-1">
+    {{ validation?.customError }}</small> -->

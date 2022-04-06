@@ -25,11 +25,8 @@ export class DynamicFieldSelectService {
     //   this.theLatestDatabase = { ...this.theLatestDatabase, ['selected_value_' + i]: theSaveValues[i] };
     // }
 
-    let i = 0;
-
-    for (const element of theSaveValues) {
+    for (const [i, element] of theSaveValues.entries()) {
       this.theLatestDatabase = { ...this.theLatestDatabase, ['key_value_pair_' + i]: this.getSelection(originalDatabase, i), ['selected_value_' + i]: element };
-      i += 1;
       if (!element) { break; }
     }
 

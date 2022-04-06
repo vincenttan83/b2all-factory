@@ -5,33 +5,52 @@
             [attr.for]="generateId(formName, config.name, arrayIndex) + 'select'">{{
             control.label
             }}</label>
-        <select [ngClass]="
-                        control.validation_fn ? 
-                            group.controls[control.name].touched ? 
-                                group.controls[control.name].valid ? 
-                                    detailConfig.css_class.select ? detailConfig.css_class.select + ' is-valid' : 'is-valid' 
-                                : detailConfig.css_class.select ? detailConfig.css_class.select + ' is-invalid': 'is-invalid' 
-                            : detailConfig.css_class.select 
-                        : detailConfig.css_class.select"
-            [attr.id]="generateId(formName, config.name, arrayIndex) + 'select'"
-            [attr.aria-label]="'Select ' + (control.placeholder ? control.placeholder : control.label)" [formControlName]="control.name"
-            (change)="onChange($event, i)">
-
-            <option [value]="''" [disabled]="control.disabled ?? false">Select {{ control.placeholder ?
-                control.placeholder : control.label }}</option>
-
-            <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]"
-                [disabled]="group.controls[control.name].value !== choice[control.value_field] ? control.disabled ?? false : false">
-                {{ choice[control.key_field] }}
-            </option>
-
-        </select>
-
+        <ng-container [ngTemplateOutlet]="control.type === 'datalist' ? datalistTemplate : selectTemplate"
+            [ngTemplateOutletContext]="{control:control, i:i}">
+        </ng-container>
         <div *ngIf="control.validation_fn && group.controls[control.name].touched">
             <b2all-validator-hint *ngIf="group.controls[control.name].errors"
                 [validation]="group.controls[control.name].errors"></b2all-validator-hint>
         </div>
-
     </div>
-
 </div>
+
+<ng-template #selectTemplate let-control="control" let-i="i" [formGroup]="group">
+    <select [ngClass]="
+    control.validation_fn ? 
+        group.controls[control.name].touched ? 
+            group.controls[control.name].valid ? 
+                detailConfig.css_class.select ? detailConfig.css_class.select + ' is-valid' : 'is-valid' 
+            : detailConfig.css_class.select ? detailConfig.css_class.select + ' is-invalid': 'is-invalid' 
+        : detailConfig.css_class.select 
+    : detailConfig.css_class.select" [attr.id]="generateId(formName, config.name, arrayIndex) + 'select'"
+        [attr.aria-label]="'Select ' + (control.placeholder ? control.placeholder : control.label)"
+        [formControlName]="control.name" (change)="onChange($event, i)">
+
+
+        <option [value]="''" [disabled]="control.disabled ?? false">Select {{ control.placeholder ?
+            control.placeholder : control.label }}</option>
+
+        <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]"
+            [disabled]="group.controls[control.name].value !== choice[control.value_field] ? control.disabled ?? false : false">
+            {{ choice[control.key_field] }}
+        </option>
+
+    </select>
+</ng-template>
+
+<ng-template #datalistTemplate let-control="control" let-i="i" [formGroup]="group">
+    <input type="text" [id]="generateId(formName, control.name, arrayIndex) + 'select'"
+        [ngClass]="getCssClasses(group.controls[control.name].touched, (group.controls[control.name].valid && !(control.name === group.errors?.field_name)))"
+        [formControlName]="control.name" [attr.list]="generateId(formName, control.name, arrayIndex) + 'datalist'"
+        [placeholder]="'Select ' + (control.placeholder ? control.placeholder : control.label)"
+        [readonly]="control.readonly" (change)="onChange($event, i)">
+
+    <ng-container *ngIf="group.controls[control.name].touched && control.name === group.errors?.field_name">
+        <b2all-validator-hint [validation]="group.errors"></b2all-validator-hint>
+    </ng-container>
+    <datalist [id]="generateId(formName, control.name, arrayIndex) + 'datalist'">
+        <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]"
+            [label]="control.display_key ? choice[control.key_field] : ''">
+    </datalist>
+</ng-template>

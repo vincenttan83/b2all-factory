@@ -105,4 +105,30 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
     return name;
   }
 
+  getCssClasses(touched: boolean, valid: boolean): string {
+    const hasValidation = (this.config.validation_fn && this.config.validation_fn.length > 0);
+    if (hasValidation) {
+      if (touched) {
+        if (valid) {
+          return this.getBasicCss() + ' is-valid' + this.getSpecialCss();
+        } else {
+          return this.getBasicCss() + ' is-invalid' + this.getSpecialCss();
+        }
+      } else {
+        return this.getBasicCss() + this.getSpecialCss();
+      }
+    } else {
+      return this.getBasicCss() + this.getSpecialCss();
+    }
+
+  }
+
+  getBasicCss(): string {
+    return this.detailConfig.css_class.select ? ` ${this.detailConfig.css_class.select}` : '';
+  }
+
+  getSpecialCss(): string {
+    return this.config.type_config.css_class ? ` ${this.config.type_config.css_class}` : '';
+  }
+
 }
