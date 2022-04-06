@@ -332,6 +332,7 @@ export class DynamicFormGenerator {
                 )
               );
             });
+            group.setValidators(element.validation_fn ?? null);
             break;
           }
         }

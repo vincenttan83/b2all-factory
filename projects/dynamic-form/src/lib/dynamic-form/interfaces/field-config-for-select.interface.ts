@@ -10,12 +10,13 @@ export interface IFieldConfigForSelectConfig extends IFieldConfigBased {
 
 export interface ISelectConfig {
     /**
-    * Only accept dataset in the outer join manner for
-    * dependant combo box
-    */
+     * Only accept dataset in the outer join manner for
+     * dependant combo box
+     */
     dataset: IMultiSelect[];
     controls: {
         name: string;
+        type?: 'select' | 'datalist';
         label?: string;
         key_field: string;
         value_field: string;
