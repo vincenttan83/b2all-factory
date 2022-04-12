@@ -101,7 +101,7 @@ formOnSubmit(formValue: any): Promise<void> {
 | index?               | number                         | For field sorting                                             |
 | css_class?           | string                         | For css class                                                 |
 | type                 | EFieldConfigType               | Indicate field type                                           |
-| type_config          | [T](type_config-configuration) | Futher configuration for specific type (detail is at below)   |
+| type_config          | [T](#type_config-configuration) | Futher configuration for specific type (detail is at below)   |
 
 ## type_config Configuration
 
