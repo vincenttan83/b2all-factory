@@ -105,7 +105,7 @@ formOnSubmit(formValue: any): Promise<void> {
 
 ## type_config Configuration
 
-# Input
+### Input
 
 | Key                           | Type                  | Description                                                                     |
 | ----------------------------- | --------------------- | ------------------------------------------------------------------------------- |
@@ -118,7 +118,7 @@ formOnSubmit(formValue: any): Promise<void> {
 | css_class?                    | T                     | Css class                                                                       |
 | placeholder?                  | string                | Placeholder (Optional, if this field has value, display_text will not be shown) |
 
-# Button
+### Button
 
 | Key           | Type                | Description  |
 | ------------- | ------------------- | ------------ |
@@ -127,7 +127,7 @@ formOnSubmit(formValue: any): Promise<void> {
 | loading_text? | string              | Loading Text |
 | css_class?    | T                   | Css class    |
 
-# Select
+### Select
 
 | Key       | Type           | Description    |
 | --------- | -------------- | -------------- |
@@ -135,7 +135,7 @@ formOnSubmit(formValue: any): Promise<void> {
 | controls  | T[]            | Select control |
 | css_class | T              | CSS class      |
 
-# css_class Configuration
+#### css_class Configuration
 
 
 
