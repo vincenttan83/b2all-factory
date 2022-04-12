@@ -18,7 +18,7 @@ npm install @b2allsolution/factory
 
 Import `B2allDynamicFormModule` into `app.module` or selected module.
 
-Add `ProgressSpinnerService` into providers.
+Add `ProgressSpinnerService` into providers if button is used in configuration.
 
 ```typescript
 @NgModule({
@@ -29,11 +29,11 @@ Add `ProgressSpinnerService` into providers.
   imports: [
     BrowserModule,
     AppRoutingModule,
-    // Import B2allDynamicFormModule
+    // import B2allDynamicFormModule
     B2allDynamicFormModule,
   ],
   providers: [
-    // Add ProgressSpinnerService
+    // add ProgressSpinnerService if button is used
     ProgressSpinnerService
   ],
   bootstrap: [AppComponent]
@@ -88,9 +88,9 @@ formOnSubmit(formValue: any): Promise<void> {
 }
 ```
 
-## Configuration IFieldConfig
+## IFieldConfig Configuration
 
-| Field                | Type             | Description                                                   |
+| Key                  | Type             | Description                                                   |
 | -------------------- | ---------------- | ------------------------------------------------------------- |
 | name?                | string           | Name of the field to be store into database as the field name |
 | display_text?        | string           | Display Text for label                                        |
@@ -100,6 +100,44 @@ formOnSubmit(formValue: any): Promise<void> {
 | disabled?            | boolean          | Disabled field (disabled field will not be store when submit) |
 | index?               | number           | For field sorting                                             |
 | css_class?           | string           | For css class                                                 |
+| type                 | EFieldConfigType | Indicate field type                                           |
+| type_config          | T                | Futher configuration for specific type (detail is at below)   |
+
+## type_config Configuration
+
+# Input
+
+| Key                           | Type                  | Description                                                                     |
+| ----------------------------- | --------------------- | ------------------------------------------------------------------------------- |
+| readonly?                     | boolean               | Control become readonly (undefined to disabled readonly)                        |
+| type?                         | EFieldConfigInputType | Input type                                                                      |
+| list?                         | boolean               | For Checkbox and Radio list                                                     |
+| dataset?                      | IKeyValueInString[]   | When list is true, this field is use                                            |
+| input_helper?                 | boolean               | ?                                                                               |
+| single_checkbox_display_text? | string                | When list is false and is Checkbox, text will display beside checkbox           |
+| css_class?                    | T                     | Css class                                                                       |
+| placeholder?                  | string                | Placeholder (Optional, if this field has value, display_text will not be shown) |
+
+# Button
+
+| Key           | Type                | Description  |
+| ------------- | ------------------- | ------------ |
+| type          | 'button' / 'submit' | Button type  |
+| onclick_fn    | () => Promise<void> | Click Event  |
+| loading_text? | string              | Loading Text |
+| css_class?    | T                   | Css class    |
+
+# Select
+
+| Key       | Type           | Description    |
+| --------- | -------------- | -------------- |
+| dataset   | IMultiSelect[] | Select Dataset |
+| controls  | T[]            | Select control |
+| css_class | T              | CSS class      |
+
+# css_class Configuration
+
+
 
 ## Contributing
 
