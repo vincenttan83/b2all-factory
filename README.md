@@ -137,27 +137,24 @@ formOnSubmit(formValue: any): Promise<void> {
 
 ### Array
 
-| Key                      | Type                           | Description                                  |
-| ------------------------ | ------------------------------ | -------------------------------------------- |
-| hierarchy_level?         | IMultiSelect[]                 | hierarchy                                    |
-| field_configs            | IFieldConfig[]                 | FieldConfig                                  |
-| css_class                | [\*](#css_class-configuration) | CSS class                                    |
-| table_column_names?      | string[]                       | Configuration for recursive enabled template |
-| table_column_width?      | string[]                       | table column width                           |
-| table_caption?           | string                         | table caption                                |
-| enable_default_options?  | IKeyValueInString[]            | default value                                |
-| hideAddButton?           | boolean                        | hide add button flag                         |
-| hideRemoveRowItemButton? | boolean                        | hide remove row item button flag             |
+| Key                      | Type                                          | Description                                  |
+| ------------------------ | --------------------------------------------- | -------------------------------------------- |
+| hierarchy_level?         | IMultiSelect[]                                | hierarchy                                    |
+| field_configs            | [IFieldConfig](#ifieldconfig-configuration)[] | FieldConfig                                  |
+| css_class                | [\*](#css_class-configuration)                | CSS class                                    |
+| table_column_names?      | string[]                                      | Configuration for recursive enabled template |
+| table_column_width?      | string[]                                      | table column width                           |
+| table_caption?           | string                                        | table caption                                |
+| enable_default_options?  | IKeyValueInString[]                           | default value                                |
+| hideAddButton?           | boolean                                       | hide add button flag                         |
+| hideRemoveRowItemButton? | boolean                                       | hide remove row item button flag             |
 
 ### Object
 
-| Key         | Type                           | Description      |
-| ----------- | ------------------------------ | ---------------- |
-| row_count   | number                         | Number of row    |
-| col_count?  | number                         | Number of column |
-| readonly    | boolean                        | Read Only flag   |
-| css_class   | [\*](#css_class-configuration) | CSS class        |
-| placeholder | string                         | placeholder      |
+| Key           | Type                                          | Description |
+| ------------- | --------------------------------------------- | ----------- |
+| field_configs | [IFieldConfig](#ifieldconfig-configuration)[] | FieldConfig |
+| css_class     | [\*](#css_class-configuration)                | CSS class   |
 
 ### Textarea
 
@@ -171,13 +168,17 @@ formOnSubmit(formValue: any): Promise<void> {
 
 #### Select controls Configuration
 
-| Key         | Type                           | Description      |
-| ----------- | ------------------------------ | ---------------- |
-| row_count   | number                         | Number of row    |
-| col_count?  | number                         | Number of column |
-| readonly    | boolean                        | Read Only flag   |
-| css_class   | [\*](#css_class-configuration) | CSS class        |
-| placeholder | string                         | placeholder      |
+| Key           | Type                 | Description                       |
+| ------------- | -------------------- | --------------------------------- |
+| name          | number               | Name of the control               |
+| type?         | 'select' / 'datalist | Type of the control               |
+| label?        | string               | Label for the field               |
+| key_field     | string               | Key's field name of the dataset   |
+| value_field   | string               | Value's field name of the dataset |
+| value         | string               | value                             |
+| validation_fn | string               | Validation for the selected field |
+| disabled      | string               | Disabled selected control         |
+| placeholder   | string               | placeholder for the control       |
 
 ##### No type_config needed
 
