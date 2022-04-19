@@ -7,12 +7,33 @@ export interface IFieldConfigForButtonConfig extends IFieldConfigBased {
 }
 
 export interface IButtonConfig {
-    type: 'button' | 'submit'; // reset should be just refresh the page
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#attr-type
+     */
+    type: 'button' | 'submit' | 'reset';
     onclick_fn?: () => Promise<void>;
+    /**
+     * Button loading text
+     * @default 'Please wait...'
+     */
     loading_text?: string;
     css_class: {
+        /**
+         * Wrapper class for button
+         * @example 'd-grid gap-2 d-md-flex justify-content-md-end mt-3'
+         */
         group: string;
+        /**
+         * Button cclass
+         * @example 'btn btn-primary'
+         * @see https://getbootstrap.com/docs/5.1/components/buttons/
+         */
         button: string;
+        /**
+         * spinner class
+         * @default 'spinner-border spinner-border-sm text-white'
+         * @see https://getbootstrap.com/docs/5.1/components/spinners/
+         */
         spinner?: string;
     };
 }

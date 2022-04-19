@@ -9,18 +9,52 @@ export interface IFieldConfigForInputConfig extends IFieldConfigBased {
 }
 
 export interface IInputConfig {
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-readonly
+     */
     readonly?: boolean;
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
+     */
     type: EFieldConfigInputType;
+    /**
+     * For Checkbox and Radio list
+     */
     list?: boolean;
+    /**
+     * When list is true, this field is use
+     */
     dataset?: IKeyValueInString[];
     input_helper?: boolean;
+    /**
+     * When list is false and is Checkbox, text will display beside checkbox 
+     */
     single_checkbox_display_text?: string;
     css_class: {
+        /**
+         * class for group label
+         * only for list or checkbox
+         * leave empty string if not needed
+         */
         group_label: string;
+        /**
+         * wrapper class for input
+         * @example 'form-group'
+         */
         group: string;
+        /**
+         * class for input label
+         */
         input_label: string;
+        /**
+         * class for input label
+         * @example 'form-control'
+         */
         input: string;
     };
+    /**
+     * If placeholder is set, it will be used and display_text will be ignored
+     */
     placeholder?: string;
 }
 
