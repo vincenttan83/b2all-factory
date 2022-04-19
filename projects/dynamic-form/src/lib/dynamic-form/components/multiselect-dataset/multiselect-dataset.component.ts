@@ -34,7 +34,7 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
   multiSelectTemplate: IFieldConfig[] = [];
   formReady = false;
 
-  constructor() {}
+  constructor() { }
 
   ngAfterViewInit(): void {
     this.dynamicForm.changes.subscribe((resp) => {
@@ -142,13 +142,7 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
             css_class: 'val-width-non-child',
           },
         ],
-        css_class: {
-          add_button: 'btn btn-sm btn-primary',
-          del_button: 'btn btn-sm btn-danger',
-          group: '',
-          group_label: '',
-          label: '',
-        },
+        css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', },
       },
     };
   }
@@ -211,9 +205,6 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
         css_class: {
           add_button: 'btn btn-sm btn-primary',
           del_button: 'btn btn-sm btn-danger',
-          group: '',
-          group_label: '',
-          label: '',
         },
       },
     };

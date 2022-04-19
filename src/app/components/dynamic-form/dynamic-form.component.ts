@@ -276,9 +276,6 @@ export class DynamicFormComponent implements OnInit {
           css_class: {
             add_button: 'btn btn-sm btn-primary',
             del_button: 'btn btn-sm btn-danger',
-            group: '',
-            group_label: 'h4',
-            label: '',
           },
         },
       },
@@ -416,9 +413,6 @@ export class DynamicFormComponent implements OnInit {
           css_class: {
             add_button: 'btn btn-sm btn-primary',
             del_button: 'btn btn-sm btn-danger',
-            group: '',
-            group_label: 'h4',
-            label: '',
           },
         },
       }
