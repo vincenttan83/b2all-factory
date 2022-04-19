@@ -360,7 +360,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
           },
         },
       ],
-      css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: '', label: '' }
+      css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger' }
     };
 
     const typeSelectionConfig: ISelectConfig = {
@@ -603,7 +603,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
                     },
                   },
                 ],
-                css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: '', label: '' }
+                css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger' }
               },
             },
             {
@@ -673,7 +673,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
                     },
                   },
                 ],
-                css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: '', label: '' }
+                css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger' }
               },
             },
             {
@@ -908,7 +908,7 @@ export class FormDesignareComponent implements OnInit, AfterViewInit {
             }
           }
         ],
-        css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger', group: '', group_label: 'h4', label: '' }
+        css_class: { add_button: 'btn btn-sm btn-primary', del_button: 'btn btn-sm btn-danger' }
       },
     };
   }

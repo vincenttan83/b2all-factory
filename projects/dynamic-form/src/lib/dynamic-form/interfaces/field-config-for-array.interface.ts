@@ -24,9 +24,6 @@ export interface IArrayConfig {
          * @example 'btn btn-danger'
          */
         del_button: string;
-        // group: string;
-        // group_label: string;
-        // label: string;
     };
     /**
      * Configuration for recursive enabled tempalte
