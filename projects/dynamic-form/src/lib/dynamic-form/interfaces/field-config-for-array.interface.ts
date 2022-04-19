@@ -14,11 +14,19 @@ export interface IArrayConfig {
     };
     field_configs: IFieldConfig[];
     css_class: {
+        /**
+         * Class for Add button
+         * @example 'btn btn-primary'
+         */
         add_button: string;
+        /**
+         * Class for Delete button
+         * @example 'btn btn-danger'
+         */
         del_button: string;
-        group: string;
-        group_label: string;
-        label: string;
+        // group: string;
+        // group_label: string;
+        // label: string;
     };
     /**
      * Configuration for recursive enabled tempalte
