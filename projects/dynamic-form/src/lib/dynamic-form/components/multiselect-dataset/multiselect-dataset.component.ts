@@ -41,7 +41,7 @@ export class MultiselectDatasetComponent implements OnInit, OnChanges, AfterView
   ngOnChanges({ inputSubmitButtonTemplate }: SimpleChanges): void {
     if (inputSubmitButtonTemplate && !inputSubmitButtonTemplate.firstChange) {
       this.multiSelectTemplate = [];
-      this.ngOnInit();
+      this.renderForm();
     }
   }
 
@@ -52,6 +52,10 @@ export class MultiselectDatasetComponent implements OnInit, OnChanges, AfterView
   }
 
   ngOnInit(): void {
+    this.renderForm();
+  }
+
+  private renderForm() {
     // generate the multiselect template based on the level received
     const theTemplate = this.generateTemplate(this.inputHierarchyLevels);
     // push the template into the fields stack
