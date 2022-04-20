@@ -3,8 +3,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { getValidators } from '../../classes/custom-validator.class';
@@ -20,7 +22,7 @@ import { DynamicFormComponent } from '../dynamic-form.component';
   templateUrl: './multiselect-dataset.component.html',
   styleUrls: ['./multiselect-dataset.component.css'],
 })
-export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
+export class MultiselectDatasetComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(DynamicFormComponent) dynamicForm!: DynamicFormComponent;
 
   @Input() inputHierarchyLevels!: string[];
@@ -36,6 +38,13 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
+  ngOnChanges({ inputSubmitButtonTemplate }: SimpleChanges): void {
+    if (inputSubmitButtonTemplate && !inputSubmitButtonTemplate.firstChange) {
+      this.multiSelectTemplate = [];
+      this.renderForm();
+    }
+  }
+
   ngAfterViewInit(): void {
     this.dynamicForm.changes.subscribe((resp) => {
       this.outputFormOnChange.emit(resp);
@@ -43,6 +52,10 @@ export class MultiselectDatasetComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.renderForm();
+  }
+
+  private renderForm() {
     // generate the multiselect template based on the level received
     const theTemplate = this.generateTemplate(this.inputHierarchyLevels);
     // push the template into the fields stack
