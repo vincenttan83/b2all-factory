@@ -178,9 +178,9 @@ export class MultiSelectComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   formOnSubmitMultiselect(val: any): void {
     console.log(val);
@@ -188,5 +188,9 @@ export class MultiSelectComponent implements OnInit {
 
   formOnChangeMultiselect(val: any): void {
     console.log(val);
+  }
+
+  addLevel() {
+    this.multiselectSubmitButtonTemplate.display_text = 'Hello world';
   }
 }

@@ -1,5 +1,7 @@
 <h1>Multi select CRUD</h1>
 
+<button class="btn btn-primary" (click)="addLevel()">Add level</button>
+
 <b2all-multiselect-dataset [inputHierarchyLevels]="multiselectHierarchyLevels" [inputData]="multiselectData"
   [inputPreTemplate]="preTemplate" [inputPostTemplate]="postTemplate"
   [inputSubmitButtonTemplate]="multiselectSubmitButtonTemplate" (outputFormOnSubmit)="formOnSubmitMultiselect($event)"
