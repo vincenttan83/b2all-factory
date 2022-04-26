@@ -8,12 +8,13 @@
                 : cssClass+' is-invalid'
             : cssClass
         :cssClass">
-    <ng-container *ngIf="tempForm.controls[config.name + '_temp'].touched && tempForm.controls[config.name + '_temp'].errors">
-        <b2all-validator-hint [validation]="tempForm.controls[config.name + '_temp'].errors"></b2all-validator-hint>
-    </ng-container>
     <div class="options" *ngIf="showDropdown">
         <div class="option">Select {{config.label}}</div>
         <div class="option" *ngFor="let item of filterItems" (mousedown)="choose(item)">{{item[config.key_field]}}
         </div>
     </div>
 </form>
+
+<ng-container *ngIf="tempForm.controls[config.name + '_temp'].touched && tempForm.controls[config.name + '_temp'].errors">
+    <b2all-validator-hint [validation]="tempForm.controls[config.name + '_temp'].errors"></b2all-validator-hint>
+</ng-container>
