@@ -1,0 +1,20 @@
+.option {
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.option:hover {
+    background-color: #4285f4;
+    cursor: pointer;
+    color: white;
+}
+
+.options {
+    position: fixed;
+    border-radius: 5px;
+    min-width: 200px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 1px grey solid;
+}

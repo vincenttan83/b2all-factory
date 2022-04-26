@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AsyncValidatorFn, FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { DynamicFormGenerator } from '../classes/dynamic-form-generator.class';
 import { EFieldConfigType } from '../enums/field-config-type.enum';
 import { IFieldConfig } from '../interfaces/field-config.interface';
@@ -13,7 +13,7 @@ import { IFieldConfig } from '../interfaces/field-config.interface';
 
     <div class="row">
       <div *ngFor="let field of inputFormConfigs;" [ngClass]="field.css_class ?? ''">
-        <ng-container b2allDynamicField [config]="field" [group]="formGroup" [formName]="inputFormName">
+        <ng-container b2allDynamicField [config]="field" [group]="formGroup" [formName]="inputFormName" [resetEvent]="resetEvent.asObservable()">
         </ng-container>
       </div>
     </div>
@@ -39,6 +39,8 @@ export class DynamicFormComponent implements OnChanges {
 
   formGroup!: FormGroup;
   wrongInterfaceErrorMessage = 'was using the wrong interface for type_config!';
+  // emit the reset event to children
+  resetEvent: Subject<void> = new Subject<void>();
 
   get changes(): Observable<any> { return this.formGroup.valueChanges; }
   get dirty(): boolean { return this.formGroup.dirty; }
@@ -148,6 +150,7 @@ export class DynamicFormComponent implements OnChanges {
     if (value) {
       // generally reset once first
       this.formGroup.reset(value);
+      this.resetEvent.next();
       // iterate the configuration of fields to check if there is any array field type array
       Object.keys(this.formGroup.value).forEach(key => {
         if (Array.isArray(this.formGroup.value[key])) {

@@ -40,7 +40,7 @@
 </ng-template>
 
 <ng-template #datalistTemplate let-control="control" let-i="i" [formGroup]="group">
-    <input type="text" [id]="generateId(formName, control.name, arrayIndex) + 'select'"
+    <!-- <input type="text" [id]="generateId(formName, control.name, arrayIndex) + 'select'"
         [ngClass]="getCssClasses(group.controls[control.name].touched, (group.controls[control.name].valid && !(control.name === group.errors?.field_name)))"
         [formControlName]="control.name" [attr.list]="generateId(formName, control.name, arrayIndex) + 'datalist'"
         [placeholder]="'Select ' + (control.placeholder ? control.placeholder : control.label)"
@@ -52,5 +52,7 @@
     <datalist [id]="generateId(formName, control.name, arrayIndex) + 'datalist'">
         <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]"
             [label]="control.display_key ? choice[control.key_field] : ''">
-    </datalist>
+    </datalist> -->
+    <b2all-select-search [items]="latestDatabase['key_value_pair_' + i]"
+        [config]="control" [group]="group" [cssClass]="detailConfig.css_class.select" [resetEvent]="resetEvent" (valueOnChanges)="onSelectSearch($event, i)"></b2all-select-search>
 </ng-template>

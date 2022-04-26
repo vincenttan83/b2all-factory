@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IFieldConfigForSelectConfig, ISelectConfig } from '../../interfaces/field-config-for-select.interface';
 import { IField } from '../../interfaces/field.interface';
 import { IMultiSelect } from '../../interfaces/multi-select.interface';
@@ -18,6 +18,7 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
   group!: FormGroup;
   arrayIndex!: number;
   formName!: string;
+  resetEvent!: Observable<void>;
 
   detailConfig!: ISelectConfig;
 
@@ -131,4 +132,7 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
     return this.config.type_config.css_class ? ` ${this.config.type_config.css_class}` : '';
   }
 
+  onSelectSearch(value: any, index: number): void {
+    this.privateDynamicFieldSelectService.setValue(value, index);
+  }
 }
