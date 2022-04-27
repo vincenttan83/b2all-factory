@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { IFieldConfigForSelectConfig, ISelectConfig } from '../../interfaces/field-config-for-select.interface';
 import { IField } from '../../interfaces/field.interface';
 import { IMultiSelect } from '../../interfaces/multi-select.interface';
@@ -30,6 +30,8 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
 
   latestDatabase: { [key: string]: any } = {};
 
+  matchEvent: Subject<number> = new Subject<number>();
+
   constructor(
     // @Inject('css_class') private privateCssClass: ICssClass,
     private privateDynamicFieldSelectService: DynamicFieldSelectService
@@ -55,7 +57,12 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
     this.subscription = this.privateDynamicFieldSelectService.storageChanged$.subscribe(resp => {
       this.latestDatabase = { ...resp };
       for (let i = 0; i < this.detailConfig.controls.length; i++) {
-        this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
+        console.log(this.group.controls[this.detailConfig.controls[i].name].value);
+
+        if (this.group.controls[this.detailConfig.controls[i].name].value !== this.latestDatabase['selected_value_' + i]) {
+          this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
+          this.matchEvent.next(i);
+        }
       }
     });
   }

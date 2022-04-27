@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ISelectSearch } from './select-search.interface';
 
 @Component({
   selector: 'b2all-select-search',
   templateUrl: './select-search.component.html',
-  styleUrls: ['./select-search.component.css']
+  styleUrls: ['./select-search.component.css'],
 })
 export class SelectSearchComponent implements OnInit, OnChanges {
   showDropdown = false;
@@ -15,6 +15,8 @@ export class SelectSearchComponent implements OnInit, OnChanges {
   @Input() cssClass!: any;
   @Input() items: any[] = [];
   @Input() resetEvent!: Observable<void>;
+  @Input() matchEvent!: Observable<number>;
+  @Input() index!: number;
   @Output() valueOnChanges: EventEmitter<any> = new EventEmitter<any>();
   filterItems: any[] = [];
   tempForm!: FormGroup;
@@ -55,10 +57,11 @@ export class SelectSearchComponent implements OnInit, OnChanges {
         return item[this.config.key_field].toLowerCase().includes(value.toLowerCase());
       });
     });
-    // this.group.controls[this.config.name].statusChanges.subscribe((status) => {
-    //   console.log(status);
-
-    // });
+    this.matchEvent.subscribe(index => {
+      if (index === this.index) {
+        this.tempForm.controls[`${this.config.name}_temp`].setValue(null);
+      }
+    });
   }
 
   setSavedData(): void {

@@ -53,6 +53,7 @@
         <option *ngFor="let choice of latestDatabase['key_value_pair_' + i]" [value]="choice[control.value_field]"
             [label]="control.display_key ? choice[control.key_field] : ''">
     </datalist> -->
-    <b2all-select-search [items]="latestDatabase['key_value_pair_' + i]"
-        [config]="control" [group]="group" [cssClass]="detailConfig.css_class.select" [resetEvent]="resetEvent" (valueOnChanges)="onSelectSearch($event, i)"></b2all-select-search>
+    <b2all-select-search [items]="latestDatabase['key_value_pair_' + i]" [config]="control" [group]="group"
+        [cssClass]="detailConfig.css_class.select" [resetEvent]="resetEvent" [index]="i"
+        [matchEvent]="matchEvent.asObservable()" (valueOnChanges)="onSelectSearch($event, i)"></b2all-select-search>
 </ng-template>
