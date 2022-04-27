@@ -50,12 +50,16 @@ export class SelectSearchComponent implements OnInit, OnChanges {
     }
     // subscribe user input and filter items
     this.tempForm.controls[`${this.config.name}_temp`].valueChanges.subscribe((value: string) => {
-      this.filterItems = this.items?.filter(item => {
-        if (value === '' || value === null || value === undefined) {
-          return true;
-        }
-        return item[this.config.key_field].toLowerCase().includes(value.toLowerCase());
-      });
+      if (this.items.some(item => item[this.config.key_field] === value)) {
+        this.filterItems = this.items;
+      } else {
+        this.filterItems = this.items?.filter(item => {
+          if (value === '' || value === null || value === undefined) {
+            return true;
+          }
+          return item[this.config.key_field].toLowerCase().includes(value.toLowerCase());
+        });
+      }
     });
     this.matchEvent.subscribe(index => {
       if (index === this.index) {
