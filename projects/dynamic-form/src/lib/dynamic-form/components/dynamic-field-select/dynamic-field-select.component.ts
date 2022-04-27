@@ -57,8 +57,6 @@ export class DynamicFieldSelectComponent implements OnInit, IField, OnDestroy {
     this.subscription = this.privateDynamicFieldSelectService.storageChanged$.subscribe(resp => {
       this.latestDatabase = { ...resp };
       for (let i = 0; i < this.detailConfig.controls.length; i++) {
-        console.log(this.group.controls[this.detailConfig.controls[i].name].value);
-
         if (this.group.controls[this.detailConfig.controls[i].name].value !== this.latestDatabase['selected_value_' + i]) {
           this.group.controls[this.detailConfig.controls[i].name].setValue(this.latestDatabase['selected_value_' + i]);
           this.matchEvent.next(i);
