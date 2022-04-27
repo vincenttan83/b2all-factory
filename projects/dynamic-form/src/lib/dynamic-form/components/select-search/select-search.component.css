@@ -10,7 +10,8 @@
 }
 
 .options {
-    position: fixed;
+    position: absolute;
+    z-index: 10;
     border-radius: 5px;
     min-width: 200px;
     background-color: white;
