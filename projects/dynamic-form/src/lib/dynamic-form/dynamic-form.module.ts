@@ -25,6 +25,7 @@ import { DynamicDivFormComponent } from './components/dynamic-div-form/dynamic-d
 import { ValidatorHintComponent } from './components/validator-hint/validator-hint.component';
 import { MultiselectDatasetComponent } from './components/multiselect-dataset/multiselect-dataset.component';
 import { FormDesignareComponent } from './components/form-designare/form-designare.component';
+import { SelectSearchComponent } from './components/select-search/select-search.component';
 
 
 
@@ -47,6 +48,7 @@ import { FormDesignareComponent } from './components/form-designare/form-designa
     ValidatorHintComponent,
     MultiselectDatasetComponent,
     FormDesignareComponent,
+    SelectSearchComponent,
   ],
   imports: [
     CommonModule,

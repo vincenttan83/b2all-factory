@@ -1,5 +1,6 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { DynamicFieldArrayComponent } from '../components/dynamic-field-array/dynamic-field-array.component';
 import { DynamicFieldButtonComponent } from '../components/dynamic-field-button/dynamic-field-button.component';
 import { DynamicFieldDividerComponent } from '../components/dynamic-field-divider/dynamic-field-divider.component';
@@ -32,6 +33,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField {
   @Input() arrayIndex!: number;
   @Input() abstractControl!: AbstractControl;
   @Input() formName!: string;
+  @Input() resetEvent!: Observable<void>;
 
   component!: ComponentRef<IField>;
 
@@ -60,6 +62,7 @@ export class DynamicFieldDirective implements OnInit, OnChanges, IField {
       this.component.instance.group = this.group ?? this.abstractControl as FormGroup;
       this.component.instance.arrayIndex = this.arrayIndex;
       this.component.instance.formName = this.formName;
+      this.component.instance.resetEvent = this.resetEvent;
     }
 
 
