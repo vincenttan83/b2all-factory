@@ -1,13 +1,13 @@
 .option {
-    padding: 5px 10px;
+    padding: 2px 10px;
     border-radius: 5px;
 }
 
-.option:hover {
+/* .option:hover {
     background-color: #4285f4;
     cursor: pointer;
     color: white;
-}
+} */
 
 .options {
     position: absolute;
@@ -20,4 +20,10 @@
     border: 1px grey solid;
     max-height: 150px;
     overflow-y: auto;
+}
+
+.option.active {
+    background-color: #4285f4;
+    cursor: pointer;
+    color: white;
 }

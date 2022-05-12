@@ -1,7 +1,7 @@
 <form [formGroup]="tempForm">
-    <input type="text" [placeholder]="config.placeholder ?? 'Select ' + (config.label ?? '')"
+    <input type="text" [id]="config.name + '_temp'" [placeholder]="config.placeholder ?? 'Select ' + (config.label ?? '')"
         [readonly]="config.readonly" [formControlName]="config.name + '_temp'" (focus)="showDropdown = true"
-        (blur)="onBlur()" [ngClass]="
+        (blur)="onBlur()" (keydown)="handleKeydown($event)" autocomplete="off" [ngClass]="
         tempForm.controls[config.name + '_temp'].validator ? 
             tempForm.controls[config.name + '_temp'].touched ?
                 tempForm.controls[config.name + '_temp'].valid ? cssClass+' is-valid'
@@ -10,7 +10,7 @@
         :cssClass">
     <div class="options" *ngIf="showDropdown">
         <div class="option">Select {{config.label}}</div>
-        <div class="option" *ngFor="let item of filterItems" (mousedown)="choose(item)">{{item[config.key_field]}}
+        <div class="option" [ngClass]="activeId === i ? 'active' : ''" *ngFor="let item of filterItems; let i = index" (mouseenter)="activeId = i" (mousedown)="choose(item)">{{item[config.key_field]}}
         </div>
     </div>
 </form>
