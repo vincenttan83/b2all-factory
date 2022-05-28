@@ -20,6 +20,7 @@ export class SelectSearchComponent implements OnInit, OnChanges {
   @Output() valueOnChanges: EventEmitter<any> = new EventEmitter<any>();
   filterItems: any[] = [];
   tempForm!: FormGroup;
+  activeId = 0;
   constructor(private fb: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -64,6 +65,7 @@ export class SelectSearchComponent implements OnInit, OnChanges {
     this.matchEvent.subscribe(index => {
       if (index === this.index) {
         this.tempForm.controls[`${this.config.name}_temp`].setValue(null);
+        this.activeId = 0;
       }
     });
   }
@@ -87,9 +89,37 @@ export class SelectSearchComponent implements OnInit, OnChanges {
       && !this.items.some(item => item[this.config.key_field] === this.tempForm.controls[`${this.config.name}_temp`].value)) {
       this.group.controls[this.config.name].setValue(null);
       this.tempForm.controls[`${this.config.name}_temp`].setValue(null);
-
+      this.activeId = 0;
     }
     this.valueOnChanges.emit(this.group.controls[this.config.name].value);
+  }
+
+  handleKeydown(event: any): void {
+    switch (event.code) {
+      case 'ArrowDown': {
+        if (this.activeId < this.filterItems.length - 1) {
+          this.activeId = this.activeId + 1;
+        }
+        break;
+      }
+      case 'ArrowUp': {
+        if (this.activeId > 0) {
+          this.activeId = this.activeId - 1;
+        }
+        break;
+      }
+      case 'Enter': {
+        console.log(this.filterItems[this.activeId]);
+        this.tempForm.controls[`${this.config.name}_temp`].setValue(this.filterItems[this.activeId][this.config.key_field]);
+        this.group.controls[this.config.name].setValue(this.filterItems[this.activeId][this.config.value_field]);
+        this.showDropdown = false;
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return;
   }
 
 }

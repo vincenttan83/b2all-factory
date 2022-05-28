@@ -69,19 +69,19 @@
                         : detailConfig.css_class.input ?? ''" -->
         <ng-template #input>
           <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
-            [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
+            [id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
             [formControlName]="config.name" [attr.type]="detailConfig.type"
-            [attr.value]="detailConfig.type === 'number' ? 0 : ''" [attr.min]="detailConfig.type==='range' ? 0 : null"
-            [attr.max]="detailConfig.type==='range' ? 100: null" [attr.step]="detailConfig.type==='range' ? 5: null"
-            [attr.readonly]="detailConfig.readonly" [placeholder]="detailConfig.placeholder ?? ''">
+            [attr.value]="detailConfig.type === 'number' ? 0 : ''" [min]="detailConfig.min"
+            [max]="detailConfig.max" [step]="detailConfig.step"
+            [readonly]="detailConfig.readonly" [placeholder]="detailConfig.placeholder ?? ''">
         </ng-template>
 
         <ng-template #inputForNumber>
           <input [ngClass]="getCssClasses(group.controls[config.name].touched, group.controls[config.name].valid)"
-            [attr.id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
+            [id]="generateId(formName, detailConfig.type, config.name, arrayIndex) + 'input'"
             [formControlName]="config.name" type="number" [attr.value]="detailConfig.type === 'number' ? 0 : ''"
-            [attr.min]="detailConfig.type==='range' ? 0 : null" [attr.max]="detailConfig.type==='range' ? 100: null"
-            [attr.step]="detailConfig.type==='range' ? 5: null" [attr.readonly]="detailConfig.readonly"
+            [min]="detailConfig.min ?? ''" [max]="detailConfig.max ?? ''"
+            [step]="detailConfig.step" [readonly]="detailConfig.readonly"
             [placeholder]="detailConfig.placeholder ?? ''">
         </ng-template>
 
