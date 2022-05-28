@@ -27,9 +27,21 @@ export interface IInputConfig {
     dataset?: IKeyValueInString[];
     input_helper?: boolean;
     /**
-     * When list is false and is Checkbox, text will display beside checkbox 
+     * When list is false and is Checkbox, text will display beside checkbox
      */
     single_checkbox_display_text?: string;
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min
+     */
+    min?: number | string;
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max
+     */
+    max?: number | string;
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step
+     */
+    step?: number;
     css_class: {
         /**
          * class for group label

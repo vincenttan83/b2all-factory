@@ -43,6 +43,12 @@ export const cs: IMultiSelect[] = [
             }
         ]
     },
+    {
+        key: 'Indonesia', value: 'indonesia'
+    },
+    {
+        key: 'Vietnam', value: 'vietnam'
+    }
 ];
 
 export const countries = [

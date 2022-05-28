@@ -1,9 +1,9 @@
 {
   "name": "@b2allsolution/factory",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "peerDependencies": {
-    "@angular/common": "^11.2.14",
-    "@angular/core": "^11.2.14"
+    "@angular/common": "^13.3.7",
+    "@angular/core": "^13.3.7"
   },
   "private": false,
   "dependencies": {

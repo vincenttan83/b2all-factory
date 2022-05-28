@@ -1,6 +1,7 @@
 // tslint:disable: max-line-length
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { getValidators } from 'projects/dynamic-form/src/lib/dynamic-form/classes/custom-validator.class';
+import { convertDatetimeToInputFormat, convertDateToInputFormat, convertTimeToInputFormat } from 'projects/dynamic-form/src/lib/dynamic-form/classes/helper';
 import { EFieldConfigInputType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-input-type.enum';
 import { EFieldConfigType } from 'projects/dynamic-form/src/lib/dynamic-form/enums/field-config-type.enum';
 import { EFormValidator } from 'projects/dynamic-form/src/lib/dynamic-form/enums/form-validator.enum';
@@ -99,6 +100,44 @@ export class DynamicFormComponent implements OnInit {
         type_config: {
           type: EFieldConfigInputType.Text,
           list: false,
+          css_class: {
+            group: 'form-group mb-3',
+            group_label: '',
+            input: 'form-control',
+            input_label: 'mb-1',
+          },
+        },
+        css_class: 'col-lg-6',
+      },
+      {
+        name: 'birthday',
+        display_text: 'Birthday: ',
+        type: EFieldConfigType.Input,
+        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+        type_config: {
+          type: EFieldConfigInputType.Date,
+          list: false,
+          min: convertDateToInputFormat(new Date(1900)),
+          max: convertDateToInputFormat(new Date()),
+          css_class: {
+            group: 'form-group mb-3',
+            group_label: '',
+            input: 'form-control',
+            input_label: 'mb-1',
+          },
+        },
+        css_class: 'col-lg-6',
+      },
+      {
+        name: 'birthday_time',
+        display_text: 'Birthday Time: ',
+        type: EFieldConfigType.Input,
+        validation_fn: getValidators([{ type: EFormValidator.Required }]),
+        type_config: {
+          type: EFieldConfigInputType.DateTimeLocal,
+          list: false,
+          min: convertDatetimeToInputFormat(new Date(1900, 1, 1, 0, 0, 0, 0)),
+          max: convertDatetimeToInputFormat(new Date()),
           css_class: {
             group: 'form-group mb-3',
             group_label: '',
